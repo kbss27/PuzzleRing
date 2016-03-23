@@ -15,6 +15,7 @@ ArrayList<Project_detail> p = (ArrayList<Project_detail>)request.getAttribute("p
 for(int i = 0; i < p.size(); i++) {
 	System.out.println(p.get(i).getProject_name());
 	System.out.println(p.get(i).getProject_detail());
+	// test!
 }
 %>
 </body>
