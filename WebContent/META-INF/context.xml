@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context reloadable="true">
+<!-- <Resource name="jdbc/mysql" auth="Container"
+				type="javax.sql.DataSource"
+				username="wckhg89"
+				password="1149811kk"
+				driverClassName="com.mysql.jdbc.Driver"
+				factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
+				url="jdbc:mysql://localhost:3306/wckhg89"
+				maxActive="20"
+				maxIdle="2"
+				removeAbandoned="true"/> -->
+
+<Resource name="jdbc/mysql" auth="Container"
+				type="javax.sql.DataSource"
+				username="root"
+				password="11070622"
+				driverClassName="com.mysql.jdbc.Driver"
+				factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
+				url="jdbc:mysql://localhost:3306/PuzzleRingDB?characterEncoding=UTF-8"
+				maxActive="20"
+				maxIdle="2"
+				removeAbandoned="true"/>
+</Context>
