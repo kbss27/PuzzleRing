@@ -32,6 +32,7 @@ public class PRController_member {
 			//req, res통해서 통신한다.
 			//?id=kbss27&pass=1234
 			//request객체는 url.
+			//ttt
 			String id = req.getParameter("id");
 			String pass = req.getParameter("password");
 			// String pass = controller.getEncSHA256(hash_pass);
