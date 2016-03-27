@@ -3,18 +3,94 @@
 <%@ page import="com.dao.PRCreateProject"%>
 <%@ page import="com.dao.PRModel" %>
 <%@ page import="java.util.ArrayList" %> 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="css/loginmain.css">
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/addcss.css">
 
 
+<script type="text/javascript">
+	//back, foward, logout button event function
+	function goback() { //go to back page
+		history.back();
+	}
+	function forward() { //go to prior page
+		history.forward();
+	}
+	function logout() {
 
- 
- 
-<title>Insert title here</title>
+	}
+</script>
+<script type="text/javascript">
+	function addRow(TableID) // 테이블 동적 생성
+	{
+	}
+	$(document).ready(
+			function() {
+				// 옵션추가 버튼 클릭시
+				$("#addItemBtn").click(
+						function() {
+							// item 의 최대번호 구하기
+							var lastItemNo = $("#tableid tr:last")
+									.attr("class").replace("item", "");
+
+							var newitem = $("#tableid tr:eq(1)").clone();
+							newitem.removeClass();
+							newitem.find("td:eq(0)").attr("rowspan", "1");
+							newitem.addClass("item"
+									+ (parseInt(lastItemNo) + 1));
+
+							$("#tableid").append(newitem);
+						});
+
+				// 항목추가 버튼 클릭시
+				$(".addBtn").live("click", function() {
+					var clickedRow = $(this).parent().parent();
+					var cls = clickedRow.attr("class");
+
+					// tr 복사해서 마지막에 추가
+					var newrow = clickedRow.clone();
+					newrow.find("td:eq(0)").remove();
+					newrow.insertAfter($("#tableid ." + cls + ":last"));
+
+					// rowspan 조정
+					resizeRowspan(cls);
+				});
+
+				// 삭제버튼 클릭시
+				$(".delBtn").live(
+						"click",
+						function() {
+							var clickedRow = $(this).parent().parent();
+							var cls = clickedRow.attr("class");
+
+							// 각 항목의 첫번째 row를 삭제한 경우 다음 row에 td 하나를 추가해 준다.
+							if (clickedRow.find("td:eq(0)").attr("rowspan")) {
+								if (clickedRow.next().hasClass(cls)) {
+									clickedRow.next().prepend(
+											clickedRow.find("td:eq(0)"));
+								}
+							}
+
+							clickedRow.remove();
+
+							// rowspan 조정
+							resizeRowspan(cls);
+						});
+
+				// cls : rowspan 을 조정할 class ex) item1, item2, ...
+				function resizeRowspan(cls) {
+					var rowspan = $("." + cls).length;
+					$("." + cls + ":first td:eq(0)").attr("rowspan", rowspan);
+				}
+			});
+</script>
+<title>main</title>
 </head>
 
 <%
@@ -35,7 +111,7 @@ if(id!=null){
 			<header id="header" class="container"> <!-- Logo -->
 			<div id="logo">
 				<h1>
-					<a href="index.html">PuzzleRing</a>
+				<a href="main.do">Puzzle Ring</a>
 				</h1>
 			</div>
 
@@ -45,21 +121,18 @@ if(id!=null){
 				</a></li>
 				<li><a href="#">Dropdown</a>
 					<ul>
-						<li><a href="#">Lorem ipsum dolor</a></li>
-						<li><a href="#">Magna phasellus</a></li>
-						<li><a href="#">Phasellus consequat</a>
-							<ul>
-								<li><a href="#">Lorem ipsum dolor</a></li>
-								<li><a href="#">Phasellus consequat</a></li>
-								<li><a href="#">Magna phasellus</a></li>
-								<li><a href="#">Etiam dolore nisl</a></li>
-							</ul></li>
-						<li><a href="#">Veroeros feugiat</a></li>
-					</ul></li>
-				<li><a href="left-sidebar.html">Left Sidebar</a></li>
-				<li><a href="right-sidebar.html">Right Sidebar</a></li>
-				<li><a href="no-sidebar.html">No Sidebar</a></li>
-			</ul>
+						<li class="current"><a href="main_page.do"><i
+								class="fa fa-2x fa-fw fa-home text-warning"></i></a></li>
+						<li><a href="left-sidebar.html">Left Sb</a></li>
+						<li><a href="right-sidebar.html">Right Sb</a></li>
+						<li><a href="no-sidebar.html">No Sb</a></li>
+						<li><a href="#" onclick="goback()"><i
+								class="fa fa-2x fa-angle-left fa-fw"></i></a></li>
+						<li><a href="logout.do"><i
+								class="fa fa-2x fa-fw fa-unlock text-success"></i></a></li>
+						<li><a href="#" onclick="foward()"><i
+								class="fa fa-2x fa-angle-right fa-fw"></i></a></li>
+					</ul>
 			</nav> </header>
 		</div>
 
@@ -423,93 +496,61 @@ if(id!=null){
 			</div>
 		</div>
 
-		<!-- Footer -->
+<!-- Footer -->
 		<div id="footer-wrapper">
 			<footer id="footer" class="container">
-			<div class="row">
-				<div class="3u 6u(medium) 12u$(small)">
-
-					<!-- Links -->
-					<section class="widget links">
-					<h3>Random Stuff</h3>
-					<ul class="style2">
-						<li><a href="#">Etiam feugiat condimentum</a></li>
-						<li><a href="#">Aliquam imperdiet suscipit odio</a></li>
-						<li><a href="#">Sed porttitor cras in erat nec</a></li>
-						<li><a href="#">Felis varius pellentesque potenti</a></li>
-						<li><a href="#">Nullam scelerisque blandit leo</a></li>
-					</ul>
-					</section>
-
-				</div>
-				<div class="3u 6u$(medium) 12u$(small)">
-
-					<!— Links —>
-					<section class="widget links">
-					<h3>Random Stuff</h3>
-					<ul class="style2">
-						<li><a href="#">Etiam feugiat condimentum</a></li>
-						<li><a href="#">Aliquam imperdiet suscipit odio</a></li>
-						<li><a href="#">Sed porttitor cras in erat nec</a></li>
-						<li><a href="#">Felis varius pellentesque potenti</a></li>
-						<li><a href="#">Nullam scelerisque blandit leo</a></li>
-					</ul>
-					</section>
-
-				</div>
-				<div class="3u 6u(medium) 12u$(small)">
-
-					<!— Links —>
-					<section class="widget links">
-					<h3>Random Stuff</h3>
-					<ul class="style2">
-						<li><a href="#">Etiam feugiat condimentum</a></li>
-						<li><a href="#">Aliquam imperdiet suscipit odio</a></li>
-						<li><a href="#">Sed porttitor cras in erat nec</a></li>
-						<li><a href="#">Felis varius pellentesque potenti</a></li>
-						<li><a href="#">Nullam scelerisque blandit leo</a></li>
-					</ul>
-					</section>
-
-				</div>
-				<div class="3u 6u$(medium) 12u$(small)">
-
-					<!— Contact —>
-					<section class="widget contact last">
-					<h3>Contact Us</h3>
-					<ul>
-						<li><a href="#" class="icon fa-twitter"><span
-								class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon fa-facebook"><span
-								class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon fa-instagram"><span
-								class="label">Instagram</span></a></li>
-						<li><a href="#" class="icon fa-dribbble"><span
-								class="label">Dribbble</span></a></li>
-						<li><a href="#" class="icon fa-pinterest"><span
-								class="label">Pinterest</span></a></li>
-					</ul>
-					<p>
-						1234 Fictional Road<br /> Nashville, TN 00000<br /> (800)
-						555-0000
-					</p>
-					</section>
-
-				</div>
-			</div>
-			<div class="row">
-				<div class="12u">
-					<div id="copyright">
-						<ul class="menu">
-							<li>&copy; Untitled. All rights reserved</li>
-							<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-						</ul>
+				<div class="row">
+					<div class="8u 12u(medium) important(medium)">
+						<section class="last">
+							<h3>So what's this all about?</h3>
+							<p>
+								This is <strong>Puzzle Ring</strong>, a free and fully
+								responsive web site made by department of software, Gachon Univ.
+								Puzzle Ring is released under the Creative Commons Attribution
+								license, so feel free to use it for any personal or commercial
+								project you might have going on (just don't forget to credit us
+								for the design!)
+							</p>
+						</section>
+					</div>
+					<div class="4u 12u(medium)">
+						<!-- Contact -->
+						<section class="widget contact last">
+							<h3>
+								Contact Us <i class="fa fa-1x fa-envelope fa-fw text-danger"></i>
+							</h3>
+							<ul>
+								<li><a href="#" class="icon fa-twitter"><span
+										class="label">Twitter</span></a></li>
+								<li><a href="#" class="icon fa-facebook"><span
+										class="label">Facebook</span></a></li>
+								<li><a href="#" class="icon fa-instagram"><span
+										class="label">Instagram</span></a></li>
+								<li><a href="#" class="icon fa-dribbble"><span
+										class="label">Dribbble</span></a></li>
+								<li><a href="#" class="icon fa-pinterest"><span
+										class="label">Pinterest</span></a></li>
+							</ul>
+							<p>
+								Gachon University <br>Gyeonggi-do, Korea <br>(031)
+								555-0000
+							</p>
+						</section>
 					</div>
 				</div>
-			</div>
+				<div class="row">
+					<div class="12u">
+						<div id="copyright">
+							<ul class="menu">
+								<li>© Puzzle Ring. All rights reserved</li>
+								<li>Design: Software of Gachon Univ.</li>
+							</ul>
+						</div>
+					</div>
+				</div>
 			</footer>
 		</div>
-
+	</div>
 	</div>
 </body>
 </html>

@@ -402,8 +402,7 @@
 						<button type="button" class="close" data-dismiss="modal">
 							<span aria-hidden="true">x</span> <span class="sr-only">Close</span>
 						</button>
-						<h3 class="modal-title" id="lineModalLabel">Modal Login
-							Window</h3>
+						<h3 class="modal-title" id="lineModalLabel">Login</h3>
 					</div>
 					<div class="modal-body">
 						<section class="loginform">
@@ -417,9 +416,7 @@
 									class="form-control txt" name="password"
 									placeholder="Enter Password">
 							</div>
-							<input type="submit" value="Login" formmethod="post"
-								formaction="login.do"> <input type="submit"
-								value="Signup" formmethod="get" formaction="join.do">
+							<input type="submit" value="Login" formmethod="post" formaction="login.do">
 						</form>
 						</section>
 					</div>
