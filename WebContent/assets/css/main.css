@@ -6,66 +6,6 @@
 	html5up.net | @n33co
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
-/* modal form -added from bootstrap.min.css */
-.center-block {
-	display: block;
-	margin-right: auto;
-	margin-left: auto
-}
-@media ( min-width :768px) {
-	.modal-dialog {
-		width: 600px;
-		margin: 30px auto
-	}
-	.modal-content {
-		-webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
-		box-shadow: 0 5px 15px rgba(0, 0, 0, .5)
-	}
-	.modal-sm {
-		width: 300px
-	}
-}
-
-
-
-/* join.css -added */
-.signupform {
-	margin: 5px auto;
-	padding: 25px;
-	background-color: rgba(250,250,250,0.5);
-	border-radius: 5px;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2),
-    			inset 0px 1px 0px 0px rgba(250, 250, 250, 0.5);
-    border: 1px solid rgba(0, 0, 0, 0.3);
-}
-.signupform ul {
-    padding: 0;
-    margin: 0;
-}
-.signupform li {
-    display: inline;
-    float: left;
-}
-.signupform input:not([type=submit]) {
-    padding: 5px;
-    margin-right: 10px;
-    margin-left:2px;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
-    box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.1),
-				0px 1px 0px 0px rgba(250, 250, 250, 0.5) ;
-}
-.signupform input[type=submit] {
-	border: 1px solid rgba(0, 0, 0, 0.3);
-	background: #64c8ef;
-	color: #fff;
-	padding: 5px 15px;
-	margin-right: 10px;
-	margin-top: 5px;
-    margin-left:0px;
-	border-radius: 3px;
-	text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
-}
 
 
 /* form-group -added */
@@ -79,27 +19,6 @@
 	line-height: 1.5;
 	border-radius: 3px
 }
-.form-control {
-	display: block;
-	width: 100%;
-	height: 34px;
-	padding: 6px 12px;
-	font-size: 14px;
-	line-height: 1.42857143;
-	color: #555;
-	background-color: #fff;
-	background-image: none;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow
-		ease-in-out .15s;
-	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out
-		.15s;
-	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
-}
-
 
 select.form-group-sm .form-control {
 	height: 30px;
@@ -306,7 +225,6 @@ button.close {
 	height: 50px;
 	overflow: scroll
 }
-
 
 /* Reset */
 
@@ -1395,7 +1313,7 @@ button.close {
 
 	@media screen and (max-width: 736px) {
 		.modal-dialog {
-			width: 500px;
+			width: 600px;
 			margin: 30px auto
 		}
 		.modal-content {
@@ -1619,53 +1537,6 @@ button.close {
 
 	}
 
-@media ( min-width :768px) {
-	.form-inline .form-group {
-		display: inline-block;
-		margin-bottom: 0;
-		vertical-align: middle
-	}
-	.form-inline .form-control {
-		display: inline-block;
-		width: auto;
-		vertical-align: middle
-	}
-	.form-inline .form-control-static {
-		display: inline-block
-	}
-	.form-inline .input-group {
-		display: inline-table;
-		vertical-align: middle
-	}
-	.form-inline .input-group .form-control, .form-inline .input-group .input-group-addon,
-		.form-inline .input-group .input-group-btn {
-		width: auto
-	}
-	.form-inline .input-group>.form-control {
-		width: 100%
-	}
-	.form-inline .control-label {
-		margin-bottom: 0;
-		vertical-align: middle
-	}
-	.form-inline .checkbox, .form-inline .radio {
-		display: inline-block;
-		margin-top: 0;
-		margin-bottom: 0;
-		vertical-align: middle
-	}
-	.form-inline .checkbox label, .form-inline .radio label {
-		padding-left: 0
-	}
-	.form-inline .checkbox input[type=checkbox], .form-inline .radio input[type=radio]
-		{
-		position: relative;
-		margin-left: 0
-	}
-	.form-inline .has-feedback .form-control-feedback {
-		top: 0
-	}
-}
 /* Basic */
 
 	@-ms-viewport {
@@ -2440,7 +2311,7 @@ button.close {
 
 	@media screen and (max-width: 980px) {
 		.modal-lg {
-			width: 600px;
+			width: 900px
 		}
 
 		/* Basic */
