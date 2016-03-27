@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ page import="com.dao.PRModel"%>
+    pageEncoding="UTF-8"%>
+<%@ page import = "com.dao.PRModel" %>
+<%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="css/main.css">
-<link rel="stylesheet" type="text/css" href="css/slider1.css">
-<link rel="stylesheet" type="text/css" href="css/slider2.css">
+<link rel="stylesheet" type="text/css" href="assets/css/main.css">
+<link rel="stylesheet" type="text/css"	href="assets/css/slider1.css">
+<link rel="stylesheet" type="text/css"	href="assets/css/slider3.css">
+<link rel="stylesheet" type="text/css" href="assets/css/modalform.css">
 
 <script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
@@ -18,13 +20,20 @@
 <script type="text/javascript" src="assets/js/jquery.slitslider.js"></script>
 <script type="text/javascript" src="assets/js/jquery.ba-cond.min.js"></script>
 
+
 <title>Puzzle Ring</title>
 
 <%
-PRModel prmodel = new PRModel();
-prmodel.updateTodayProject();
+//PRModel prmodel = new PRModel();
+//prmodel.updateTodayProject();
 %>
-
+<script type="text/javascript">
+	function goJoin() {
+		var form = document.getElementById("joinForm");
+		form.action = "joinprocess.do";
+		form.submit();
+	}
+</script>
 <script type="text/javascript">
 	//back, foward, logout button event function
 	function goback() { //go to back page
@@ -106,139 +115,59 @@ prmodel.updateTodayProject();
 	});
 </script>
 
+
 </head>
-
 <body class="homepage">
-	<div id="page-wrapper">
+<div id="page-wrapper">
 
-		<!-- Header -->
-		<div id="header-wrapper">
-			<header id="header" class="container"> <!-- Logo -->
-			<div id="logo">
-				<a href="home.html">Puzzle Ring</a>
-			</div>
+    <!-- Header -->
+    <div id="header-wrapper">
+        <header id="header" class="container">
 
-			<!-- Nav --> <nav id="nav">
-			<ul>
-				<li class="current"><a href="main_page.do"><i
-						class="fa fa-2x fa-fw fa-home text-warning"></i></a></li>
-				<li><a href="left-sidebar.html">Left Sb</a></li>
-				<li><a href="right-sidebar.html">Right Sb</a></li>
-				<li><a href="no-sidebar.html">No Sb</a></li>
-				<li><a href="#" onclick="goback()"><i
-						class="fa fa-2x fa-angle-left fa-fw"></i></a></li>
-				<li><a href="logout.do"><i
-						class="fa fa-2x fa-fw fa-unlock text-success"></i></a></li>
-				<li><a href="#" onclick="foward()"><i
-						class="fa fa-2x fa-angle-right fa-fw"></i></a></li>
-			</ul>
-			</nav> </header>
-		</div>
+            <!-- Logo -->
+            <div id="logo">
+                <h1><a href="main.do">Puzzle Ring</a></h1>
+            </div>
 
-		<!-- Banner -->
-		<div id="banner-wrapper">
-			<div id="banner" class="box container">
-				<div class="row">
-					<div class="7u 12u(medium)">
-						<h2>Hi. This is Puzzle Ring</h2>
-						<p>
-							You can realize your dream.<br>You can contribute someone's
-							dream.
-						</p>
-					</div>
-					<div class="5u 12u(medium)">
-						<ul>
-							<li><a data-toggle="modal" data-target="#squarespaceModal"
+            <!-- Nav --> 
+            <nav id="nav">
+                <ul>
+                    <li class="current"><a href="main.do"><i class="fa fa-2x fa-fw fa-home text-warning"></i></a></li>
+					<li><a href="left-sidebar.html">Left Sb</a></li>
+					<li><a href="right-sidebar.html">Right Sb</a></li>
+					<li><a href="no-sidebar.html">No Sb</a></li>
+					<li><a href="#" onclick="goback()"><i class="fa fa-2x fa-angle-left fa-fw"></i></a></li>
+					<li><a href="logout.do"><i class="fa fa-2x fa-fw fa-unlock text-success"></i></a></li>
+					<li><a href="#" onclick="foward()"><i class="fa fa-2x fa-angle-right fa-fw"></i></a></li>
+				</ul>
+			</nav> 
+		</header>
+	</div>
+
+
+    <!-- Banner -->
+    <div id="banner-wrapper">
+        <div id="banner" class="box container">
+            <div class="row">
+                <div class="7u 12u(medium)">
+               		<h2>Hi. This is Puzzle Ring</h2>
+					<p>	You can realize your dream.<br>You can contribute someone's	dream. </p>
+                </div>
+                <div class="5u 12u(medium)">
+<ul>
+							<li><a data-toggle="modal" data-target="#loginModal"
 								class="button big icon fa-arrow-circle-right">Login</a></li>
-							<li><a data-toggle="modal" data-target="#squarespaceModal"
+							<li><a data-toggle="modal" data-target="#signupModal"
 								class="button alt big icon fa-question-circle">Join Us!</a></li>
 						</ul>
+                </div>
 
-					</div>
-
-				</div>
-			</div>
-		</div>
-
-		<!-- Features -->
-		<div id="features-wrapper">
-			<div class="container">
-				<div class="row">
-					<div class="4u 12u(medium)">
-
-						<!-- Box -->
-						<section class="box feature">
-						<div class="container" text-center>
-							<div class="inner">
-								<header>
-								<h2>Today's new Project</h2>
-								</header>
-							</div>
-
-							<% 
-                            PRModel gettoday = new PRModel();
-                            ArrayList<String> arr = gettoday.getTodayProject();
-							%>
-
-							<%for(int i = 0; i <arr.size(); i++){ %>
-
-							<div class="row">
-								<div class="col-sm-12 col-md-4"></div>
-								<div class="col-sm-12 col-md-4 contents">
-									<div class="panel text-center">
-										<div class="panel11 text-right">
-											<div>
-												<span class="bigicon"><%=arr.get(i)%></span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-12 col-md-4"></div>
-							</div>
-							<%} %>
-
-						</div>
-						</section>
-
-					</div>
-					<div class="4u 12u(medium)">
-
-						<!-- Box -->
-						<section class="box feature"> <a href="#"
-							class="image featured"><img src="images/pic02.jpg" alt="" /></a>
-						<div class="inner">
-							<header>
-							<h2>An interesting title</h2>
-							<p>This is also an interesting subtitle</p>
-							</header>
-							<p>Phasellus quam turpis, feugiat sit amet in, hendrerit in
-								lectus. Praesent sed semper amet bibendum tristique fringilla.</p>
-						</div>
-						</section>
-
-					</div>
-					<div class="4u 12u(medium)">
-
-						<!-- Box -->
-						<section class="box feature"> <a href="#"
-							class="image featured"><img src="images/pic03.jpg" alt="" /></a>
-						<div class="inner">
-							<header>
-							<h2>Oh, and finally ...</h2>
-							<p>Here's another intriguing subtitle</p>
-							</header>
-							<p>Phasellus quam turpis, feugiat sit amet in, hendrerit in
-								lectus. Praesent sed semper amet bibendum tristique fringilla.</p>
-						</div>
-						</section>
-
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Main -->
-		<div class="container">
+            </div>
+        </div>
+    </div>
+<br>
+    <!-- Main -->
+   <div class="container">
 			<!-- Slide Start-->
 			<div class="demo-1">
 				<div class="demo-1">
@@ -338,8 +267,62 @@ prmodel.updateTodayProject();
 				<!-- Slide end-->
 
 			</div>
+			
+			 <!-- Features -->
+    <div id="features-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="4u 12u(medium)">
 
-			<!-- Footer -->
+                    <!-- Box -->
+                    <section class="box feature">
+                      
+                        <div class="inner">
+                            <header>
+                               <h2>Today's new Project</h2>
+                            </header>
+                        </div>
+                        					
+                        
+                    </section>
+
+                </div>
+                <div class="4u 12u(medium)">
+
+                    <!-- Box -->
+                    <section class="box feature">
+                        <a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
+                        <div class="inner">
+                            <header>
+                                <h2>An interesting title</h2>
+                                <p>This is also an interesting subtitle</p>
+                            </header>
+                            <p>Phasellus quam turpis, feugiat sit amet in, hendrerit in lectus. Praesent sed semper amet bibendum tristique fringilla.</p>
+                        </div>
+                    </section>
+
+                </div>
+                <div class="4u 12u(medium)">
+
+                    <!-- Box -->
+                    <section class="box feature">
+                        <a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
+                        <div class="inner">
+                            <header>
+                                <h2>Oh, and finally ...</h2>
+                                <p>Here's another intriguing subtitle</p>
+                            </header>
+                            <p>Phasellus quam turpis, feugiat sit amet in, hendrerit in lectus. Praesent sed semper amet bibendum tristique fringilla.</p>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </div>
+			
+
+    <!-- Footer -->
 			<div id="footer-wrapper">
 				<footer id="footer" class="container">
 				<div class="row">
@@ -392,20 +375,25 @@ prmodel.updateTodayProject();
 					</div>
 				</div>
 				</footer>
-			</div>
-		</div>
-		<!-- Scripts -->
+
+    </div>
+
+</div>
+
+<!-- Scripts -->
 
 		<!--<script src="assets/js/jquery.min.js"></script> -->
-		<script src="js/jquery.dropotron.min.js"></script>
-		<script src="js/skel.min.js"></script>
-		<script src="js/util.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/skel.min.js"></script>
+		<script src="assets/js/util.js"></script>
 		<!--[if lte IE 8]>
             <script src="assets/js/ie/respond.min.js"></script>
         <![endif]-->
-		<script src="js/main.js"></script>
+		<script src="assets/js/main.js"></script>
 		<!-- Popup Modal Window - END -->
-		<div class="alert fade modal text-center" id="squarespaceModal"
+		<!-- Start of login modal -->
+		<div class="center">
+		<div class="alert fade modal text-center" id="loginModal"
 			tabindex="-1" role="dialog" aria-labelledby="modalLabel"
 			aria-hidden="true">
 			<div class="modal-dialog">
@@ -437,8 +425,61 @@ prmodel.updateTodayProject();
 					</div>
 				</div>
 			</div>
-		</div>
-		<style>
+		</div> </div><!--  End of login modal -->
+		<!-- Start of signup modal -->
+		<div class="alert fade modal text-center" id="signupModal"
+			tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">x</span> <span class="sr-only">Close</span>
+						</button>
+						<h3 class="modal-title" id="lineModalLabel">Join our Membership</h3>
+					</div>
+					<div class="modal-body">
+						<section class="signupform">
+							<form role="form" id="joinForm" method="get">
+						    <div class="signup_id">
+						        <label for="id">ID: </label>
+								<input type="text" class="form-control txt" name="id" placeholder="　length 5-20">
+						    </div>
+						    <div class="signup_password">
+						        <label for="password">password: </label>
+								<input type="password" class="form-control txt" name="password">
+						    </div>
+						    <div class="signup_password_check">
+						        <label for="password_check">password(again): </label>
+								<input type="password" class="form-control txt" name="passcheck">
+						    </div>
+						    <div class="signup_email">
+						        <label for="email">E-mail: </label>
+								<input type="text" class="form-control txt" name="e_mail" placeholder="sample@sample.com">
+						    </div>
+						    <div class="signup_interested">
+						    	<label for="interested">Interested part: </label>
+						    	<select name="interestedPart">
+						    		<option value="sorting">Sorting</option>
+						    		<option value="tree">Tree</option>
+						    		<option value="algorithm">Algorithm</option>
+						    		<option value="design">Design</option>
+						    		<option value="others">Others</option>
+						    	</select>
+						    </div>
+						    <div class="signup_info">
+						        <label for="info">Information: </label>
+								<textarea class="form-control txt" name="information" max_length="900" cols="80" rows="10"  placeholder="Information(1~900)"></textarea>
+						    </div>
+						    <input type="submit" value="Join" onclick = "goJoin()" >
+						</form>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div> <!-- End of signup modal -->
+		
+<style>
 .center {
 	margin-top: 50px;
 }
@@ -462,6 +503,7 @@ prmodel.updateTodayProject();
 	border-right: 0;
 }
 </style>
-		<!-- Popup Modal Window - END -->
+<!-- Popup Modal Window - END -->
+
 </body>
 </html>
