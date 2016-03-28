@@ -15,7 +15,7 @@ import com.controller.PRController_createProject;
 import com.controller.PRController_main;
 import com.controller.PRController_member;
 import com.controller.PRController_showProject;
-import com.controller.PRController_uploadfile;
+import com.controller.PRController_showUploadList;
 
 
 
@@ -29,8 +29,8 @@ public class PRFilter implements Filter {
 	
 	PRController_showProject controller_test;
 	
-	PRController_uploadfile controller_upload;
-	
+	PRController_showUploadList controller_show_upload;
+
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		
@@ -42,7 +42,7 @@ public class PRFilter implements Filter {
 		
 		controller_test = new PRController_showProject();
 		
-		controller_upload = new PRController_uploadfile();
+		controller_show_upload = new PRController_showUploadList();
 		
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
@@ -67,10 +67,9 @@ public class PRFilter implements Filter {
 			controller_show_project.showproject(req, res);
 		}else if(reqString.equals("/test.do")) {
 			controller_test.showproject(req, res);
-		} else if(reqString.equals("/upload.do")) {
-			controller_upload.upload(req, res);
+		}else if(reqString.equals("/showUploadList.do")) {
+			controller_show_upload.showUploadList(req, res);
 		}
-
 	}
 
 	@Override

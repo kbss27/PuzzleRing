@@ -7,7 +7,9 @@ import java.sql.Statement;
 
 import javax.sql.DataSource;
 import javax.naming.InitialContext;
-
+/*
+ * DB로 upload file정보 전송
+ * */
 public class PRUpload {
 	DataSource ds;
 	
@@ -21,21 +23,22 @@ public class PRUpload {
 		}
 	}
 	
-	public void upLoad(String uploader, String fileName, String date) {
+	/*
+	 * attributes : fileName, id, date, projectName, className 
+	 * */
+	public void upLoad(String fileName, String id, String date, String projectName, String className) {
 		try {
 			Connection con = ds.getConnection();
-			String sql = "insert into project_detail(project_name, project_content, project_creator, project_members, project_methods, project_progress) values(?, ?, ?, ?, ?, ?)";
+			String sql = "insert into uploadlist(fileName, id, date, projectName, className) values(?, ?, ?, ?, ?)";
 			
 			PreparedStatement pstat = con.prepareStatement(sql);
 			
 			
-			pstat.setString(1, uploader);
-			pstat.setString(2, fileName);
+			pstat.setString(1, fileName);
+			pstat.setString(2, id);
 			pstat.setString(3, date);
-			pstat.setInt(4, 0);
-			pstat.setInt(5, 0);
-			pstat.setInt(6, 0);
-			
+			pstat.setString(4, projectName);
+			pstat.setString(5, className);
 			pstat.executeUpdate();
 
 			pstat.close();

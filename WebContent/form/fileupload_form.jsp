@@ -8,7 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ page import="java.io.File" %>
-
+<%@ page import="com.dao.PRUpload" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,68 +18,85 @@
 <body>
 <h1>Source code upload page</h1>
 <%
-System.out.println("1");
+PRUpload upload;
 request.setCharacterEncoding("UTF-8");
-System.out.println("2");
 //10Mbyte
 int maxSize = 1024*1024*10;
-System.out.println("3");
-String path = request.getSession().getServletContext().getRealPath("/");
-String uploadFile = "";
-String newFile = "";
 
+//파일 저장할 경로
+String path = request.getSession().getServletContext().getRealPath("/");
+
+//업로드된 파일 이름
+String uploadFile = "";
+
+//저장될 파일 이름
+String fileName = "";
+
+//DB에 저장될 날짜, 아이디, 프로젝트 이름, 클래스 이름
+String DB_date, DB_Id, DB_projectName, DB_className;
+boolean isJava = true;
 int read = 0;
 byte[] buf = new byte[1024];
 FileInputStream is = null;
 FileOutputStream os = null;
-System.out.println("4");
 long currentTime = System.currentTimeMillis();
-SimpleDateFormat simDf = new SimpleDateFormat("yyyyMMddHHmmss"); 
-
+SimpleDateFormat simDf = new SimpleDateFormat("yyyyMMdd"); 
+SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss");
 try {
-	System.out.println("5");
 	System.out.println("path : " + request.getSession().getServletContext().getRealPath("/"));
 	System.out.println(request.getContentType());
 	MultipartRequest multi = new MultipartRequest(request, path, maxSize, "UTF-8", new DefaultFileRenamePolicy());
-    System.out.println("title : " + multi.getParameter("title")); 
-     // 전송받은 parameter의 한글깨짐 방지
-     String title = multi.getParameter("title");
-     title = new String(title.getBytes("8859_1"), "UTF-8");
 
-     System.out.println("6");
-     System.out.println(multi.getFilesystemName("uploadFile"));
-     // 파일업로드
+     //System.out.println(multi.getFilesystemName("uploadFile"));
+     //파일 이름
      uploadFile = multi.getFilesystemName("uploadFile");
-
-     // 실제 저장할 파일명(ex : 20140819151221.zip)
-     newFile = simDf.format(new Date(currentTime)) +"."+ uploadFile.substring(uploadFile.lastIndexOf(".")+1);
-     System.out.println("7");
-      
+     //확장자
+     String extension = uploadFile.substring(uploadFile.lastIndexOf(".")+1);
+     System.out.println("확장자: " + extension);
+     //확장자가 java가 아니라면
+     if(!(extension.equalsIgnoreCase("java"))) {
+    	 return;
+     }
+     else {
+    	 DB_date = date.format(new Date(currentTime));
+    	 DB_Id = "sampleID";
+    	 DB_projectName = "sampleProject";
+    	 DB_className = uploadFile.substring(0, uploadFile.lastIndexOf("."));
+    	 System.out.println("업로드 날짜: " + DB_date);
+    	 System.out.println("아이디: " + DB_Id);
+    	 System.out.println("프로젝트 이름 : " + DB_projectName);
+    	 System.out.println("클래스 이름 : " + DB_className);
+    	// 실제 저장할 파일명(project name_id_date.java)
+    	 fileName = DB_className + "_" + DB_Id + "_" + simDf.format(new Date(currentTime)) + "." + extension;
+    	 System.out.println("저장된 이름 : " + fileName);
+    	 
+    	 upload = new PRUpload();
+         //filename, id, date, projectname, classname
+        upload.upLoad(fileName, DB_Id, DB_date, DB_projectName, DB_className);
+     }
+     
+     //System.out.println(fileName + "_" + simDf.format(new Date(currentTime)));
      // 업로드된 파일 객체 생성
      File oFile = new File(path + uploadFile);
-     System.out.println("8");
       
      // 실제 저장될 파일 객체 생성
-     File nFile = new File(path + newFile);
-     System.out.println("9");
+     File nFile = new File(path + fileName);
 
      // 파일명 rename
      if(!oFile.renameTo(nFile)){
-    	 System.out.println("10");
          // rename이 되지 않을경우 강제로 파일을 복사하고 기존파일은 삭제
-
          buf = new byte[1024];
          is = new FileInputStream(oFile);
          os = new FileOutputStream(nFile);
          read = 0;
          while((read=is.read(buf,0,buf.length))!=-1){
              os.write(buf, 0, read);
-         }
+      }
           
          is.close();
          os.close();
-         oFile.delete();
-}
+         oFile.delete();     
+	}
 }catch(Exception e) {
 	e.printStackTrace();
 }
