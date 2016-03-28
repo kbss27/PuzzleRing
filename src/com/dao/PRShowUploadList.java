@@ -8,8 +8,6 @@ import java.util.ArrayList;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-
-import com.vo.Project_detail;
 import com.vo.UploadFile;
 
 public class PRShowUploadList {
@@ -30,7 +28,7 @@ public class PRShowUploadList {
 		try {
 			con = ds.getConnection();
 
-			String sql = "select id, fileName, date, projectName, className from uploadlist order by date desc";
+			String sql = "select fileName, id, date, projectName, className from uploadlist order by date desc";
 			PreparedStatement pstat = con.prepareStatement(sql);
 			
 			ResultSet rs = pstat.executeQuery();
@@ -48,5 +46,21 @@ public class PRShowUploadList {
 			e.printStackTrace();
 		}
 		return files;
+	}
+	public UploadFile getFile(String fileName) {
+		Connection con;
+		UploadFile file = null;
+		try {
+			System.out.println("Test file name:: " + fileName);
+			con = ds.getConnection();
+			String sql = "select fileName, id, date, projectName, className from uploadlist where fileName='"+fileName+"'";
+			PreparedStatement pstat = con.prepareStatement(sql);
+			ResultSet rs = pstat.executeQuery();
+			file = new UploadFile(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+			System.out.println("Test :: " + file.getFileName());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return file;
 	}
 }

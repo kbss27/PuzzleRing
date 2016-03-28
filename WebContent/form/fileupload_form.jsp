@@ -24,7 +24,7 @@ request.setCharacterEncoding("UTF-8");
 int maxSize = 1024*1024*10;
 
 //파일 저장할 경로
-String path = request.getSession().getServletContext().getRealPath("/");
+String path = request.getSession().getServletContext().getRealPath("/")+"download/";
 
 //업로드된 파일 이름
 String uploadFile = "";
@@ -34,7 +34,6 @@ String fileName = "";
 
 //DB에 저장될 날짜, 아이디, 프로젝트 이름, 클래스 이름
 String DB_date, DB_Id, DB_projectName, DB_className;
-boolean isJava = true;
 int read = 0;
 byte[] buf = new byte[1024];
 FileInputStream is = null;
@@ -43,7 +42,7 @@ long currentTime = System.currentTimeMillis();
 SimpleDateFormat simDf = new SimpleDateFormat("yyyyMMdd"); 
 SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss");
 try {
-	System.out.println("path : " + request.getSession().getServletContext().getRealPath("/"));
+	System.out.println("path : " + request.getSession().getServletContext().getRealPath("/")+"download/");
 	System.out.println(request.getContentType());
 	MultipartRequest multi = new MultipartRequest(request, path, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 
@@ -66,40 +65,42 @@ try {
     	 System.out.println("아이디: " + DB_Id);
     	 System.out.println("프로젝트 이름 : " + DB_projectName);
     	 System.out.println("클래스 이름 : " + DB_className);
-    	// 실제 저장할 파일명(project name_id_date.java)
+    	// 실제 저장할 파일명(class name_id_date.java)
     	 fileName = DB_className + "_" + DB_Id + "_" + simDf.format(new Date(currentTime)) + "." + extension;
     	 System.out.println("저장된 이름 : " + fileName);
     	 
     	 upload = new PRUpload();
          //filename, id, date, projectname, classname
         upload.upLoad(fileName, DB_Id, DB_date, DB_projectName, DB_className);
+         
+        //System.out.println(fileName + "_" + simDf.format(new Date(currentTime)));
+        // 업로드된 파일 객체 생성
+        File oFile = new File(path + uploadFile);
+         
+        // 실제 저장될 파일 객체 생성
+        File nFile = new File(path + fileName);
+
+        // 파일명 rename
+        if(!oFile.renameTo(nFile)){
+            // rename이 되지 않을경우 강제로 파일을 복사하고 기존파일은 삭제
+            buf = new byte[1024];
+            is = new FileInputStream(oFile);
+            os = new FileOutputStream(nFile);
+            read = 0;
+            while((read=is.read(buf,0,buf.length))!=-1){
+                os.write(buf, 0, read);
+         }
+             
+            is.close();
+            os.close();
+            oFile.delete();     
+   	}
      }
      
-     //System.out.println(fileName + "_" + simDf.format(new Date(currentTime)));
-     // 업로드된 파일 객체 생성
-     File oFile = new File(path + uploadFile);
-      
-     // 실제 저장될 파일 객체 생성
-     File nFile = new File(path + fileName);
-
-     // 파일명 rename
-     if(!oFile.renameTo(nFile)){
-         // rename이 되지 않을경우 강제로 파일을 복사하고 기존파일은 삭제
-         buf = new byte[1024];
-         is = new FileInputStream(oFile);
-         os = new FileOutputStream(nFile);
-         read = 0;
-         while((read=is.read(buf,0,buf.length))!=-1){
-             os.write(buf, 0, read);
-      }
-          
-         is.close();
-         os.close();
-         oFile.delete();     
-	}
 }catch(Exception e) {
 	e.printStackTrace();
 }
 %>
+<a href="project_details.html">돌아가기</a>
 </body>
 </html>

@@ -8,7 +8,8 @@ public class UploadFile {
 	private String projectName;
 	private String className;
 	
-	public UploadFile(String id, String fileName, String date, String projectName, String className) {
+	public UploadFile() {}
+	public UploadFile(String fileName, String id, String date, String projectName, String className) {
 		this.id = id;
 		this.fileName = fileName;
 		this.date = date;
