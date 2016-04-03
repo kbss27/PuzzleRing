@@ -31,7 +31,7 @@ public class PRController_showUploadList {
 			System.out.println("----------------------");
 		}
 		req.setAttribute("lists", files);
-		RequestDispatcher dis = req.getRequestDispatcher("/form/uploadListTest.jsp");
+		RequestDispatcher dis = req.getRequestDispatcher("/form/project_detail.jsp");
 		try {
 			dis.forward(req, res);
 		} catch (Exception e) {

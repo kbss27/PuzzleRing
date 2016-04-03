@@ -42,7 +42,7 @@ long currentTime = System.currentTimeMillis();
 SimpleDateFormat simDf = new SimpleDateFormat("yyyyMMdd"); 
 SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss");
 try {
-	System.out.println("path : " + request.getSession().getServletContext().getRealPath("/")+"download/");
+	System.out.println("현우형 path : " + request.getSession().getServletContext().getRealPath("/")+"download/");
 	System.out.println(request.getContentType());
 	MultipartRequest multi = new MultipartRequest(request, path, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 
@@ -101,6 +101,6 @@ try {
 	e.printStackTrace();
 }
 %>
-<a href="project_details.html">돌아가기</a>
+<a href="project_detail.jsp">돌아가기</a>
 </body>
 </html>
