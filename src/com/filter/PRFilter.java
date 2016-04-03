@@ -11,6 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ajax.PRAjax;
 import com.controller.PRController_createProject;
 import com.controller.PRController_main;
 import com.controller.PRController_member;
@@ -31,6 +32,8 @@ public class PRFilter implements Filter {
 	
 	PRController_showUploadList controller_show_upload;
 
+	PRAjax prAjax;
+	
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		
@@ -43,6 +46,7 @@ public class PRFilter implements Filter {
 		controller_test = new PRController_showProject();
 		
 		controller_show_upload = new PRController_showUploadList();
+		prAjax = new PRAjax();
 		
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
@@ -69,7 +73,11 @@ public class PRFilter implements Filter {
 			controller_test.showproject(req, res);
 		}else if(reqString.equals("/showUploadList.do")) {
 			controller_show_upload.showUploadList(req, res);
-		}
+		}else if (reqString.equals("/ajaxIssue.do")){
+	         prAjax.getIssueData(req,res);//main.jsp.
+	    }else if (reqString.equals("/ajaxIssuehome.do")){
+	         prAjax.getIssueDatahome(req,res);//home.jsp
+	    } 
 	}
 
 	@Override

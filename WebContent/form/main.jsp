@@ -8,11 +8,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="css/loginmain.css">
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
 <link rel="stylesheet" href="assets/css/main.css">
 <link rel="stylesheet" href="assets/css/addcss.css">
 
+<script src="assets/js/jquery.min.js"></script>
 
 <script type="text/javascript">
 	//back, foward, logout button event function
@@ -26,70 +26,51 @@
 
 	}
 </script>
-<script type="text/javascript">
-	function addRow(TableID) // 테이블 동적 생성
-	{
-	}
-	$(document).ready(
-			function() {
-				// 옵션추가 버튼 클릭시
-				$("#addItemBtn").click(
-						function() {
-							// item 의 최대번호 구하기
-							var lastItemNo = $("#tableid tr:last")
-									.attr("class").replace("item", "");
 
-							var newitem = $("#tableid tr:eq(1)").clone();
-							newitem.removeClass();
-							newitem.find("td:eq(0)").attr("rowspan", "1");
-							newitem.addClass("item"
-									+ (parseInt(lastItemNo) + 1));
-
-							$("#tableid").append(newitem);
-						});
-
-				// 항목추가 버튼 클릭시
-				$(".addBtn").live("click", function() {
-					var clickedRow = $(this).parent().parent();
-					var cls = clickedRow.attr("class");
-
-					// tr 복사해서 마지막에 추가
-					var newrow = clickedRow.clone();
-					newrow.find("td:eq(0)").remove();
-					newrow.insertAfter($("#tableid ." + cls + ":last"));
-
-					// rowspan 조정
-					resizeRowspan(cls);
-				});
-
-				// 삭제버튼 클릭시
-				$(".delBtn").live(
-						"click",
-						function() {
-							var clickedRow = $(this).parent().parent();
-							var cls = clickedRow.attr("class");
-
-							// 각 항목의 첫번째 row를 삭제한 경우 다음 row에 td 하나를 추가해 준다.
-							if (clickedRow.find("td:eq(0)").attr("rowspan")) {
-								if (clickedRow.next().hasClass(cls)) {
-									clickedRow.next().prepend(
-											clickedRow.find("td:eq(0)"));
-								}
-							}
-
-							clickedRow.remove();
-
-							// rowspan 조정
-							resizeRowspan(cls);
-						});
-
-				// cls : rowspan 을 조정할 class ex) item1, item2, ...
-				function resizeRowspan(cls) {
-					var rowspan = $("." + cls).length;
-					$("." + cls + ":first td:eq(0)").attr("rowspan", rowspan);
-				}
-			});
+<script>
+      $(document).ready(function(){ 
+         
+         setInterval(function(){
+            $.ajax({
+               type : "POST",
+               url : '/PRfinal/ajaxIssue.do',
+               dataType : 'json',
+               contentType : 'application/json; charset=utf-8',
+               success : function(res) {
+                  
+                  var $table = $("#class_list");
+                  
+                  $table.empty();
+               
+               
+                  $.each(res, function(idx, value){
+                     var projectNameTag = "<tr><td>" + value.projectName + "</td>";
+                     var projectProgressTag = "<td><div class='progress'><div class='progress-bar progress-bar-striped active'role='progressbar' aria-valuenow='40' aria-valuemin='0'aria-valuemax='100' style='width: {{pro}}'>{{pro}}</div></div></td>"
+                     var projectProgressTag = projectProgressTag.replace(/{{pro}}/gi, value.projectProgress +"%")
+                     
+                     var projectStatus;
+                     if(value.projectProgress === 0){
+                        projectStatus = "<td>TODO</td></tr>";
+                     }else if(value.projectProgress === 50){
+                        projectStatus = "<td>PROGRESS</td></tr>";
+                     }else {
+                        projectStatus = "<td>DONE</td></tr>";
+                     }
+                     
+                     $table.append(projectNameTag + projectProgressTag + projectStatus);
+                     
+                  });
+               },
+               error : function(req, st, e) {
+            
+               }
+            });
+            
+         },10000);
+          
+      });
 </script>
+
 <title>main</title>
 </head>
 
@@ -105,7 +86,7 @@ if(id!=null){
 
 <body class="homepage">
 	<div id="page-wrapper">
-
+	
 		<!-- Header -->
 		<div id="header-wrapper">
 			<header id="header" class="container"> <!-- Logo -->
@@ -257,181 +238,36 @@ if(id!=null){
 		</div>
 
 		<!-- Features -->
-		<div id="features-wrapper">
-			<div class="container">
-				<div class="row">
-					<div class="4u 12u(medium)">
+      <div id="features-wrapper">
+         <div class="container">
+            <div class="row">
+              
+               <div class="4u 12u(medium)" style="width: 1220px;">
 
-						<!-- Box -->
-						<section class="box feature">
-						<div class="container" text-center>
-							<div class="inner">
-								<header>
-								<h2>Today's new Project</h2>
-								</header>
-							</div>
-							
-							<% 
-                            PRModel gettoday = new PRModel();
-                            ArrayList<String> arr = gettoday.getTodayProject();
-							%>
-							
-							<%for(int i = 0; i <arr.size(); i++){ %>
-							<div class="row">
-								<div class="col-sm-12 col-md-4"></div>
-								<div class="col-sm-12 col-md-4 contents">
-									<div class="panel text-center">
-										<div class="panel11 text-right">
-											<div>
-												<span class="bigicon"><%=arr.get(i)%></span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-12 col-md-4"></div>
-							</div>
-							<%} %>
+                  <!-- Box -->
+                  <section class="box feature">
+                  <div style="height: 450px;" class="container" text-center>
+                     <div class="inner">
+                        <header>
+                        <h2>
+                           <a href="">Issue Tracking</a>
+                        </h2>
+                        </header>
 
-						</div>
-						</section>
+                        <div  style="width: 1120px; height: 300px; overflow: scroll;">
+                           <table style="border: 1px;" width="100%" cellspacing="0"
+                              cellpadding="0" align="middle" id="class_list">       
+                           </table>
+                        </div>
+                        
+                     </div>
+                  </div>
+                  </section>
 
-					</div>
-					<div class="4u 12u(medium)">
-
-						<!-- Box -->
-						<section class="box feature">
-						<div class="container" text-center>
-							<div class="inner">
-								<header>
-								<h2>Oldest Project</h2>
-								</header>
-							</div>
-							<div class="row">
-								<div class="col-sm-12 col-md-4"></div>
-								<div class="col-sm-12 col-md-4 contents">
-									<div class="panel text-center">
-										<div class="panel21 text-right">
-											<div>
-												<span class="bigicon">Elevator algorithm</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-12 col-md-4"></div>
-							</div>
-							<div class="row">
-								<div class="col-sm-12 col-md-4"></div>
-								<div class="col-sm-12 col-md-4 contents">
-									<div class="panel text-center">
-										<div class="panel22 text-right">
-											<div>
-												<span class="bigicon">ddddddddd</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-12 col-md-4"></div>
-							</div>
-							<div class="row">
-								<div class="col-sm-12 col-md-4"></div>
-								<div class="col-sm-12 col-md-4 contents">
-									<div class="panel text-center">
-										<div class="panel23 text-right">
-											<div>
-												<span class="bigicon">eeeeeeee</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-12 col-md-4"></div>
-							</div>
-							<div class="row">
-								<div class="col-sm-12 col-md-4"></div>
-								<div class="col-sm-12 col-md-4 contents">
-									<div class="panel text-center last">
-										<div class="panel21 text-right">
-											<div>
-												<span class="big icon">ffffffff</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-12 col-md-4"></div>
-							</div>
-
-						</div>
-						</section>
-					</div>
-					<div class="4u 12u(medium)">
-
-						<!— Box —>
-						<section class="box feature">
-						<div class="container" text-center>
-							<div class="inner">
-								<header>
-								<h2>Popular Project</h2>
-								</header>
-							</div>
-							<div class="row">
-								<div class="col-sm-12 col-md-4"></div>
-								<div class="col-sm-12 col-md-4 contents">
-									<div class="panel text-center">
-										<div class="panel31 text-right">
-											<div>
-												<span class="big icon">Programming Linked list</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-12 col-md-4"></div>
-							</div>
-							<div class="row">
-								<div class="col-sm-12 col-md-4"></div>
-								<div class="col-sm-12 col-md-4 contents">
-									<div class="panel text-center">
-										<div class="panel32 text-right">
-											<div>
-												<span class="big icon">ggggggggg</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-12 col-md-4"></div>
-							</div>
-							<div class="row">
-								<div class="col-sm-12 col-md-4"></div>
-								<div class="col-sm-12 col-md-4 contents">
-									<div class="panel text-center">
-										<div class="panel33 text-right">
-											<div>
-												<span class="big icon">hhhhhhhh</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-12 col-md-4"></div>
-							</div>
-							<div class="row">
-								<div class="col-sm-12 col-md-4"></div>
-								<div class="col-sm-12 col-md-4 contents">
-									<div class="panel text-center last">
-										<div class="panel31 text-right">
-											<div>
-												<span class="big icon">iiiiiiiii</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-12 col-md-4"></div>
-							</div>
-
-						</div>
-						</section>
-
-					</div>
-				</div>
-			</div>
-		</div>
+               </div>
+            </div>
+         </div>
+      </div>
 
 		<!-- Main -->
 		<div id="main-wrapper">
