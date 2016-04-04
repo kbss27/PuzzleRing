@@ -4,6 +4,22 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */ /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 
+<!-- table form - added -->
+#TableForList {
+	text-align: center;
+	border: 0.5px gray solid;
+}
+
+#TableForList th {
+	text-align: center;
+	border: 0.5px gray solid;
+}
+
+#TableForList td {
+	text-align: center;
+	border: 0.5px gray dotted; 
+}
+
 .form-control {
 	display: block;
 	width: 100%;

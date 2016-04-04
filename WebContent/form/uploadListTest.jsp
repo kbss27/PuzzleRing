@@ -24,7 +24,7 @@
 <td>파일 이름: <%=lists.get(i).getFileName()%></td>
 <td>업로더: <%=lists.get(i).getId()%></td>
 <td>업로드 날짜: <%=lists.get(i).getDate()%></td> 
-<td><a href="form/downloadFile.jsp?filename=<%=lists.get(i).getFileName()%>">다운로드</a></td>
+<td><a href="downloadFile.jsp?filename=<%=lists.get(i).getFileName()%>">다운로드</a></td>
 </tr>
 <%}%>
 </table>
