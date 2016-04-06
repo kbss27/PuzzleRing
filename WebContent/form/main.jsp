@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="com.dao.PRCreateProject"%>
 <%@ page import="com.dao.PRModel"%>
+<%@ page import="com.dao.PRGetModalInfo" %>
 <%@ page import="java.util.ArrayList"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -54,9 +55,9 @@
 																	function(
 																			idx,
 																			value) {
-																		var projectNameTag = "<tr><td>"
+																		var projectNameTag = "<tr><td><a href='showUploadList.do?project_name="+value.projectName+"'>"
 																				+ value.projectName
-																				+ "</td>";
+																				+ "</a></td>";
 																		var projectProgressTag = "<td><div class='progress'><div class='progress-bar progress-bar-striped active'role='progressbar' aria-valuenow='40' aria-valuemin='0'aria-valuemax='100' style='width: {{pro}}'>{{pro}}</div></div></td>"
 																		var projectProgressTag = projectProgressTag
 																				.replace(
@@ -156,10 +157,10 @@
 														<i class="fa fa-tasks fa-5x"></i>
 													</div>
 													<%
-															PRCreateProject gettotal = new PRCreateProject();
-															String total_id = (String) session.getAttribute("login");
-															int total = gettotal.getTotal(total_id);
-														%>
+														PRCreateProject gettotal = new PRCreateProject();
+														String total_id = (String) session.getAttribute("login");
+														int total = gettotal.getTotal(total_id);
+													%>
 													<div>
 														<div class="huge"><%=total%></div>
 														<div>New Projects</div>
@@ -234,7 +235,8 @@
 							<div class="inner">
 								<header>
 								<h2>
-									<a href="#progressModal" data-toggle="modal">Project Progress</a>
+									<a href="#progressModal" data-toggle="modal">Project
+										Progress</a>
 								</h2>
 								</header>
 
@@ -336,22 +338,18 @@
 								<i class="fa fa-bullhorn"></i> To Do
 							</h3>
 							</header>
+							
+							<%PRGetModalInfo modal = new PRGetModalInfo();
+								ArrayList<String> todo = modal.getTodo(); 
+								ArrayList<String> inprogress = modal.getInprogress();
+								ArrayList<String> done = modal.getDone();
+								
+								for(int i = 0; i<todo.size(); i++){ %>
 							<div
 								class="row col-sm-12 displaystyle-leftborder displaystyle-danger">
-								<a href="basic_table.html#"><strong>Company Ltd</strong></a>
+								<a href="showUploadList.do?project_name=<%=todo.get(i)%>"><strong><%=todo.get(i)%></strong></a>
 							</div>
-							<div
-								class="row col-sm-12 displaystyle-leftborder displaystyle-danger">
-								<a href="basic_table.html#"><strong>Company Ltd</strong></a>
-							</div>
-							<div
-								class="row col-sm-12 displaystyle-leftborder displaystyle-success">
-								<a href="basic_table.html#"><strong>Company Ltd</strong></a>
-							</div>
-							<div
-								class="row col-sm-12 displaystyle-leftborder displaystyle-warning">
-								<a href="basic_table.html#"><strong>Company Ltd</strong></a>
-							</div>
+							<%} %>							
 							</section>
 
 						</div>
@@ -364,15 +362,12 @@
 								<i class="fa fa-archive"></i> In Progress
 							</h3>
 							</header>
+							<%for(int i = 0; i<inprogress.size(); i++){ %>
 							<div
 								class="row col-sm-12 displaystyle-leftborder displaystyle-success">
-								<a href="basic_table.html#"><strong>Company Ltd</strong></a>
+								<a href="basic_table.html#"><strong><%=inprogress.get(i)%></strong></a>
 							</div>
-							<div
-								class="row col-sm-12 displaystyle-leftborder displaystyle-warning">
-								<a href="basic_table.html#"><strong>Company Ltd</strong></a>
-							</div>
-
+							<%} %>
 							</section>
 
 						</div>
@@ -385,14 +380,12 @@
 								<i class="fa fa-bookmark"></i> Done
 							</h3>
 							</header>
+							<%for(int i = 0; i<done.size(); i++){ %>
 							<div
 								class="row col-sm-12 displaystyle-leftborder displaystyle-success">
-								<a href="basic_table.html#"><strong>Company Ltd</strong></a>
+								<a href="basic_table.html#"><strong><%=done.get(i)%></strong></a>
 							</div>
-							<div
-								class="row col-sm-12 displaystyle-leftborder displaystyle-warning">
-								<a href="basic_table.html#"><strong>Company Ltd</strong></a>
-							</div>
+							<%} %>
 							</section>
 
 						</div>
