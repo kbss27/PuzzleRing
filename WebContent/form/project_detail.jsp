@@ -5,6 +5,15 @@
 <%@ page import="com.dao.PRModel"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="com.vo.UploadFile"%>
+<%@ page import="java.io.File" %>
+<%@ page import="com.dao.PRUpload" %>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.io.FileInputStream"%>
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
+<%@page import="java.io.FileOutputStream"%>
+<%@page import="java.io.DataInputStream"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -43,6 +52,105 @@
 
 	}
 </script>
+<script type="text/javascript">
+function ErrorType(){
+	alert("Invalid Type!");
+}
+
+function confirmUpload(){
+	$('#smallModal').modal();
+}
+</script>
+<script type="text/javascript">
+function fileupload_form(){
+	<%
+	PRUpload upload;
+	request.setCharacterEncoding("UTF-8");
+	//10Mbyte
+	int maxSize = 1024*1024*10;
+
+	//파일 저장할 경로
+	String path = request.getSession().getServletContext().getRealPath("/")+"download/";
+
+	//업로드된 파일 이름
+	String uploadFile = "";
+
+	//저장될 파일 이름
+	String fileName = "";
+
+	//DB에 저장될 날짜, 아이디, 프로젝트 이름, 클래스 이름
+	String DB_date, DB_Id, DB_projectName, DB_className;
+	int read = 0;
+
+	byte[] buf = new byte[1024];
+	FileInputStream is = null;
+	FileOutputStream os = null;
+	long currentTime = System.currentTimeMillis();
+	SimpleDateFormat simDf = new SimpleDateFormat("yyyyMMdd"); 
+	SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss");
+	try {
+		System.out.println("path : " + request.getSession().getServletContext().getRealPath("/")+"download/");
+		System.out.println(request.getContentType());
+		MultipartRequest multi = new MultipartRequest(request, path, maxSize, "UTF-8", new DefaultFileRenamePolicy());
+
+	     //System.out.println(multi.getFilesystemName("uploadFile"));
+	     //파일 이름
+	     uploadFile = multi.getFilesystemName("uploadFile");
+	     //확장자
+	     String extension = uploadFile.substring(uploadFile.lastIndexOf(".")+1);
+	     System.out.println("확장자: " + extension);
+	     //확장자가 java가 아니라면
+	     if(!(extension.equalsIgnoreCase("java"))) { 	
+			return;
+	     }
+	     else {
+	    	 DB_date = date.format(new Date(currentTime));
+	    	 DB_Id = "sampleID";
+	    	 DB_projectName = "sampleProject";
+	    	 DB_className = uploadFile.substring(0, uploadFile.lastIndexOf("."));
+	    	 System.out.println("업로드 날짜: " + DB_date);
+	    	 System.out.println("아이디: " + DB_Id);
+	    	 System.out.println("프로젝트 이름 : " + DB_projectName);
+	    	 System.out.println("클래스 이름 : " + DB_className);
+	    	// 실제 저장할 파일명(class name_id_date.java)
+	    	 fileName = DB_className + "_" + DB_Id + "_" + simDf.format(new Date(currentTime)) + "." + extension;
+	    	 System.out.println("저장된 이름 : " + fileName);
+	    	 
+	    	 upload = new PRUpload();
+	         //filename, id, date, projectname, classname
+	        upload.upLoad(fileName, DB_Id, DB_date, DB_projectName, DB_className);
+	         
+	        //System.out.println(fileName + "_" + simDf.format(new Date(currentTime)));
+	        // 업로드된 파일 객체 생성
+	        File oFile = new File(path + uploadFile);
+	         
+	        // 실제 저장될 파일 객체 생성
+	        File nFile = new File(path + fileName);
+
+	        // 파일명 rename
+	        if(!oFile.renameTo(nFile)){
+	            // rename이 되지 않을경우 강제로 파일을 복사하고 기존파일은 삭제
+	            buf = new byte[1024];
+	            is = new FileInputStream(oFile);
+	            os = new FileOutputStream(nFile);
+	            read = 0;
+	            while((read=is.read(buf,0,buf.length))!=-1){
+	                os.write(buf, 0, read);
+	         }
+	             
+	            is.close();
+	            os.close();
+	            oFile.delete();     
+	   	}
+	     }
+	     
+	}catch(Exception e) {
+		e.printStackTrace();
+	}
+	%>  
+}
+    
+    </script>
 <script type="text/javascript">
 	function addRow(TableID) // 테이블 동적 생성
 	{
@@ -107,6 +215,31 @@
 				}
 			});
 </script>
+<script type="text/javascript">
+	$(document).ready(function() {
+			// 옵션추가 버튼 클릭시
+			$("#addUploadIssue").click(
+				function (){
+					var issue;
+					issue = "<li><!--Time Line Element---> <div class='timeline-badge up'>	<i class='	fa fa-cloud-upload'></i></div>" 
+					+"	<div class='timeline-panel'>	<div class='timeline-heading'>	<h4 class='timeline-title'>Time Line Entry #1</h4></div>" 
+					+"	<div class='timeline-body'>	<!---Time Line Body&Content--->	<p>Upload</p>"
+					+"		</div>		</div>	</li>";
+					$("#timeline").append(issue);
+				});
+	$("#addDownloadIssue").click(
+			function (){
+				var issue;
+				issue = "<li><!--Time Line Element---> <div class='timeline-badge down'><i class='fa fa-cloud-download'></i></div>" 
+				+"	<div class='timeline-panel'>	<div class='timeline-heading'>	<h4 class='timeline-title'>Time Line Entry #1</h4></div>" 
+				+"	<div class='timeline-body'>	<!---Time Line Body&Content--->	<p>Download</p>"
+				+"		</div>		</div>	</li>";
+				$("#timeline").append(issue);
+			});	
+	});
+
+</script>
+
 </head>
 
 <%
@@ -193,89 +326,12 @@ if(id!=null){
 						<div class="container" text-center>
 							<div class="inner">
 								<header>
-								<h2>Issue Tracker</h2>
+								<h2>Issue Tracker</h2> 
 								</header>
 								<div class="scroll">
-									<ul class="timeline">
-										<li>
-											<!---Time Line Element--->
-											<div class="timeline-badge up">
-												<i class="fa fa-thumbs-up"></i>
-											</div>
-											<div class="timeline-panel">
-												<div class="timeline-heading">
-													<h4 class="timeline-title">Time Line Entry #1</h4>
-												</div>
-												<div class="timeline-body">
-													<!---Time Line Body&Content--->
-													<p>Time line content is placed here...</p>
-												</div>
-											</div>
-										</li>
-										<li>
-											<!---Time Line Element--->
-											<div class="timeline-badge down">
-												<i class="fa fa-thumbs-down"></i>
-											</div>
-											<div class="timeline-panel">
-												<div class="timeline-heading">
-													<h4 class="timeline-title">Time Line Entry #2</h4>
-												</div>
-												<div class="timeline-body">
-													<!---Time Line Body&Content--->
-													<p>Time line content is placed here...</p>
-													<p>And some more Time line content</p>
-												</div>
-											</div>
-										</li>
-										<li>
-											<!---Time Line Element--->
-											<div class="timeline-badge neutral">
-												<i class="fa fa-navicon"></i>
-											</div>
-											<div class="timeline-panel">
-												<div class="timeline-heading">
-													<h4 class="timeline-title">Time Line Entry #3</h4>
-												</div>
-												<div class="timeline-body">
-													<!---Time Line Body&Content--->
-													<p>Time line content is placed here...</p>
-													<p>This appears to be a neutral time line enty...</p>
-												</div>
-											</div>
-										</li>
-										<li>
-											<!---Time Line Element--->
-											<div class="timeline-badge down">
-												<i class="fa fa-thumbs-down"></i>
-											</div>
-											<div class="timeline-panel">
-												<div class="timeline-heading">
-													<h4 class="timeline-title">Time Line Entry #4</h4>
-												</div>
-												<div class="timeline-body">
-													<!---Time Line Body&Content--->
-													<p>Time line content is placed here...</p>
-													<p>And some more Time line content</p>
-												</div>
-											</div>
-										</li>
+									<ul class="timeline" id = "timeline">
+										<!-- space for appending timeline -->
 
-										<li>
-											<!---Time Line Element--->
-											<div class="timeline-badge up">
-												<i class="fa fa-thumbs-up"></i>
-											</div>
-											<div class="timeline-panel">
-												<div class="timeline-heading">
-													<h4 class="timeline-title">Time Line Entry #5</h4>
-												</div>
-												<div class="timeline-body">
-													<!---Time Line Body&Content--->
-													<p>Time line content is placed here...</p>
-												</div>
-											</div>
-										</li>
 									</ul>
 								</div>
 							</div>
@@ -371,11 +427,11 @@ if(id!=null){
 					<h3 class="modal-title" id="lineModalLabel">Upload Code File</h3>
 				</div>
 				<div class="modal-body">
-					<form action="form/fileupload_form.jsp" method="post"
+					<form action="" method="post" onsubmit="JavaScript:fileupload_form()" 
 						enctype="multipart/form-data">
 						<input type="file" id="file" class="file" name="uploadFile"
 							id="uploadFile"> <br>
-						<button type="submit" class="btn btn-primary" name="upload">Submit</button>
+						<button type="submit" class="btn btn-primary" name="upload" onClick = "confirmUpload()">Submit</button>
 						<button type="reset" class="btn btn-default">Reset</button>
 					</form>
 					<hr>
@@ -423,9 +479,8 @@ if(id!=null){
 								<td><%=lists.get(i).getFileName()%></td>
 								<td><%=lists.get(i).getId()%></td>
 								<td><%=lists.get(i).getDate()%></td>
-								<td><a
-									href="form/downloadFile.jsp?filename=<%=lists.get(i).getFileName()%>"><span
-										class="glyphicon glyphicon-save" aria-hidden="true"></span></a></td>
+								<td><a href="form/downloadFile.jsp?filename=<%=lists.get(i).getFileName()%>" >
+								<span class="glyphicon glyphicon-save" aria-hidden="true" id="addDownloadIssue"></span></a></td>
 								<%System.out.println(lists.get(i).getFileName()); %>
 							</tr>
 							<%}%>
@@ -439,7 +494,15 @@ if(id!=null){
 		</div>
 		<!-- End of download modal -->
 
-
+<!-- Start of confirm modal -->
+<div id = "smallModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      ...alert
+    </div>
+  </div>
+</div>
+<!-- End of confirm modal -->
 		<style>
 .center {
 	margin-top: 50px;
