@@ -36,10 +36,13 @@ public class PRAjax{
 		try{
 			Connection con = ds.getConnection();
 
-			String sql = "select project_name, project_progress from project_detail where project_creator=?";
+			//First, find info from my id
+			String sql = "select project_name, project_progress from project_detail where project_id in (select project_id from project_member_detail where project_member_name = ?) or project_creator= ?";
 
 			PreparedStatement pstat = con.prepareStatement(sql);
 			pstat.setString(1, req.getSession().getAttribute("login").toString());
+			pstat.setString(2, req.getSession().getAttribute("login").toString());
+
 			ResultSet rs = pstat.executeQuery();
 
 			JSONArray  arr = new JSONArray();

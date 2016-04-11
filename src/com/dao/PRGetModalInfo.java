@@ -27,15 +27,17 @@ public class PRGetModalInfo {
 		}
 	}
 	
-	public ArrayList<String> getTodo(){
+	public ArrayList<String> getTodo(String id){
 		Connection con;
 		ArrayList<String> projects = new ArrayList<String>();
 		
 		try {
 			con = ds.getConnection();
+			String sql = "select T.project_name from (select project_name, project_progress from project_detail where project_id in (select project_id from project_member_detail where project_member_name = ?) or project_creator= ?) as T where project_progress = 0";
 
-			String sql = "select project_name from project_detail where project_progress = 0";
 			PreparedStatement pstat = con.prepareStatement(sql);
+			pstat.setString(1, id);
+			pstat.setString(2, id);
 
 			ResultSet rs = pstat.executeQuery();
 			
@@ -51,15 +53,18 @@ public class PRGetModalInfo {
 		return projects;
 	}
 	
-	public ArrayList<String> getInprogress(){
+	public ArrayList<String> getInprogress(String id){
 		Connection con;
 		ArrayList<String> projects = new ArrayList<String>();
 		
 		try {
 			con = ds.getConnection();
 
-			String sql = "select project_name from project_detail where project_progress = 50";
+			String sql = "select T.project_name from (select project_name, project_progress from project_detail where project_id in (select project_id from project_member_detail where project_member_name = ?) or project_creator= ?) as T where project_progress = 50";
+
 			PreparedStatement pstat = con.prepareStatement(sql);
+			pstat.setString(1, id);
+			pstat.setString(2, id);
 
 			ResultSet rs = pstat.executeQuery();
 			
@@ -75,15 +80,18 @@ public class PRGetModalInfo {
 		return projects;
 	}
 	
-	public ArrayList<String> getDone(){
+	public ArrayList<String> getDone(String id){
 		Connection con;
 		ArrayList<String> projects = new ArrayList<String>();
 		
 		try {
 			con = ds.getConnection();
 
-			String sql = "select project_name from project_detail where project_progress = 100";
+			String sql = "select T.project_name from (select project_name, project_progress from project_detail where project_id in (select project_id from project_member_detail where project_member_name = ?) or project_creator= ?) as T where project_progress = 100";
+
 			PreparedStatement pstat = con.prepareStatement(sql);
+			pstat.setString(1, id);
+			pstat.setString(2, id);
 
 			ResultSet rs = pstat.executeQuery();
 			

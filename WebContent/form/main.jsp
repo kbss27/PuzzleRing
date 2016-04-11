@@ -340,9 +340,10 @@
 							</header>
 							
 							<%PRGetModalInfo modal = new PRGetModalInfo();
-								ArrayList<String> todo = modal.getTodo(); 
-								ArrayList<String> inprogress = modal.getInprogress();
-								ArrayList<String> done = modal.getDone();
+								String tmpId = (String) session.getAttribute("login");
+								ArrayList<String> todo = modal.getTodo(tmpId); 
+								ArrayList<String> inprogress = modal.getInprogress(tmpId);
+								ArrayList<String> done = modal.getDone(tmpId);
 								
 								for(int i = 0; i<todo.size(); i++){ %>
 							<div
@@ -365,7 +366,7 @@
 							<%for(int i = 0; i<inprogress.size(); i++){ %>
 							<div
 								class="row col-sm-12 displaystyle-leftborder displaystyle-success">
-								<a href="basic_table.html#"><strong><%=inprogress.get(i)%></strong></a>
+								<a href="showUploadList.do?project_name=<%=inprogress.get(i)%>"><strong><%=inprogress.get(i)%></strong></a>
 							</div>
 							<%} %>
 							</section>
@@ -383,7 +384,7 @@
 							<%for(int i = 0; i<done.size(); i++){ %>
 							<div
 								class="row col-sm-12 displaystyle-leftborder displaystyle-success">
-								<a href="basic_table.html#"><strong><%=done.get(i)%></strong></a>
+								<a href="showUploadList.do?project_name=<%=done.get(i)%>"><strong><%=done.get(i)%></strong></a>
 							</div>
 							<%} %>
 							</section>

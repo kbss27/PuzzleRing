@@ -6,9 +6,9 @@
 <%@page import="java.io.FileOutputStream"%>
 <%@page import="java.io.DataInputStream"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<%@ page import="java.io.File" %>
-<%@ page import="com.dao.PRUpload" %>
+	pageEncoding="EUC-KR"%>
+<%@ page import="java.io.File"%>
+<%@ page import="com.dao.PRUpload"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,7 +16,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
+	<%
 PRUpload upload;
 request.setCharacterEncoding("UTF-8");
 //10Mbyte

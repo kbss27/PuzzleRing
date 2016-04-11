@@ -216,28 +216,30 @@ function fileupload_form(){
 			});
 </script>
 <script type="text/javascript">
-	$(document).ready(function() {
-			// 옵션추가 버튼 클릭시
-			$("#addUploadIssue").click(
-				function (){
-					var issue;
-					issue = "<li><!--Time Line Element---> <div class='timeline-badge up'>	<i class='	fa fa-cloud-upload'></i></div>" 
-					+"	<div class='timeline-panel'>	<div class='timeline-heading'>	<h4 class='timeline-title'>Time Line Entry #1</h4></div>" 
-					+"	<div class='timeline-body'>	<!---Time Line Body&Content--->	<p>Upload</p>"
-					+"		</div>		</div>	</li>";
-					$("#timeline").append(issue);
-				});
-	$("#addDownloadIssue").click(
-			function (){
-				var issue;
-				issue = "<li><!--Time Line Element---> <div class='timeline-badge down'><i class='fa fa-cloud-download'></i></div>" 
-				+"	<div class='timeline-panel'>	<div class='timeline-heading'>	<h4 class='timeline-title'>Time Line Entry #1</h4></div>" 
-				+"	<div class='timeline-body'>	<!---Time Line Body&Content--->	<p>Download</p>"
-				+"		</div>		</div>	</li>";
-				$("#timeline").append(issue);
-			});	
-	});
-
+	$(document).ready(
+					function() {
+			
+						$("#addUploadIssue")
+								.click(
+										function() {
+											var issue;
+											issue = "<li><!--Time Line Element---> <div class='timeline-badge up'>	<i class='	fa fa-cloud-upload'></i></div>"
+													+ "	<div class='timeline-panel'>	<div class='timeline-heading'>	<h4 class='timeline-title'>Time Line Entry #1</h4></div>"
+													+ "	<div class='timeline-body'>	<!---Time Line Body&Content--->	<p>Upload</p>"
+													+ "		</div>		</div>	</li>";
+											$("#timeline").append(issue);
+										});
+						$("#addDownloadIssue")
+								.click(
+										function() {
+											var issue;
+											issue = "<li><!--Time Line Element---> <div class='timeline-badge down'><i class='fa fa-cloud-download'></i></div>"
+													+ "	<div class='timeline-panel'>	<div class='timeline-heading'>	<h4 class='timeline-title'>Time Line Entry #1</h4></div>"
+													+ "	<div class='timeline-body'>	<!---Time Line Body&Content--->	<p>Download</p>"
+													+ "		</div>		</div>	</li>";
+											$("#timeline").append(issue);
+										});
+					});
 </script>
 
 </head>
