@@ -19,7 +19,7 @@ public class PRController_showUploadList {
 	
 	public void showUploadList(HttpServletRequest req, HttpServletResponse res) {
 		ArrayList<UploadFile> files;
-		String p_name = (String)req.getParameter("project_name");
+		String p_name = (String)req.getSession().getAttribute("project_name");
 		
 		files = file.getFileList(p_name);
 				

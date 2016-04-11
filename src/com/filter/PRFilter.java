@@ -2,6 +2,7 @@ package com.filter;
 
 import java.io.IOException;
 
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -10,6 +11,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.JSONObject;
 
 import com.ajax.PRAjax;
 import com.controller.PRController_createProject;
@@ -82,6 +85,8 @@ public class PRFilter implements Filter {
 	         prAjax.getIssueDatahome(req,res);//home.jsp
 	    }else if (reqString.equals("/createproject2.do")){
 			controller_project_process2.createProject2(req, res);
+		}else if (reqString.equals("/ajax_project_detail_Issue.do")){
+			prAjax.getIssueProject(req, res);
 		}
 	}
 

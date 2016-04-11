@@ -113,4 +113,50 @@ public class PRAjax{
 		}
 
 	}
+	
+	public void getIssueProject(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		// TODO Auto-generated method stub
+
+		try{
+			Connection con = ds.getConnection();
+
+			String sql = "select className, id, date from uploadlist where projectName = ? order by date desc";
+
+			PreparedStatement pstat = con.prepareStatement(sql);
+			String p_name=(String)req.getParameter("project_name");
+			System.out.println(p_name);
+			
+			pstat.setString(1, "hyunwoo");
+			
+			ResultSet rs = pstat.executeQuery();
+
+			JSONArray  arr = new JSONArray();
+
+			while(rs.next()){
+
+				JSONObject obj;
+
+				obj = new JSONObject();
+
+				obj.put("className", rs.getString(1));
+				obj.put("id", rs.getString(2));
+				obj.put("date", rs.getString(3));
+
+				arr.add(obj);
+			}
+
+			res.setContentType("application/json");
+
+			PrintWriter out = res.getWriter();
+
+			out.write(arr.toJSONString());
+
+			rs.close();
+			pstat.close();
+			con.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+
+	}
 }
