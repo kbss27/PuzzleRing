@@ -53,8 +53,16 @@
 	}
 </script>
 <%! 
-String project_name;
+String project_name, id;
 %>
+
+<%
+
+id = (String)session.getAttribute("login");
+System.out.println("ididtest ==   "+id);
+
+%>
+
 <%project_name = request.getParameter("project_name"); %>
 <script type="text/javascript">
 function ErrorType(){
@@ -110,8 +118,8 @@ function fileupload_form(){
 	     }
 	     else {
 	    	 DB_date = date.format(new Date(currentTime));
-	    	 DB_Id = "sampleID";
-	    	 DB_projectName = "sampleProject";
+	    	 DB_Id = id;
+	    	 DB_projectName = project_name;
 	    	 DB_className = uploadFile.substring(0, uploadFile.lastIndexOf("."));
 	    	 System.out.println("업로드 날짜: " + DB_date);
 	    	 System.out.println("아이디: " + DB_Id);
@@ -221,6 +229,15 @@ function fileupload_form(){
 			});
 </script>
 <script type="text/javascript">
+
+function addDownloadIssue(){
+	var issue;
+	issue = "<li><!--Time Line Element---> <div class='timeline-badge down'><i class='fa fa-cloud-download'></i></div>"
+			+ "	<div class='timeline-panel'>	<div class='timeline-heading'>	<h4 class='timeline-title'>Time Line Entry #1</h4></div>"
+			+ "	<div class='timeline-body'>	<!---Time Line Body&Content--->	<p>Download</p>"
+			+ "		</div>		</div>	</li>";
+	$("#timeline").append(issue);
+}
 	$(document).ready(
 					function() {
 			
@@ -234,30 +251,12 @@ function fileupload_form(){
 													+ "		</div>		</div>	</li>";
 											$("#timeline").append(issue);
 										});
-						$("#addDownloadIssue")
-								.click(
-										function() {
-											var issue;
-											issue = "<li><!--Time Line Element---> <div class='timeline-badge down'><i class='fa fa-cloud-download'></i></div>"
-													+ "	<div class='timeline-panel'>	<div class='timeline-heading'>	<h4 class='timeline-title'>Time Line Entry #1</h4></div>"
-													+ "	<div class='timeline-body'>	<!---Time Line Body&Content--->	<p>Download</p>"
-													+ "		</div>		</div>	</li>";
-											$("#timeline").append(issue);
-										});
 					});
 </script>
 
 </head>
 
-<%
 
-String id = (String)request.getAttribute("id");
-
-if(id!=null){
-	session.setAttribute("login", id);
-}
-
-%>
 
 <body class="homepage">
 	<div id="page-wrapper">
@@ -487,7 +486,7 @@ if(id!=null){
 								<td><%=lists.get(i).getId()%></td>
 								<td><%=lists.get(i).getDate()%></td>
 								<td><a href="form/downloadFile.jsp?filename=<%=lists.get(i).getFileName()%>" >
-								<span class="glyphicon glyphicon-save" aria-hidden="true" id="addDownloadIssue"></span></a></td>
+								<span class="glyphicon glyphicon-save" aria-hidden="true" onclick="addDownloadIssue()"></span></a></td>
 								<%System.out.println(lists.get(i).getFileName()); %>
 							</tr>
 							<%}%>

@@ -21,15 +21,16 @@ public class PRShowUploadList {
 		}
 	}
 
-	public ArrayList<UploadFile> getFileList() {
+	public ArrayList<UploadFile> getFileList(String projectName) {
 		Connection con;
 		ArrayList<UploadFile> files = new ArrayList<UploadFile>();
 		UploadFile file;
 		try {
 			con = ds.getConnection();
 
-			String sql = "select fileName, id, date, projectName, className from uploadlist order by date desc";
+			String sql = "select fileName, id, date, projectName, className from uploadlist where projectName = ? order by date desc";
 			PreparedStatement pstat = con.prepareStatement(sql);
+			pstat.setString(1, projectName);
 			
 			ResultSet rs = pstat.executeQuery();
 			
@@ -53,9 +54,13 @@ public class PRShowUploadList {
 		try {
 			System.out.println("Test file name:: " + fileName);
 			con = ds.getConnection();
-			String sql = "select fileName, id, date, projectName, className from uploadlist where fileName='"+fileName+"'";
+			String sql = "select fileName, id, date, projectName, className from uploadlist where fileName = ?";
 			PreparedStatement pstat = con.prepareStatement(sql);
+
+			pstat.setString(1, fileName);
+
 			ResultSet rs = pstat.executeQuery();
+
 			file = new UploadFile(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
 			System.out.println("Test :: " + file.getFileName());
 		} catch(Exception e) {

@@ -56,8 +56,11 @@ try {
     	 return;
      }
      else {
+    	 String id = (String)session.getAttribute("login");
+    	 System.out.println(id);
+    	 
     	 DB_date = date.format(new Date(currentTime));
-    	 DB_Id = "sampleID";
+    	 DB_Id = id;
     	 DB_projectName = "sampleProject";
     	 DB_className = uploadFile.substring(0, uploadFile.lastIndexOf("."));
     	 System.out.println("업로드 날짜: " + DB_date);
