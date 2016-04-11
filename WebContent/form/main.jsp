@@ -186,7 +186,7 @@
 
 											</div>
 											<a href="#"> <span><a
-													href="location.href='createproject_process.do'">Create
+													href="createproject_process.do">Create
 														Projects </a> <i class="fa fa-arrow-circle-right"></i></span>
 
 											</a>

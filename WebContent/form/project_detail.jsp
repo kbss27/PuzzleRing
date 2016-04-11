@@ -52,6 +52,10 @@
 
 	}
 </script>
+<%! 
+String project_name;
+%>
+<%project_name = request.getParameter("project_name"); %>
 <script type="text/javascript">
 function ErrorType(){
 	alert("Invalid Type!");
@@ -100,7 +104,8 @@ function fileupload_form(){
 	     String extension = uploadFile.substring(uploadFile.lastIndexOf(".")+1);
 	     System.out.println("확장자: " + extension);
 	     //확장자가 java가 아니라면
-	     if(!(extension.equalsIgnoreCase("java"))) { 	
+	     if(!(extension.equalsIgnoreCase("java"))) {
+	    	
 			return;
 	     }
 	     else {
@@ -290,7 +295,7 @@ if(id!=null){
 					<div class="container" text-center>
 						<div>
 							<header>
-							<h2 style="text-align: center;">Project Name</h2>
+							<h2 style="text-align: center;"><%= project_name %></h2>
 							</header>
 						</div>
 						<p>project에 대한 설명을 불러올것.</p>

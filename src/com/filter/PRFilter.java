@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ajax.PRAjax;
 import com.controller.PRController_createProject;
+import com.controller.PRController_createProject2;
 import com.controller.PRController_main;
 import com.controller.PRController_member;
 import com.controller.PRController_showProject;
@@ -26,6 +27,7 @@ public class PRFilter implements Filter {
 	PRController_member controller_member;
 	PRController_main controller_main;
 	PRController_createProject controller_project_process;
+	PRController_createProject2 controller_project_process2;
 	PRController_showProject controller_show_project;
 	
 	PRController_showProject controller_test;
@@ -41,6 +43,7 @@ public class PRFilter implements Filter {
 		controller_main = new PRController_main();
 		controller_member = new PRController_member();
 		controller_project_process = new PRController_createProject();
+		controller_project_process2 = new PRController_createProject2();
 		controller_show_project = new PRController_showProject();
 		
 		controller_test = new PRController_showProject();
@@ -77,7 +80,9 @@ public class PRFilter implements Filter {
 	         prAjax.getIssueData(req,res);//main.jsp.
 	    }else if (reqString.equals("/ajaxIssuehome.do")){
 	         prAjax.getIssueDatahome(req,res);//home.jsp
-	    } 
+	    }else if (reqString.equals("/createproject2.do")){
+			controller_project_process2.createProject2(req, res);
+		}
 	}
 
 	@Override
