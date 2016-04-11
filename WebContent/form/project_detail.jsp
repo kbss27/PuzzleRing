@@ -153,6 +153,11 @@ function fileupload_form(){
 		e.printStackTrace();
 	}
 	%>  
+	
+	var r = confirm("Uploaded Success!");
+	if (r == true) {
+		window.addUploadIssue();
+	} 
 }
     
     </script>
@@ -221,27 +226,26 @@ function fileupload_form(){
 			});
 </script>
 <script type="text/javascript">
-	$(document).ready(function() {
-			// 옵션추가 버튼 클릭시
-			$("#addUploadIssue").click(
-				function (){
-					var issue;
-					issue = "<li><!--Time Line Element---> <div class='timeline-badge up'>	<i class='	fa fa-cloud-upload'></i></div>" 
-					+"	<div class='timeline-panel'>	<div class='timeline-heading'>	<h4 class='timeline-title'>Time Line Entry #1</h4></div>" 
-					+"	<div class='timeline-body'>	<!---Time Line Body&Content--->	<p>Upload</p>"
-					+"		</div>		</div>	</li>";
-					$("#timeline").append(issue);
-				});
-	$("#addDownloadIssue").click(
-			function (){
-				var issue;
-				issue = "<li><!--Time Line Element---> <div class='timeline-badge down'><i class='fa fa-cloud-download'></i></div>" 
-				+"	<div class='timeline-panel'>	<div class='timeline-heading'>	<h4 class='timeline-title'>Time Line Entry #1</h4></div>" 
-				+"	<div class='timeline-body'>	<!---Time Line Body&Content--->	<p>Download</p>"
-				+"		</div>		</div>	</li>";
-				$("#timeline").append(issue);
-			});	
-	});
+function addUploadIssue(){
+	
+	var issue;
+	issue = "<li><!--Time Line Element---> <div class='timeline-badge up'>	<i class='	fa fa-cloud-upload'></i></div>" 
+	+"	<div class='timeline-panel'>	<div class='timeline-heading'>	<h4 class='timeline-title'>Time Line Entry #1</h4></div>" 
+	+"	<div class='timeline-body'>	<!---Time Line Body&Content--->	<p>Upload</p>"
+	+"		</div>		</div>	</li>";
+	$("#timeline").append(issue); //db에 넣어야 함!
+
+}
+function addDownloadIssue(){
+	
+	var issue;
+	issue = "<li><!--Time Line Element---> <div class='timeline-badge down'><i class='fa fa-cloud-download'></i></div>" 
+	+"	<div class='timeline-panel'>	<div class='timeline-heading'>	<h4 class='timeline-title'>Time Line Entry #1</h4></div>" 
+	+"	<div class='timeline-body'>	<!---Time Line Body&Content--->	<p>Download</p>"
+	+"		</div>		</div>	</li>";
+	$("#timeline").append(issue); //db에 넣어야 함!
+}
+
 
 </script>
 
@@ -436,7 +440,7 @@ if(id!=null){
 						enctype="multipart/form-data">
 						<input type="file" id="file" class="file" name="uploadFile"
 							id="uploadFile"> <br>
-						<button type="submit" class="btn btn-primary" name="upload" onClick = "confirmUpload()">Submit</button>
+						<button type="submit" class="btn btn-primary" name="upload" >Submit</button>
 						<button type="reset" class="btn btn-default">Reset</button>
 					</form>
 					<hr>
@@ -485,7 +489,7 @@ if(id!=null){
 								<td><%=lists.get(i).getId()%></td>
 								<td><%=lists.get(i).getDate()%></td>
 								<td><a href="form/downloadFile.jsp?filename=<%=lists.get(i).getFileName()%>" >
-								<span class="glyphicon glyphicon-save" aria-hidden="true" id="addDownloadIssue"></span></a></td>
+								<span class="glyphicon glyphicon-save" aria-hidden="true" onClick="addDownloadIssue()"></span></a></td>
 								<%System.out.println(lists.get(i).getFileName()); %>
 							</tr>
 							<%}%>

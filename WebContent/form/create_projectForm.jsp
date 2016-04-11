@@ -3,16 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <title>Test Site</title>
-
+	<link rel="stylesheet" type="text/css" href="assets/css/joint.css"/>
+	<link rel="stylesheet" type="text/css" href="assets/css/joint.min.css"/>
 	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css" />
 
-   	<script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
-   	<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+	  <script type="text/javascript" src="assets/js/lodash.min.js"></script>
    	<script type="text/javascript" src="assets/js/backbone-min.js"></script>
 	<script type="text/javascript" src="assets/js/joint.js"></script>
+	<script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
+   	<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+  
+    
     
 <style type="text/css">
+
 .bs-example {
 	margin: 20px;
 }
@@ -255,6 +261,7 @@
 	
 </script>
 <script type="text/javascript">
+	
 	function gocreateProject() {
 		var form = document.getElementById("projectform");
 		form.action = "createproject.do";
@@ -291,6 +298,9 @@
 			m2String = m2String + temp;
 		}
 		method_detail2.innerHTML = m2String;
+		
+		//uml function call
+		window.addUML();
 	}
 	function gocreateProject2() {
 		
@@ -319,357 +329,286 @@
 		document.getElementById("project_content2").value = project_type;
 	}
 </script>
-<script>
-	$(document)
-			.ready(
-					function() {
-						var graph = new joint.dia.Graph;
-						var uml = joint.shapes.uml;
+<script type="text/javascript">
 
-						var paper = new joint.dia.Paper({
-							el : $('#boxes'),
-							width : 1000,
-							height : 1000,
-							model : graph,
-							gridSize : 1
-						});
 
-						var rects = [];
-						var arrows = [];
-						var classes = [];
+function addUML(){
+var graph = new joint.dia.Graph;
+var uml = joint.shapes.uml;
 
-						$("#addUMLClass")
-								.click(
-										function() {
-											var className = [];
-											var classLength = class_list.length;
-											for (var i = 0; i < classLength; i++) {
-												className[i] = class_list[i].class_name;
-												addUMLClass(className[i], i);
-											}
 
-											var relations = [ Generalization(
-													rects[0], rects[1]) ];
-											_.each(relations, function(r) {
-												graph.addCell(r);
-											});
+var paper = new joint.dia.Paper({
+	el : $('#boxes'),
+	width : 1000,
+	height : 1000,
+	model : graph,
+	gridSize : 1
+}); 
 
-										});
+var rects = [];
+var arrows = [];
+var classes = [];
+	
+	var className = [];
+	var classLength = class_list.length;
+	
+	for (var i = 0; i < classLength; i++) {
+		className[i] = class_list[i].class_name;
+		addUMLClass(className[i], i);
+	}
+	
+/*	var relations = [ Generalization(
+			rects[0], rects[1]) ];
+	_.each(relations, function(r) {
+		graph.addCell(r);
+	}); */
+	
 
-						function addVariable(i) {
+function addUMLClass(name, p) {
 
-							var variableScope = "vs" + i;
-							var variableName = "vn" + i;
-							var variableType = "vt" + i;
-							var text = variableScope + " " + variableName + ":"
-									+ variableType + "\n";
+	
+	var classType = 1; //1:normal, 2: abstract, 3: interface
+	var methodNum = method_list.length;
+	var method = "";
 
-							return text;
+	for (var i = 0; i < methodNum; i++) {
+		var temp, mMax;
+		if (i == 0) {
+			temp = addMethod(name).length;
+			mMax = addMethod(name).length;
+		} else {
+			temp = addMethod(name).length;
+		}
+		if (mMax < temp) {
+			mMax = temp;
+		}
+		
+	}
+	method += addMethod(name);
+	var widthSize = mMax;
+	var heightSize = methodNum;
 
+	if (classType == 3) {
+		var c = new uml.Interface(
+				{
+					position : {
+						x : p * 10,
+						y : p * 300
+					},
+					size : {
+						width : widthSize * 7,
+						height : heightSize * 60
+					},
+					name : name,
+					methods : [ method ],
+					attrs : {
+						'.uml-class-name-rect' : {
+							fill : '#feb662',
+							stroke : '#ffffff',
+							'stroke-width' : 0.5
+						},
+						'.uml-class-attrs-rect, .uml-class-methods-rect' : {
+							fill : '#fdc886',
+							stroke : '#fff',
+							'stroke-width' : 0.5
+						},
+						'.uml-class-attrs-text' : {
+							ref : '.uml-class-attrs-rect',
+							'ref-y' : 0.5,
+							'y-alignment' : 'middle'
+						},
+						'.uml-class-methods-text' : {
+							ref : '.uml-class-methods-rect',
+							'ref-y' : 0.5,
+							'y-alignment' : 'middle'
 						}
-						function addMethod(i) {
 
-							var methodAccessModifier = "maasdfasfasdfasdfasdfasdfm"
-									+ i;
-							var methodName = "mn" + i;
-							var methodType = "mt" + i;
-							var text = methodAccessModifier + " " + methodName
-									+ ":" + methodType + "\n";
-
-							return text;
+					}
+				})
+	} else if (classType == 2) {
+		var c = new uml.Abstract(
+				{
+					position : {
+						x : p * 10,
+						y : p * 300
+					},
+					size : {
+						width : widthSize * 7,
+						height : heightSize * 60
+					},
+					name : name,
+					methods : [ method ],
+					attrs : {
+						'.uml-class-name-rect' : {
+							fill : '#68ddd5',
+							stroke : '#ffffff',
+							'stroke-width' : 0.5
+						},
+						'.uml-class-attrs-rect, .uml-class-methods-rect' : {
+							fill : '#9687fe',
+							stroke : '#fff',
+							'stroke-width' : 0.5
+						},
+						'.uml-class-methods-text, .uml-class-attrs-text' : {
+							fill : '#fff'
 						}
-
-						function addUMLClass(name, p) {
-							var classType = 1; //1:normal, 2: abstract, 3: interface
-							var variableNum = 2;
-							var methodNum = 3;
-							var variable = "";
-							var method = "";
-
-							for (var i = 0; i < methodNum; i++) {
-								var temp, mMax;
-								if (i == 0) {
-									temp = addMethod(i).length;
-									mMax = addMethod(i).length;
-								} else {
-									temp = addMethod(i).length;
-								}
-								if (mMax < temp) {
-									mMax = temp;
-								}
-								method += addMethod(i);
-							}
-
-							for (var i = 0; i < variableNum; i++) {
-								var temp, vMax;
-								if (i == 0) {
-									temp = addVariable(i).length;
-									vMax = addVariable(i).length;
-								} else {
-									temp = addVariable(i).length;
-								}
-								if (vMax < temp) {
-									vMax = temp;
-								}
-								variable += addVariable(0);
-							}
-
-							var widthSize = mMax > vMax ? mMax : vMax;
-							var heightSize = variableNum > methodNum ? variableNum
-									: methodNum;
-
-							if (classType == 3) {
-								var c = new uml.Interface(
-										{
-											position : {
-												x : p * 10,
-												y : p * 300
-											},
-											size : {
-												width : widthSize * 7,
-												height : heightSize * 60
-											},
-											name : name,
-											attributes : [ variable ],
-											methods : [ method ],
-											attrs : {
-												'.uml-class-name-rect' : {
-													fill : '#feb662',
-													stroke : '#ffffff',
-													'stroke-width' : 0.5
-												},
-												'.uml-class-attrs-rect, .uml-class-methods-rect' : {
-													fill : '#fdc886',
-													stroke : '#fff',
-													'stroke-width' : 0.5
-												},
-												'.uml-class-attrs-text' : {
-													ref : '.uml-class-attrs-rect',
-													'ref-y' : 0.5,
-													'y-alignment' : 'middle'
-												},
-												'.uml-class-methods-text' : {
-													ref : '.uml-class-methods-rect',
-													'ref-y' : 0.5,
-													'y-alignment' : 'middle'
-												}
-
-											}
-										})
-							} else if (classType == 2) {
-								var c = new uml.Abstract(
-										{
-											position : {
-												x : p * 10,
-												y : p * 300
-											},
-											size : {
-												width : widthSize * 7,
-												height : heightSize * 60
-											},
-											name : name,
-											attributes : [ variable ],
-											methods : [ method ],
-											attrs : {
-												'.uml-class-name-rect' : {
-													fill : '#68ddd5',
-													stroke : '#ffffff',
-													'stroke-width' : 0.5
-												},
-												'.uml-class-attrs-rect, .uml-class-methods-rect' : {
-													fill : '#9687fe',
-													stroke : '#fff',
-													'stroke-width' : 0.5
-												},
-												'.uml-class-methods-text, .uml-class-attrs-text' : {
-													fill : '#fff'
-												}
-											}
-										});
-							} else {
-								var c = new uml.Class(
-										{
-											position : {
-												x : p * 10,
-												y : p * 300
-											},
-											size : {
-												width : widthSize * 7,
-												height : heightSize * 60
-											},
-											name : name,
-											attributes : [ variable ],
-											methods : [ method ],
-											attrs : {
-												'.uml-class-name-rect' : {
-													fill : '#ff8450',
-													stroke : '#fff',
-													'stroke-width' : 0.5,
-												},
-												'.uml-class-attrs-rect, .uml-class-methods-rect' : {
-													fill : '#fe976a',
-													stroke : '#fff',
-													'stroke-width' : 0.5
-												},
-												'.uml-class-attrs-text' : {
-													ref : '.uml-class-attrs-rect',
-													'ref-y' : 0.5,
-													'y-alignment' : 'middle'
-												},
-												'.uml-class-methods-text' : {
-													ref : '.uml-class-methods-rect',
-													'ref-y' : 0.5,
-													'y-alignment' : 'middle'
-												}
-											}
-
-										});
-							}
-							rects.push(c);
-							graph.addCells([ c ]);
-
-							return c;
+					}
+				});
+	} else {
+		var c = new uml.Class(
+				{
+					position : {
+						x : p * 10,
+						y : p * 300
+					},
+					size : {
+						width : widthSize * 7,
+						height : heightSize * 60
+					},
+					name : name,
+					methods : [ method ],
+					attrs : {
+						'.uml-class-name-rect' : {
+							fill : '#ff8450',
+							stroke : '#fff',
+							'stroke-width' : 0.5,
+						},
+						'.uml-class-attrs-rect, .uml-class-methods-rect' : {
+							fill : '#fe976a',
+							stroke : '#fff',
+							'stroke-width' : 0.5
+						},
+						'.uml-class-attrs-text' : {
+							ref : '.uml-class-attrs-rect',
+							'ref-y' : 0.5,
+							'y-alignment' : 'middle'
+						},
+						'.uml-class-methods-text' : {
+							ref : '.uml-class-methods-rect',
+							'ref-y' : 0.5,
+							'y-alignment' : 'middle'
 						}
-						;
+					}
 
-						function Generalization(a, b) {
-							var link = new uml.Generalization({
-								source : {
-									id : a.id
-								},
-								target : {
-									id : b.id
-								}
-							});
+				});
+	}
+	rects.push(c);
+	graph.addCells([ c ]);
 
-							//	arrows.push(link);
-							//	graph.addCells([link]);
+	return c;
+};
 
-							return link;
+function addMethod(name) {
+	var text = "";
 
-						}
-						;
+	var methodAM;
+	var methodType;
+	var methodModifier;
+	var methodName;
+	for(var i=0;i<method_list.length;i++)
+	{
+		if(method_list[i].class_info == name)
+		{
+			
+			methodAM = method_list[i].method_am;
+			methodType = method_list[i].method_type;
+			methodModifier = method_list[i].method_modifier;
+			methodName = method_list[i].method_name;
+			text += methodAM + " " + methodType + " " + methodModifier + " " + methodName + "\n";
+		}
+	}
+	
 
-						function Implementation(a, b) {
-							var link = new uml.Implementation({
-								source : {
-									id : a.id
-								},
-								target : {
-									id : b.id
-								}
-							});
+	return text;
+}
 
-							//	arrows.push(link);
-							//	graph.addCells([link]);
-							return link;
-						}
-						;
+function Generalization(a, b) {
+	var link = new uml.Generalization({
+		source : {
+			id : a.id
+		},
+		target : {
+			id : b.id
+		}
+	});
 
-						function Aggregation(a, b) {
-							var link = new uml.Aggregation({
-								source : {
-									id : a.id
-								},
-								target : {
-									id : b.id
-								}
-							});
+	//	arrows.push(link);
+	//	graph.addCells([link]);
 
-							//	arrows.push(link);
-							//	graph.addCells([link]);
+	return link;
 
-							return link;
+}
+;
 
-						}
-						;
+function Implementation(a, b) {
+	var link = new uml.Implementation({
+		source : {
+			id : a.id
+		},
+		target : {
+			id : b.id
+		}
+	});
 
-						function Composition(a, b) {
-							var link = new uml.Composition({
-								source : {
-									id : a.id
-								},
-								target : {
-									id : b.id
-								}
-							});
+	//	arrows.push(link);
+	//	graph.addCells([link]);
+	return link;
+}
+;
 
-							//	arrows.push(link);
-							//	graph.addCells([link]);
+function Aggregation(a, b) {
+	var link = new uml.Aggregation({
+		source : {
+			id : a.id
+		},
+		target : {
+			id : b.id
+		}
+	});
 
-							return link;
+	//	arrows.push(link);
+	//	graph.addCells([link]);
 
-						}
-						;
+	return link;
 
-						$("#addBox")
-								.click(
-										function() {
+}
+;
 
-											var className = "os";
-											var classAccessModifier = "cam";
-											var variableScope = "vs";
-											var variableName = "vn";
-											var variableType = "vt";
-											var methodAccessModifier = "maasdfasfasdfasdfasdfasdfm";
-											var methodName = "mn";
-											var methodType = "mt";
+function Composition(a, b) {
+	var link = new uml.Composition({
+		source : {
+			id : a.id
+		},
+		target : {
+			id : b.id
+		}
+	});
 
-											var text1 = className + " : "
-													+ classAccessModifier;
-											var text2 = variableScope + " : "
-													+ variableName + " : "
-													+ variableType;
-											var text3 = methodAccessModifier
-													+ " : " + methodName
-													+ " : " + methodType;
-											var text = text1 + "\n" + text2
-													+ "\n" + text3;
+	//	arrows.push(link);
+	//	graph.addCells([link]);
 
-											var width = text2.length > text3.length ? text2.length
-													: text3.length;
+	return link;
 
-											var rect = new joint.shapes.basic.Rect(
-													{
-														position : {
-															x : 100,
-															y : 30
-														},
-														size : {
-															width : width * 9,
-															height : 50
-														},
-														attrs : {
-															rect : {
-																fill : 'blue'
-															},
-															text : {
-																text : text,
-																fill : 'white'
-															}
-														}
-													});
-											rects.push(rect);
-											graph.addCells([ rect ]);
-										});
+};
+		
+$("#addArrow").click(function() {
+	var link = new joint.shapes.uml.Generalization({
+		source : {
+			x : 100,
+			y : 100
+		},
+		target : {
+			x : 100,
+			y : 200
+		}
+	});
 
-						$("#addArrow").click(function() {
-							var link = new joint.shapes.uml.Generalization({
-								source : {
-									x : 100,
-									y : 100
-								},
-								target : {
-									x : 100,
-									y : 200
-								}
-							});
+	arrows.push(link);
+	graph.addCells([ link ]);
 
-							arrows.push(link);
-							graph.addCells([ link ]);
+});
 
-						});
-					});
+}
 </script>
 
 <script type="text/javascript">
@@ -812,12 +751,16 @@
 									<textarea name="project_content" id="d" max_length="900" cols="120"
 										rows="10" placeholder="Information(1~900)" onchange="terms4()"></textarea>
 								</div>
-								<br /> <input type="submit" value="Create" formmethod="get"
-									onclick="gocreateProject()"> <input type="submit"
-									value="Cancel" formmethod="get" formaction="(% url 'main' %)">
+								<br /> 
+								<input class="btn btn-lg btn-primary" type="submit" value="Cancel" formmethod="get" formaction="(% url 'main' %)">
+								<input class="btn btn-lg btn-primary" type="submit" value="Create" formmethod="get" onclick="gocreateProject()">
+								<input class="btn btn-lg btn-primary" type="button" value="Next Step" onclick="javascript: resetActive(event, 33, 'step-2');"> 
+									
 							</form>
 						</section>
 					</div>
+					
+					
 				</div>
 			</div>
 			<div class="row setup-content step hiddenStepInfo" id="step-2">
@@ -971,8 +914,6 @@
 															value="add method" id="method_add"
 															onclick="method_trigger(document.getElementById('method_name').value)"; >Add
 															Method</button>
-
-
 													</div>
 												</div>
 											</div>
@@ -987,19 +928,19 @@
 						</section>
 					</div>
 					<br> 
-					<button onClick="completeProjectDetail()"; value="Create Project">Create Project</button>
-					
-					<input type="submit" value="Cancel" formmethod="get" formaction="(% url 'main' %)"><br><br><br>
-					<div class="col-md-12 well text-center">
+					<button class="btn btn-lg btn-primary" onClick="javascript: resetActive(event, 0, 'step-1');">Go Previous Step</button>
+					<button class="btn btn-lg btn-primary" onClick="completeProjectDetail()">Save</button>
+					<button class="btn btn-lg btn-primary" onClick="javascript: resetActive(event, 66, 'step-3')"";>Go Next Step</button>
+					<br><br><br>
+					<div class="col-md-12 well text-center" >
 
 						<h3 class="underline">Draw UML</h3>
 						<!-- step2 -->
-						<input id="addBox" name="add" type="button" style="cursor: hand" value="add class"> 
-						<input id="addUMLClass" name="addUMLClass" type="button" value="addUMLClass"> 
-						<input id="addArrow" type="button" style="cursor: hand" value="add Arrow">
+						<input class="btn btn-lg btn-primary" id="addBox" name="add" type="button" style="cursor: hand" value="add class"> 
+						<input class="btn btn-lg btn-primary" id="addArrow" type="button" style="cursor: hand" value="add Arrow">
 
 						<section id="boxes" class="papers"></section>
-						<button onClick="capture()" value="capture">capture</button>
+						<button class="btn btn-lg btn-primary" onClick="capture()" value="capture">capture</button>
 						<section id="Myboxes" class="papers"></section>
 					</div>
 					
@@ -1049,9 +990,36 @@
 							<textarea style="display:none; width:450px; height:250px" name = "method_detail" id="method_detail" readonly >
 							</textarea>
 						</div>
-						<button onClick="gocreateProject2()"; value="Create Project">Create Project</button>
-					
-					<input type="submit" value="Cancel" formmethod="get" formaction="(% url 'main' %)">
+						
+						<!-- Complete button modal -->
+						
+						<a href="#complete" class="btn btn-lg btn-primary"
+											data-toggle="modal">Complete Create Project</a>
+					    
+										<!-- Create Class PopUp-->
+										<div id="complete" class="modal fade">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h4 class="modal-title">Confirm</h4>
+													</div>
+													<div class="modal-body">
+														Do you really want to complete a creating Project?
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-default"
+															data-dismiss="modal">Close</button>
+														<button type="button" class="btn btn-default"
+															data-dismiss="modal" 
+															onclick="gocreateProject2();"; >Create Project</button>
+
+													</div>
+												</div>
+											</div>
+										</div>
+					    
+					    <!-- --------------------- -->
+					<input class="btn btn-lg btn-primary" type="submit" value="Cancel" formmethod="get" formaction="">
 					</div>
 				</div>
 			</form>
