@@ -5,8 +5,8 @@
 <%@ page import="com.dao.PRModel"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="com.vo.UploadFile"%>
-<%@ page import="java.io.File" %>
-<%@ page import="com.dao.PRUpload" %>
+<%@ page import="java.io.File"%>
+<%@ page import="com.dao.PRUpload"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.io.FileInputStream"%>
@@ -52,23 +52,96 @@
 
 	}
 </script>
-<%! 
-String project_name;
-%>
-<%project_name = request.getParameter("project_name"); %>
-<script type="text/javascript">
-function ErrorType(){
-	alert("Invalid Type!");
-}
+<%!String p="", id, project_name="", current_project="";%>
 
-function confirmUpload(){
-	$('#smallModal').modal();
-}
+<%
+	id = (String)session.getAttribute("login");
+System.out.println("ididtest ==   "+id);
+%>
+
+<%
+	p = request.getParameter("project_name");
+	
+	if(p!=null)
+		session.setAttribute("project_name", p);
+			
+
+	project_name = session.getAttribute("project_name").toString();
+%>
+
+
+<script type="text/javascript">
+	function ErrorType() {
+		alert("Invalid Type!");
+	}
+
+	function confirmUpload() {
+		$('#smallModal').modal();
+	}
+	
+	
+</script>
+
+<script>
+	$(document)
+			.ready(
+					function() {
+								
+						setInterval(
+								function() {		
+									
+									var pp = $('#p_name').html();
+																		
+									$
+											.ajax({
+												
+												type : "POST",
+												url : '/PRfinal/ajax_project_detail_Issue.do?project_name='+pp,
+												dataType : 'json',
+												async : true,
+												contentType : 'application/json; charset=utf-8',
+												success : function(res) {
+												
+													var $time_line = $("#timeline");
+
+													$time_line.empty();
+
+													$
+															.each(
+																	res,
+																	function(
+																			idx,
+																			value) {
+
+																		////////////////
+																		var issue;
+																		issue = "<li><!--Time Line Element---> <div class='timeline-badge up'>	<i class='	fa fa-cloud-upload'></i></div>"
+																				+ "	<div class='timeline-panel'>	<div class='timeline-heading'>	<h4 class='timeline-title'>"
+																				+ value.className +"  "
+																				+ value.id +"  "
+																				+ value.date +"  "
+																				+ "</h4></div>"
+																				+ "	<div class='timeline-body'>	<!---Time Line Body&Content--->	<p>Upload</p>"
+																				+ "		</div>		</div>	</li>";
+																		////////////////
+
+																		$time_line
+																				.append(issue);
+
+																	});
+												},
+												error : function(req, st, e) {
+
+												}
+											});
+
+								}, 3000);
+
+					});
 </script>
 <script type="text/javascript">
-function fileupload_form(){
-	<%
-	PRUpload upload;
+	function fileupload_form() {
+<%PRUpload upload;
 	request.setCharacterEncoding("UTF-8");
 	//10Mbyte
 	int maxSize = 1024*1024*10;
@@ -110,8 +183,8 @@ function fileupload_form(){
 	     }
 	     else {
 	    	 DB_date = date.format(new Date(currentTime));
-	    	 DB_Id = "sampleID";
-	    	 DB_projectName = "sampleProject";
+	    	 DB_Id = id;
+	    	 DB_projectName = project_name;
 	    	 DB_className = uploadFile.substring(0, uploadFile.lastIndexOf("."));
 	    	 System.out.println("업로드 날짜: " + DB_date);
 	    	 System.out.println("아이디: " + DB_Id);
@@ -142,25 +215,22 @@ function fileupload_form(){
 	            while((read=is.read(buf,0,buf.length))!=-1){
 	                os.write(buf, 0, read);
 	         }
-	             
-	            is.close();
-	            os.close();
-	            oFile.delete();     
+	      
 	   	}
-	     }
-	     
+		     is.close();
+	         os.close();
+	         oFile.delete();    
+	    }
 	}catch(Exception e) {
 		e.printStackTrace();
+	}%>
+	var c = confirm("Upload Success!");
+	if (c == true) {
+			window.addUploadIssue();
 	}
-	%>  
-	
-	var r = confirm("Uploaded Success!");
-	if (r == true) {
-		window.addUploadIssue();
-	} 
-}
-    
-    </script>
+}	
+</script>
+
 <script type="text/javascript">
 	function addRow(TableID) // 테이블 동적 생성
 	{
@@ -247,19 +317,23 @@ function addDownloadIssue(){
 }
 
 
+	function addUploadIssue() {
+		<%PRUpload tmp = new PRUpload();
+		// tmp.upLoad(fileName, id, date, projectName, className)
+		%>
+	}
+
+	function addDownloadIssue() {
+		var issue;
+		issue = "<li><!--Time Line Element---> <div class='timeline-badge down'><i class='fa fa-cloud-download'></i></div>"
+				+ "	<div class='timeline-panel'>	<div class='timeline-heading'>	<h4 class='timeline-title'>Time Line Entry #1</h4></div>"
+				+ "	<div class='timeline-body'>	<!---Time Line Body&Content--->	<p>Download</p>"
+				+ "		</div>		</div>	</li>";
+		$("#timeline").append(issue);
+	}
 </script>
 
 </head>
-
-<%
-
-String id = (String)request.getAttribute("id");
-
-if(id!=null){
-	session.setAttribute("login", id);
-}
-
-%>
 
 <body class="homepage">
 	<div id="page-wrapper">
@@ -297,7 +371,7 @@ if(id!=null){
 					<div class="container" text-center>
 						<div>
 							<header>
-							<h2 style="text-align: center;"><%= project_name %></h2>
+							<h2 id = "p_name" style="text-align: center; value="<%=project_name%>"><%=project_name%></h2>
 							</header>
 						</div>
 						<p>project에 대한 설명을 불러올것.</p>
@@ -335,10 +409,10 @@ if(id!=null){
 						<div class="container" text-center>
 							<div class="inner">
 								<header>
-								<h2>Issue Tracker</h2> 
+								<h2>Issue Tracker</h2>
 								</header>
 								<div class="scroll">
-									<ul class="timeline" id = "timeline">
+									<ul class="timeline" id="timeline">
 										<!-- space for appending timeline -->
 
 									</ul>
@@ -436,11 +510,15 @@ if(id!=null){
 					<h3 class="modal-title" id="lineModalLabel">Upload Code File</h3>
 				</div>
 				<div class="modal-body">
-					<form action="" method="post" onsubmit="JavaScript:fileupload_form()" 
+					<form action="" onsubmit="JavaScript:fileupload_form()"
 						enctype="multipart/form-data">
 						<input type="file" id="file" class="file" name="uploadFile"
 							id="uploadFile"> <br>
+<<<<<<< HEAD
 						<button type="submit" class="btn btn-primary" name="upload" >Submit</button>
+=======
+						<button type="submit" class="btn btn-primary" name="upload">Submit</button>
+>>>>>>> b6c5acdd1ee12660c9f4ec2cff1452199de7f37d
 						<button type="reset" class="btn btn-default">Reset</button>
 					</form>
 					<hr>
@@ -477,10 +555,11 @@ if(id!=null){
 						</theader>
 						<tbody>
 							<%
-					ArrayList<UploadFile> lists = (ArrayList<UploadFile>)request.getAttribute("lists");
-					System.out.println(lists.size());
-					for (int i = 0; i < lists.size(); i++) {
-					%>
+								ArrayList<UploadFile> lists = (ArrayList<UploadFile>) request
+										.getAttribute("lists");
+								System.out.println(lists.size());
+								for (int i = 0; i < lists.size(); i++) {
+							%>
 
 							<tr>
 								<td><%=lists.get(i).getProjectName()%></td>
@@ -488,11 +567,24 @@ if(id!=null){
 								<td><%=lists.get(i).getFileName()%></td>
 								<td><%=lists.get(i).getId()%></td>
 								<td><%=lists.get(i).getDate()%></td>
+<<<<<<< HEAD
 								<td><a href="form/downloadFile.jsp?filename=<%=lists.get(i).getFileName()%>" >
 								<span class="glyphicon glyphicon-save" aria-hidden="true" onClick="addDownloadIssue()"></span></a></td>
 								<%System.out.println(lists.get(i).getFileName()); %>
+=======
+								<td><a
+									href="form/downloadFile.jsp?filename=<%=lists.get(i).getFileName()%>">
+										<span class="glyphicon glyphicon-save" aria-hidden="true"
+										onclick="addDownloadIssue()"></span>
+								</a></td>
+								<%
+									System.out.println(lists.get(i).getFileName());
+								%>
+>>>>>>> b6c5acdd1ee12660c9f4ec2cff1452199de7f37d
 							</tr>
-							<%}%>
+							<%
+								}
+							%>
 						</tbody>
 					</table>
 
@@ -503,15 +595,14 @@ if(id!=null){
 		</div>
 		<!-- End of download modal -->
 
-<!-- Start of confirm modal -->
-<div id = "smallModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      ...alert
-    </div>
-  </div>
-</div>
-<!-- End of confirm modal -->
+		<!-- Start of confirm modal -->
+		<div id="smallModal" class="modal fade bs-example-modal-sm"
+			tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">...alert</div>
+			</div>
+		</div>
+		<!-- End of confirm modal -->
 		<style>
 .center {
 	margin-top: 50px;

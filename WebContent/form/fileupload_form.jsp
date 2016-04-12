@@ -6,9 +6,9 @@
 <%@page import="java.io.FileOutputStream"%>
 <%@page import="java.io.DataInputStream"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<%@ page import="java.io.File" %>
-<%@ page import="com.dao.PRUpload" %>
+	pageEncoding="EUC-KR"%>
+<%@ page import="java.io.File"%>
+<%@ page import="com.dao.PRUpload"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,7 +16,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
+	<%
 PRUpload upload;
 request.setCharacterEncoding("UTF-8");
 //10Mbyte
@@ -56,8 +56,11 @@ try {
     	 return;
      }
      else {
+    	 String id = (String)session.getAttribute("login");
+    	 System.out.println(id);
+    	 
     	 DB_date = date.format(new Date(currentTime));
-    	 DB_Id = "sampleID";
+    	 DB_Id = id;
     	 DB_projectName = "sampleProject";
     	 DB_className = uploadFile.substring(0, uploadFile.lastIndexOf("."));
     	 System.out.println("업로드 날짜: " + DB_date);

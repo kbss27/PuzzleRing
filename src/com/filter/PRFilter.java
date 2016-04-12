@@ -1,7 +1,6 @@
 package com.filter;
 
 import java.io.IOException;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -88,6 +87,8 @@ public class PRFilter implements Filter {
 			controller_setting.goSetting(req, res);
 		}else if (reqString.equals("/memberUpdate.do")){
 			controller_member_update.joinprocess(req, res);
+		}else if (reqString.equals("/ajax_project_detail_Issue.do")){
+			prAjax.getIssueProject(req, res);
 		}
 	}
 
