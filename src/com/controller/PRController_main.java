@@ -15,4 +15,16 @@ public class PRController_main {
 		}
 	}
 
+	public void logout(HttpServletRequest req, HttpServletResponse res){
+		//this is logout form. this logout form will open login_form.jsp
+		req.getSession().removeAttribute("login");
+		RequestDispatcher dis = req
+				.getRequestDispatcher("/form/home.jsp");
+		try {
+			dis.forward(req, res);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

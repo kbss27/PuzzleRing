@@ -30,7 +30,7 @@ public class PRController_createProject {
 		
 		if(model.createProject(project_creator, project_name, project_content)){
 			
-			RequestDispatcher dis = req.getRequestDispatcher("/form/main.jsp");
+			RequestDispatcher dis = req.getRequestDispatcher("/form/mainAftercreate.jsp");
 			try {
 				dis.forward(req, res);
 			} catch (Exception e) {

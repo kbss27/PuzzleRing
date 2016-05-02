@@ -19,8 +19,8 @@ public class PRController_showUploadList {
 	
 	public void showUploadList(HttpServletRequest req, HttpServletResponse res) {
 		ArrayList<UploadFile> files;
-		String p_name = (String)req.getSession().getAttribute("project_name");
-		
+		//String p_name = (String)req.getSession().getAttribute("project_name");
+		String p_name = req.getParameter("project_name");
 		files = file.getFileList(p_name);
 				
 		System.out.println("-- file list --");
@@ -34,12 +34,15 @@ public class PRController_showUploadList {
 			System.out.println("----------------------");
 		}
 		req.setAttribute("lists", files);
-		RequestDispatcher dis = req.getRequestDispatcher("/form/project_detail.jsp");
+		RequestDispatcher dis = req.getRequestDispatcher("/form/project_detail.jsp?project_name="+p_name);
 		try {
 			dis.forward(req, res);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+	}
+	public void showClasses(HttpServletRequest req, HttpServletResponse res) {
 		
 	}
 }

@@ -42,6 +42,7 @@ public class PRShowProject {
 			ResultSet rs = pstat.executeQuery();
 			
 			while(rs.next()){
+				//System.out.println(rs.getString(1)+" " +rs.getString(2)+" " +rs.getString(3));
 				p_detail = new Project_detail(rs.getString(1), rs.getString(2), rs.getString(3));
 				myprojects.add(p_detail);
 			}

@@ -87,6 +87,10 @@ public class PRFilter implements Filter {
 			controller_project_process2.createProject2(req, res);
 		}else if (reqString.equals("/ajax_project_detail_Issue.do")){
 			prAjax.getIssueProject(req, res);
+		}else if (reqString.equals("/usermain.do")){
+			controller_member.mainlogin(req, res);
+		}else if(reqString.equals("/logout.do")){
+			controller_main.logout(req, res);
 		}
 	}
 

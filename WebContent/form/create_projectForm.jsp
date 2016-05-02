@@ -255,11 +255,13 @@
 	
 </script>
 <script type="text/javascript">
+	
 	function gocreateProject() {
 		var form = document.getElementById("projectform");
 		form.action = "createproject.do";
 		form.submit();
 	}
+	
 	function completeProjectDetail()
 	{
 		var cString = "";
@@ -298,6 +300,7 @@
 		form2.action = "createproject2.do";
 		form2.submit();
 	}
+	
 	function terms()
 	{
 		var project_creater = document.getElementById("a").value;

@@ -68,8 +68,8 @@
 <title>Puzzle Ring</title>
 
 <%
-//PRModel prmodel = new PRModel();
-//prmodel.updateTodayProject();
+PRModel prmodel = new PRModel();
+prmodel.updateTodayProject();	//페이지 불릴때마다 today new project update.
 %>
 <script type="text/javascript">
    function goJoin() {
@@ -329,6 +329,15 @@
 							<div class="inner">
 								<header>
 								<h2>Today's new Project</h2>
+								<%
+								PRModel todaynewP = new PRModel();
+								ArrayList<String> projects = new ArrayList<String>();
+								projects = todaynewP.getTodayProject();	//투데이 프로젝트가져오기.
+								for(int i = 0; i < projects.size(); i++){
+								%>
+								<h3><%=projects.get(i)%></h3>
+								<%}%>
+								
 								</header>
 							</div>
 							</section>

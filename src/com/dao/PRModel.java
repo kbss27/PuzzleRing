@@ -54,17 +54,28 @@ public class PRModel {
 	public void updateTodayProject(){
 		Connection con;
 		ArrayList<String> projects = new ArrayList<String>();
-		Date today = new Date();
+		//Date today = new Date();
 		Calendar cal = Calendar.getInstance();
 		
 		try {
 			con = ds.getConnection();
 
+			String year = Integer.toString(cal.get(Calendar.YEAR));
+			String month = Integer.toString(cal.get(Calendar.MONTH)+1);
+			String day = Integer.toString(cal.get(Calendar.DAY_OF_MONTH));
+			
+			if(month.length()!=2){
+				month = "0"+month;
+			}
+			if(day.length()!=2){
+				day = "0"+day;
+			}
+			String today = year+"-"+month+"-"+day;
+			System.out.println(year+"-"+month+"-"+day);
+			
 			String sql = "delete from todayNewProject where Date != ?";
 			PreparedStatement pstat = con.prepareStatement(sql);
-			pstat.setString(1, today.toString());
-			
-			System.out.println(cal.YEAR + "-" +cal.MONTH + "-" +cal.DAY_OF_MONTH);
+			pstat.setString(1, today);
 			
 			pstat.execute();
 			pstat.close();

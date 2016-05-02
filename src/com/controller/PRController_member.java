@@ -57,7 +57,15 @@ public class PRController_member {
 			e1.printStackTrace();
 		}
 	}
-
+	public void mainlogin(HttpServletRequest req, HttpServletResponse res) {
+		RequestDispatcher dis = req.getRequestDispatcher("form/main.jsp");
+		try {
+			dis.forward(req, res);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void join(HttpServletRequest req, HttpServletResponse res) {
 		RequestDispatcher dis = req.getRequestDispatcher("form/join.jsp");
 		try {

@@ -26,7 +26,7 @@
 		history.forward();
 	}
 	function logout() {
-
+		
 	}
 </script>
 
@@ -123,7 +123,7 @@
 				<li><a href="no-sidebar.html">No Sb</a></li>
 				<li><a href="#" onclick="goback()"><i
 						class="fa fa-2x fa-angle-left fa-fw"></i></a></li>
-				<li><a href="logout.do"><i
+				<li><a href="logout.do" onclick="logout()"><i
 						class="fa fa-2x fa-fw fa-unlock text-success"></i></a></li>
 				<li><a href="#" onclick="foward()"><i
 						class="fa fa-2x fa-angle-right fa-fw"></i></a></li>
