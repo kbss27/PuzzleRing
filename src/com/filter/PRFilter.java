@@ -1,8 +1,6 @@
 package com.filter;
 
 import java.io.IOException;
-
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -12,13 +10,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONObject;
-
 import com.ajax.PRAjax;
 import com.controller.PRController_createProject;
 import com.controller.PRController_createProject2;
 import com.controller.PRController_main;
 import com.controller.PRController_member;
+import com.controller.PRController_memberUpdate;
+import com.controller.PRController_setting;
 import com.controller.PRController_showProject;
 import com.controller.PRController_showUploadList;
 
@@ -32,9 +30,9 @@ public class PRFilter implements Filter {
 	PRController_createProject controller_project_process;
 	PRController_createProject2 controller_project_process2;
 	PRController_showProject controller_show_project;
-	
+	PRController_setting controller_setting;
 	PRController_showProject controller_test;
-	
+	PRController_memberUpdate controller_member_update;
 	PRController_showUploadList controller_show_upload;
 
 	PRAjax prAjax;
@@ -48,9 +46,9 @@ public class PRFilter implements Filter {
 		controller_project_process = new PRController_createProject();
 		controller_project_process2 = new PRController_createProject2();
 		controller_show_project = new PRController_showProject();
-		
+		controller_setting = new PRController_setting();
 		controller_test = new PRController_showProject();
-		
+		controller_member_update = new PRController_memberUpdate();
 		controller_show_upload = new PRController_showUploadList();
 		prAjax = new PRAjax();
 		
@@ -85,6 +83,10 @@ public class PRFilter implements Filter {
 	         prAjax.getIssueDatahome(req,res);//home.jsp
 	    }else if (reqString.equals("/createproject2.do")){
 			controller_project_process2.createProject2(req, res);
+		}else if (reqString.equals("/setting.do")){
+			controller_setting.goSetting(req, res);
+		}else if (reqString.equals("/memberUpdate.do")){
+			controller_member_update.joinprocess(req, res);
 		}else if (reqString.equals("/ajax_project_detail_Issue.do")){
 			prAjax.getIssueProject(req, res);
 		}else if (reqString.equals("/usermain.do")){

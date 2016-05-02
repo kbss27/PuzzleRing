@@ -28,6 +28,12 @@
 	function logout() {
 		
 	}
+	function goSetting()
+	{
+		var form = document.getElementById("setting");
+		form.action = "setting.do";
+		form.submit();
+	}
 </script>
 
 <script>
@@ -200,6 +206,7 @@
 						</section>
 					</div>
 					<div class="5u 12u(medium)">
+					<form role="form" method="get" id="setting">
 						<ul style="text-align: center; margin-top: 20px;">
 
 							<p style="text-align: center; margin-top: 20px;">
@@ -211,14 +218,15 @@
 								<h5>
 									Welcome
 									<%=(String) session.getAttribute("login")%></h5>
+									<input type="hidden" value="<%=(String) session.getAttribute("login")%>" name="user_id" id="user_id">
 							</div>
 
-							<input type="submit" value="Settings" formmethod="get"
-								formaction="{% url 'setting' %}">
-
+							
+							<input type="button" value="Settings" onClick="goSetting()">
 							<!--<li><a href="#" class="button big icon fa-arrow-circle-right">Join</a></li>
                         <li><a href="#" class="button alt big icon fa-question-circle">Login</a></li>-->
 						</ul>
+					</form>
 					</div>
 				</div>
 			</div>
