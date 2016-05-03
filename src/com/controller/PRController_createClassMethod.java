@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.dao.PRCreateClassMethod;
+import com.dao.PRCreateProject;
+import com.dao.PRCreateProject2;
 import com.vo.Project_overview;
 
 public class PRController_createClassMethod {
@@ -15,6 +17,16 @@ public class PRController_createClassMethod {
 		model = new PRCreateClassMethod();
 	}
 
+	/*
+	public void createProcess3(HttpServletRequest req, HttpServletResponse res) {
+		RequestDispatcher dis = req.getRequestDispatcher("/form/create_projectForm.jsp");
+		try {
+			dis.forward(req, res);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	*/
 	public void createClassMethod(HttpServletRequest req, HttpServletResponse res) {
 
 	      String project_name = req.getParameter("project_name");
