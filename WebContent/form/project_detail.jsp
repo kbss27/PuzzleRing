@@ -149,7 +149,7 @@ System.out.println("ididtest ==   "+id);
 												}
 											});
 
-								}, 40000);
+								}, 20000);
 
 					});
 </script>

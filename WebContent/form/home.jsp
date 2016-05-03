@@ -332,7 +332,9 @@ prmodel.updateTodayProject();	//페이지 불릴때마다 today new project upda
 									
 									ArrayList<Project_detail> projects = new ArrayList<Project_detail>();
 									projects = todaynewP.getTodayProject(); //투데이 프로젝트가져오기.
+									System.out.println(projects.size());
 									for (int i = 0; i < projects.size(); i++) {
+										System.out.println(projects.get(i).getProject_name());
 								%>
 								<tr><td><%=projects.get(i).getProject_name()%></td><td><%=projects.get(i).getProject_type()%></td> <td><%=projects.get(i).getProject_content()%> </td> </tr>
 								<%

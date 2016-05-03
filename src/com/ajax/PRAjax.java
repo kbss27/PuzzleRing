@@ -124,9 +124,9 @@ public class PRAjax{
 
 			PreparedStatement pstat = con.prepareStatement(sql);
 			String p_name=(String)req.getParameter("project_name");
-			System.out.println(p_name);
+			//System.out.println(p_name);
 			
-			pstat.setString(1, "hyunwoo");
+			pstat.setString(1, p_name);
 			
 			ResultSet rs = pstat.executeQuery();
 

@@ -35,19 +35,20 @@ public class PRModel {
 		try {
 			con = ds.getConnection();
 
-			Project_detail tmp = new Project_detail();
 			String sql = "select project_id, project_name, project_content, project_type from todayNewProject";
 			PreparedStatement pstat = con.prepareStatement(sql);
 
 			ResultSet rs = pstat.executeQuery();
 			
 			while(rs.next()){
+				Project_detail tmp = new Project_detail();
 				tmp.setProject_name(rs.getString(2));
 				tmp.setProject_content(rs.getString(3));
 				tmp.setProject_type(rs.getString(4));
+				
+				projects.add(tmp);
+				
 			}
-			projects.add(tmp);
-			
 			pstat.close();
 			con.close();
 		} catch (SQLException e) {
