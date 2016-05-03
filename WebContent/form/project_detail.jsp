@@ -57,7 +57,9 @@
 </script>
 <%!String p="", id, project_name="", current_project="";
 ArrayList<UploadFile> lists;
+ArrayList<String> classlist;
 ArrayList<String> classes;
+String content;
 %>
 <%! String classname=""; %>
 <%
@@ -78,6 +80,8 @@ System.out.println("ididtest ==   "+id);
 %>
 <%
 								lists = (ArrayList<UploadFile>) request.getAttribute("lists");
+								classlist = (ArrayList<String>) request.getAttribute("classlist");
+								content = (String)request.getAttribute("content");
 								%>
 
 <script type="text/javascript">
@@ -353,9 +357,8 @@ function addUploadIssue(){
 			<ul>
 				<li class="current"><a href="main.do"><i
 						class="fa fa-2x fa-fw fa-home text-warning"></i></a></li>
-				<li><a href="left-sidebar.html">Left Sb</a></li>
-				<li><a href="right-sidebar.html">Right Sb</a></li>
-				<li><a href="no-sidebar.html">No Sb</a></li>
+				<li><a href="project_list">Projects</a></li>
+				<li><a href="community.do">Community</a></li>
 				<li><a href="#" onclick="goback()"><i
 						class="fa fa-2x fa-angle-left fa-fw"></i></a></li>
 				<li><a href="logout.do"><i
@@ -376,7 +379,8 @@ function addUploadIssue(){
 							<h2 id = "p_name" style="text-align: center; value="<%=project_name%>"><%=project_name%></h2>
 							</header>
 						</div>
-						<p>project에 대한 설명을 불러올것.</p>
+						<p><%=content %></p>
+						
 						<div id="current_prj">
 							<table id="tableid">
 								<tr>
@@ -385,9 +389,9 @@ function addUploadIssue(){
 								</tr>
 								<%
 								ArrayList<String> temp = new ArrayList<String>();
-								for(int i = 0; i < lists.size(); i++) { 
+								for(int i = 0; i < classlist.size(); i++) { 
 									
-									temp.add(lists.get(i).getClassName());
+									temp.add(classlist.get(i));
 								}
 								for(int i = 0; i < temp.size(); i++) {
 									for(int j = i+1; j < temp.size(); j++) {
@@ -397,6 +401,7 @@ function addUploadIssue(){
 									}
 								}
 								classes = new ArrayList<String>();
+								
 								for(int i = 0; i < temp.size(); i++) {
 									classes.add(temp.get(i));
 								%>
@@ -600,10 +605,8 @@ function addUploadIssue(){
 						</theader>
 						<tbody>
 							<% 
-								String te = "ff";
 								ArrayList<UploadFile> lists = (ArrayList<UploadFile>) request
 										.getAttribute("lists");
-								System.out.println(lists.size());
 								for (int i = 0; i < lists.size(); i++) {
 							%>
 

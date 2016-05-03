@@ -93,7 +93,9 @@
 
 				// 실제 저장될 파일 객체 생성
 				File nFile = new File(path + fileName);
-
+				
+				System.out.println("오파일오파일!!    "+oFile.getName() + "    "+
+									"엔파일엔파일!!   " + nFile.getName());
 				// 파일명 rename
 				if (!oFile.renameTo(nFile)) {
 					// rename이 되지 않을경우 강제로 파일을 복사하고 기존파일은 삭제
@@ -104,7 +106,6 @@
 					while ((read = is.read(buf, 0, buf.length)) != -1) {
 						os.write(buf, 0, read);
 					}
-
 				}
 				
 				response.sendRedirect("../showUploadList.do?project_name="+DB_projectName);			

@@ -7,6 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
    <link rel="stylesheet"  type="text/css" href="assets/css/main.css">
 <title>Setting Personel Infomation</title>
+<script type="text/javascript">
+   //back, foward, logout button event function
+   function goback() { //go to back page
+      history.back();
+   }
+   </script>
 </head>
 <body class="homepage">
 	<div id="page-wrapper">
@@ -41,6 +47,7 @@
 						    </div>
 						    <br/>
 						    <div style="float: right;">
+						    <input type="submit" value="Cancel" formmethod="post" onclick="goback()"/>
 						    <input type="submit" value="Update" formmethod="post" formaction="memberUpdate.do">
 						    </div>
 						    <br/>

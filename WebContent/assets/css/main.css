@@ -6,6 +6,83 @@
 	html5up.net | @n33co
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
+/* today's project design - added */
+
+#todayTable {
+		border-collapse:collapse;
+		border-left:1px solid #686868;
+		border-right:1px solid #686868;
+		color: black;
+}
+
+#todayTable caption {
+		padding: 0 0 .5em 0;
+		font-weight: bold;
+		text-transform: uppercase;
+		color: #333;
+		background: transparent;
+}
+
+/* =links
+----------------------------------------------- */
+
+#todayTable a {
+		color:#950000;
+		text-decoration:none;
+}
+
+#todayTable a:visited {
+		font-weight:normal;
+		color:#666;
+		text-decoration: line-through;
+}
+
+#todayTable a:hover {
+		border-bottom: 1px dashed #bbb;
+}
+
+/* =head =foot
+----------------------------------------------- */
+
+#todayTable th, tfoot th, tfoot td {
+		color:#fff
+}
+/* =body
+----------------------------------------------- */
+
+#todayTable tbody th, tbody td {
+		padding-left: 10px;
+		white-space: nowrap;
+		border-bottom: dotted 1px #333;
+}
+
+#todayTable tbody th a {
+		color:#333;
+}
+
+#todayTable tbody tr:hover {
+		background:#fafafa
+}
+
+/* class-list style - added */ 
+#class_list caption {text-align: center;}
+#class_list table {margin: 0; padding: 0; border-collapse: collapse; width: 100%;}
+#class_list td, th {padding: 10px 4px; border-bottom: 1px solid #EEE;}
+#class_list td + td {border-left: 1px solid #FAFAFA; color: #999;}
+#class_list td + td + td {color: #666; border-left: 1px solid #FAFAFA; }
+#class_list td a {color: #444; text-decoration: none; text-align: center;}
+#class_list td a, th a {display: block; width: 100%;}
+#class_list tbody tr:hover {background: #EAECEE; color: #111;}
+#class_list tfoot th {text-align: right;}
+#class_list th {text-align: left;}
+#class_list th + th {text-align: center;}
+#class_list th + th + th {text-align: center;}
+#class_list th a {color: #F06; text-decoration: none;}
+#class_list th a:visited {color: #F69;}
+#class_list th a:hover {color: #F06; text-decoration: underline;}
+#class_list thead tr, tfoot tr {color: #555;}
+#class_list tr {repeat-x: #F8F8F8; color: #666;}
+#class_list tr:hover {background: #FFF;}
 
 
 /* form-group -added */

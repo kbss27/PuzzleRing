@@ -1,4 +1,4 @@
-<%@ page import="com.vo.Member"%>
+<%@ page import="com.vo.Project_overview"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +17,7 @@
    	<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
   
     
-    
+     
 <style type="text/css">
 
 .bs-example {
@@ -32,10 +32,8 @@
 	function forward() { //go to prior page
 		history.forward();
 	}
-	function logout() {
-
-	}
 </script>
+
 <script type="text/javascript">
 	
 	var tot_obj = null;
@@ -274,12 +272,6 @@
 </script>
 <script type="text/javascript">
 	
-	function gocreateProject() {
-		var form = document.getElementById("projectform");
-		form.action = "createproject.do";
-		form.submit();
-	}
-	
 	function completeProjectDetail()
 	{
 		var cString = "";
@@ -315,13 +307,12 @@
 		//uml function call
 		window.addUML();
 	}
-	function gocreateProject2() {
+	function gocreateProject3() {
 		
 		var form2 = document.getElementById("projectform2");
-		form2.action = "createproject2.do";
+		form2.action = "createproject3.do";
 		form2.submit();
 	}
-	
 	function terms()
 	{
 		var project_creater = document.getElementById("a").value;
@@ -742,32 +733,29 @@ $("#addArrow").click(function() {
 						<!-- step1 -->
 						<section class="projectoverview">
 							<form role="form" method="get" id="projectform" >
-							
+							<%Project_overview project = (Project_overview)request.getAttribute("project_overview");%>
 								<div class="project_creator">
 									<label for="project_creator">Project Creator: </label> <input
-										type="text" id="a"name="project_creator" value ="<%=(String)session.getAttribute("login")%>" readonly onchange="terms()">
+										type="text" id="a"name="project_creator" onchange="terms()" value ="<%=project.getProject_creator()%>" readonly>
+
 								</div>
 								<div class="project_name">
 									<label for="project_name">Project Name: </label> <input
-										type="text" id="b" name="project_name" placeholder="length 1-500" onchange="terms2()">
+										type="text" id="b" name="project_name" onchange="terms2()" value ="<%=project.getProject_name()%>" readonly>
 								</div>
 								<div class="project_type">
-									<label for="project_type">Project Type: </label> <select
-										id="c" name="project_type" onchange="terms3()">
-										<option value="sorting">Sorting</option>
-										<option value="tree">Tree</option>
-										<option value="algorithm">Algorithm</option>
-										<option value="others">Others</option>
+									<label for="project_type">Project Type: </label> <input type ="text"
+										id="c" name="project_type" onchange="terms3()" value ="<%=project.getProject_type()%>" readonly>
+										
 									</select>
 								</div>
 								<div class="project_content">
 									<label for="project_content">Project Content: </label><br />
 									<textarea name="project_content" id="d" max_length="900" cols="120"
-										rows="10" placeholder="Information(1~900)" onchange="terms4()"></textarea>
+										rows="10" onchange="terms4()" readonly><%=project.getProject_detail()%></textarea>
 								</div>
 								<br /> 
-								<input class="btn btn-lg btn-primary" type="submit" value="Cancel" onClick="goback()">
-								<input class="btn btn-lg btn-primary" type="submit" value="Create" formmethod="get" onclick="gocreateProject()">
+								<input class="btn btn-lg btn-primary" type="submit" value="Cancel" onclick="goback()">
 								<input class="btn btn-lg btn-primary" type="button" value="Next Step" onclick="javascript: resetActive(event, 33, 'step-2');"> 
 									
 							</form>
@@ -1025,7 +1013,7 @@ $("#addArrow").click(function() {
 															data-dismiss="modal">Close</button>
 														<button type="button" class="btn btn-default"
 															data-dismiss="modal" 
-															onclick="gocreateProject2();"; >Create Project</button>
+															onclick="gocreateProject3();" >Create Project</button>
 
 													</div>
 												</div>

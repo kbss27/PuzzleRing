@@ -6,10 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import com.vo.Project_detail;
 
 public class PRModel {
 	DataSource ds;
@@ -27,21 +28,25 @@ public class PRModel {
 		}
 	}
 	
-	public ArrayList<String> getTodayProject(){
+	public ArrayList<Project_detail> getTodayProject(){
 		Connection con;
-		ArrayList<String> projects = new ArrayList<String>();
+		ArrayList<Project_detail> projects = new ArrayList<Project_detail>();
 		
 		try {
 			con = ds.getConnection();
 
-			String sql = "select project_id, project_name from todayNewProject";
+			Project_detail tmp = new Project_detail();
+			String sql = "select project_id, project_name, project_content, project_type from todayNewProject";
 			PreparedStatement pstat = con.prepareStatement(sql);
 
 			ResultSet rs = pstat.executeQuery();
 			
 			while(rs.next()){
-				projects.add(rs.getString(2));
+				tmp.setProject_name(rs.getString(2));
+				tmp.setProject_content(rs.getString(3));
+				tmp.setProject_type(rs.getString(4));
 			}
+			projects.add(tmp);
 			
 			pstat.close();
 			con.close();

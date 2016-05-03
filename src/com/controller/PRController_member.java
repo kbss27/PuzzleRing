@@ -50,7 +50,7 @@ public class PRController_member {
 
 			} else {
 				System.out.println("false");
-				//	req.getRequestDispatcher("/form/loginFail.jsp").forward(req, res);;
+				//	req.getRequestDispatcher("/form/loginFail.jsp").forward(req, res);; 
 			}
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block

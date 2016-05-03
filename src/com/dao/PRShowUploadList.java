@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import com.vo.Project_detail;
 import com.vo.UploadFile;
 
 public class PRShowUploadList {
@@ -38,6 +40,7 @@ public class PRShowUploadList {
 				file = new UploadFile(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
 				System.out.println(file.getId() + " / " + file.getFileName() + " / " + file.getDate() + " / " + file.getProjectName() + " / " + file.getClassName());
 				files.add(file);
+				
 				System.out.println("Current size :: " + files.size());
 			}
 			
@@ -48,6 +51,33 @@ public class PRShowUploadList {
 		}
 		return files;
 	}
+	
+	public ArrayList<String> getClassList(String projectName) {
+		Connection con;
+		ArrayList<String> classlist = new ArrayList<String>();
+		
+		try {
+			con = ds.getConnection();
+
+			String sql = "select class_name from class_detail where project_id in (select project_id from project_detail where project_name = ?)";
+			PreparedStatement pstat = con.prepareStatement(sql);
+			pstat.setString(1, projectName);
+			
+			ResultSet rs = pstat.executeQuery();
+			
+			while(rs.next()){
+				classlist.add(rs.getString(1));
+			}
+			
+			pstat.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return classlist;
+	}
+	
+	
 	public UploadFile getFile(String fileName) {
 		Connection con;
 		UploadFile file = null;
@@ -67,5 +97,27 @@ public class PRShowUploadList {
 			e.printStackTrace();
 		}
 		return file;
+	}
+	
+	public String getcontent(String p_name){
+		Connection con;
+		String content="";
+		try {
+			con = ds.getConnection();
+			String sql = "select project_content from project_detail where project_name=?";
+			PreparedStatement pstat = con.prepareStatement(sql);
+			System.out.println("project name =   "+p_name);
+			pstat.setString(1, p_name);
+
+			ResultSet rs = pstat.executeQuery();
+			
+			while(rs.next()){
+				content = rs.getString(1); 
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("ddddddddddddd          :   "+content);
+		return content;
 	}
 }

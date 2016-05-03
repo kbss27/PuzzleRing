@@ -55,37 +55,23 @@
 
 													$table.empty();
 
-													$
-															.each(
-																	res,
-																	function(
-																			idx,
-																			value) {
-																		var projectNameTag = "<tr><td><a href='showUploadList.do?project_name="+value.projectName+"'>"
-																				+ value.projectName
-																				+ "</a></td>";
-																		var projectProgressTag = "<td><div class='progress'><div class='progress-bar progress-bar-striped active'role='progressbar' aria-valuenow='40' aria-valuemin='0'aria-valuemax='100' style='width: {{pro}}'>{{pro}}</div></div></td>"
-																		var projectProgressTag = projectProgressTag
-																				.replace(
-																						/{{pro}}/gi,
-																						value.projectProgress
-																								+ "%")
+													$.each(res, function(idx, value){
+									                	  var projectNameTag = "<tr><td width='40%'>" + value.projectName + "</td>";
+									                      var projectProgressTag = "<td width='50%'><div class='progress'><div class='progress-bar progress-bar-striped active'role='progressbar' aria-valuenow='40' aria-valuemin='0'aria-valuemax='100' style='width: {{pro}}'>{{pro}}</div></div></td>"
+									                      var projectProgressTag = projectProgressTag.replace(/{{pro}}/gi, value.projectProgress +"%")
+									                      
+									                      var projectStatus;
+									                      if(value.projectProgress === 0){
+									                         projectStatus = "<td width='10%'>TODO</td></tr>";
+									                      }else if(value.projectProgress === 50){
+									                         projectStatus = "<td width='10%'>PROGRESS</td></tr>";
+									                      }else {
+									                         projectStatus = "<td width='10%'>DONE</td></tr>";
+									                      }
 
-																		var projectStatus;
-																		if (value.projectProgress === 0) {
-																			projectStatus = "<td>TODO</td></tr>";
-																		} else if (value.projectProgress === 50) {
-																			projectStatus = "<td>PROGRESS</td></tr>";
-																		} else {
-																			projectStatus = "<td>DONE</td></tr>";
-																		}
-
-																		$table
-																				.append(projectNameTag
-																						+ projectProgressTag
-																						+ projectStatus);
-
-																	});
+									                     $table.append(projectNameTag + projectProgressTag + projectStatus);
+									                     
+									                  });
 												},
 												error : function(req, st, e) {
 
@@ -124,12 +110,11 @@
 			<ul>
 				<li class="current"><a href="main.do"><i
 						class="fa fa-2x fa-fw fa-home text-warning"></i></a></li>
-				<li><a href="left-sidebar.html">Left Sb</a></li>
-				<li><a href="right-sidebar.html">Right Sb</a></li>
-				<li><a href="no-sidebar.html">No Sb</a></li>
+				<li><a href="project_list">Projects</a></li>
+				<li><a href="community.do">Community</a></li>
 				<li><a href="#" onclick="goback()"><i
 						class="fa fa-2x fa-angle-left fa-fw"></i></a></li>
-				<li><a href="logout.do" onclick="logout()"><i
+				<li><a href="logout.do"><i
 						class="fa fa-2x fa-fw fa-unlock text-success"></i></a></li>
 				<li><a href="#" onclick="foward()"><i
 						class="fa fa-2x fa-angle-right fa-fw"></i></a></li>

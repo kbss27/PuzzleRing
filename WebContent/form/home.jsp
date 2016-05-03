@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.dao.PRModel"%>
+<%@ page import="com.vo.Project_detail"%>
 <%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -38,19 +39,19 @@
                
                
                   $.each(res, function(idx, value){
-                     var projectNameTag = "<tr><td>" + value.projectName + "</td>";
-                     var projectProgressTag = "<td><div class='progress'><div class='progress-bar progress-bar-striped active'role='progressbar' aria-valuenow='40' aria-valuemin='0'aria-valuemax='100' style='width: {{pro}}'>{{pro}}</div></div></td>"
-                     var projectProgressTag = projectProgressTag.replace(/{{pro}}/gi, value.projectProgress +"%")
-                     
-                     var projectStatus;
-                     if(value.projectProgress === 0){
-                        projectStatus = "<td>TODO</td></tr>";
-                     }else if(value.projectProgress === 50){
-                        projectStatus = "<td>PROGRESS</td></tr>";
-                     }else {
-                        projectStatus = "<td>DONE</td></tr>";
-                     }
-                     
+                	  var projectNameTag = "<tr><td width='40%'>" + value.projectName + "</td>";
+                      var projectProgressTag = "<td width='50%'><div class='progress'><div class='progress-bar progress-bar-striped active'role='progressbar' aria-valuenow='40' aria-valuemin='0'aria-valuemax='100' style='width: {{pro}}'>{{pro}}</div></div></td>"
+                      var projectProgressTag = projectProgressTag.replace(/{{pro}}/gi, value.projectProgress +"%")
+                      
+                      var projectStatus;
+                      if(value.projectProgress === 0){
+                         projectStatus = "<td width='10%'>TODO</td></tr>";
+                      }else if(value.projectProgress === 50){
+                         projectStatus = "<td width='10%'>PROGRESS</td></tr>";
+                      }else {
+                         projectStatus = "<td width='10%'>DONE</td></tr>";
+                      }
+
                      $table.append(projectNameTag + projectProgressTag + projectStatus);
                      
                   });
@@ -86,10 +87,6 @@ prmodel.updateTodayProject();	//페이지 불릴때마다 today new project upda
    function forward() { //go to prior page
       history.forward();
    }
-   function logout() {
-
-   }
-
    //Slide functino
    $(function() {
 
@@ -177,9 +174,8 @@ prmodel.updateTodayProject();	//페이지 불릴때마다 today new project upda
 			<ul>
 				<li class="current"><a href="main.do"><i
 						class="fa fa-2x fa-fw fa-home text-warning"></i></a></li>
-				<li><a href="left-sidebar.html">Left Sb</a></li>
-				<li><a href="right-sidebar.html">Right Sb</a></li>
-				<li><a href="no-sidebar.html">No Sb</a></li>
+				<li><a href="project_list">Projects</a></li>
+				<li><a href="community.do">Community</a></li>
 				<li><a href="#" onclick="goback()"><i
 						class="fa fa-2x fa-angle-left fa-fw"></i></a></li>
 				<li><a href="logout.do"><i
@@ -321,53 +317,61 @@ prmodel.updateTodayProject();	//페이지 불릴때마다 today new project upda
 			<div id="features-wrapper">
 				<div class="container">
 					<div class="row">
-						<div class="4u 12u(medium)">
-
+							<div class="12u 12u(medium)">
 							<!-- Box -->
 							<section class="box feature">
 
 							<div class="inner">
 								<header>
 								<h2>Today's new Project</h2>
-								<%
-								PRModel todaynewP = new PRModel();
-								ArrayList<String> projects = new ArrayList<String>();
-								projects = todaynewP.getTodayProject();	//투데이 프로젝트가져오기.
-								for(int i = 0; i < projects.size(); i++){
-								%>
-								<h3><%=projects.get(i)%></h3>
-								<%}%>
-								
 								</header>
-							</div>
+								<div class="scroll">
+								<table id = "todayTable" width="100%"  align="middle">
+								<%
+									PRModel todaynewP = new PRModel();
+									
+									ArrayList<Project_detail> projects = new ArrayList<Project_detail>();
+									projects = todaynewP.getTodayProject(); //투데이 프로젝트가져오기.
+									for (int i = 0; i < projects.size(); i++) {
+								%>
+								<tr><td><%=projects.get(i).getProject_name()%></td><td><%=projects.get(i).getProject_type()%></td> <td><%=projects.get(i).getProject_content()%> </td> </tr>
+								<%
+									}
+								%></table>
+								</div>
+							</div> 
 							</section>
+
 						</div>
 	
 				
 					<div class="12u 12u(medium)">
 
-						<!-- Box -->
-						<section class="box feature">
-						<div class="container" text-center>
-							<div class="inner">
-								<header>
-								<h2>
-									<a href="">Issue Tracking</a>
-								</h2>
-								</header>
+					<!-- Box -->
+							<section class="box feature">
+							<div class="container" text-center>
+								<div class="inner">
+									<header>
+									<h2>
+										<a href="">Project Progress</a>
+									</h2>
+									</header>
 
-								<div class="scroll">
-									<table style="border: 1px;" width="100%" cellspacing="0"
-										cellpadding="0" align="middle" id="class_list">
-									</table>
+									<div class="scroll">
+										<table style="border: 1px;" width="100%" cellspacing="10"
+											cellpadding="10" align="middle" id="class_list">
+										</table>
+									</div>
+
 								</div>
-
 							</div>
+							</section>
 						</div>
-						</section>
 					</div>
 				</div>
 			</div>
+
+
 
 
 			<!-- Footer -->
