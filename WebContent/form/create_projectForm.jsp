@@ -605,8 +605,24 @@ function Composition(a, b) {
 
 };
 		
-$("#addArrow").click(function() {
+$("#addGeneral").click(function() {
 	var link = new joint.shapes.uml.Generalization({
+		source : {
+			x : 100,
+			y : 100
+		},
+		target : {
+			x : 200,
+			y : 300
+		}
+	});
+
+	arrows.push(link);
+	graph.addCells([ link ]);
+
+});
+$("#addImplement").click(function() {
+	var link = new joint.shapes.uml.Implementation({
 		source : {
 			x : 100,
 			y : 100
@@ -614,6 +630,38 @@ $("#addArrow").click(function() {
 		target : {
 			x : 100,
 			y : 200
+		}
+	});
+
+	arrows.push(link);
+	graph.addCells([ link ]);
+
+});
+$("#addAggregate").click(function() {
+	var link = new joint.shapes.uml.Aggregation({
+		source : {
+			x : 100,
+			y : 100
+		},
+		target : {
+			x : 300,
+			y : 400
+		}
+	});
+
+	arrows.push(link);
+	graph.addCells([ link ]);
+
+});
+$("#addCompose").click(function() {
+	var link = new joint.shapes.uml.Composition({
+		source : {
+			x : 100,
+			y : 100
+		},
+		target : {
+			x : 400,
+			y : 500
 		}
 	});
 
@@ -933,7 +981,7 @@ $("#addArrow").click(function() {
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-default"
-													data-dismiss="modal">Close</button>
+													data-dismiss="modal">Save</button>
 											</div>
 										</div>
 									</div>
@@ -950,8 +998,11 @@ $("#addArrow").click(function() {
 
 						<h3 class="underline">Draw UML</h3>
 						<!-- step2 -->
-						<input class="btn btn-lg btn-primary" id="addBox" name="add" type="button" style="cursor: hand" value="add class"> 
-						<input class="btn btn-lg btn-primary" id="addArrow" type="button" style="cursor: hand" value="add Arrow">
+					
+						<input class="btn btn-primary" id="addGeneral" type="button" style="cursor: hand" value="add Generalization Arrow">
+						<input class="btn btn-primary" id="addImplement" type="button" style="cursor: hand" value="add Implementation Arrow">
+						<input class="btn btn-primary" id="addAggregate" type="button" style="cursor: hand" value="add Aggregation Arrow">
+						<input class="btn btn-primary" id="addCompose" type="button" style="cursor: hand" value="add Composition Arrow">
 
 						<section id="boxes" class="papers"></section>
 						<button class="btn btn-lg btn-primary" onClick="capture()" value="capture">capture</button>
