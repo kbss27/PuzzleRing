@@ -36,7 +36,8 @@
 
 
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 
 <script type="text/javascript" src="assets/js/modernizr.custom.79639.js"></script>
@@ -55,34 +56,31 @@
 
 	}
 </script>
-<%!String p="", id, project_name="", current_project="";
-ArrayList<UploadFile> lists;
-ArrayList<String> classlist;
-ArrayList<String> classes;
-String content;
-%>
-<%! String classname=""; %>
+<%!String p = "", id, project_name = "", current_project = "";
+	ArrayList<UploadFile> lists;
+	ArrayList<String> classlist;
+	ArrayList<String> classes;
+	String content;%>
+<%!String classname = "";%>
 <%
-	id = (String)session.getAttribute("login");
-System.out.println("ididtest ==   "+id);
+	id = (String) session.getAttribute("login");
+	System.out.println("ididtest ==   " + id);
 %>
 
 <%
 	project_name = request.getParameter("project_name");
-	System.out.println(project_name+"      P-name test");
-	
-	
+	System.out.println(project_name + "      P-name test");
+
 	//if(p!=null)
 	//	session.setAttribute("project_name", p);
-			
 
 	//project_name = session.getAttribute("project_name").toString();
 %>
 <%
-								lists = (ArrayList<UploadFile>) request.getAttribute("lists");
-								classlist = (ArrayList<String>) request.getAttribute("classlist");
-								content = (String)request.getAttribute("content");
-								%>
+	lists = (ArrayList<UploadFile>) request.getAttribute("lists");
+	classlist = (ArrayList<String>) request.getAttribute("classlist");
+	content = (String) request.getAttribute("content");
+%>
 
 <script type="text/javascript">
 	function ErrorType() {
@@ -92,30 +90,29 @@ System.out.println("ididtest ==   "+id);
 	function confirmUpload() {
 		$('#smallModal').modal();
 	}
-	
-	
 </script>
 
 <script>
 	$(document)
 			.ready(
 					function() {
-								
+
 						setInterval(
-								function() {		
-									
+								function() {
+
 									var pp = $('#p_name').html();
-																		
+
 									$
 											.ajax({
-												
+
 												type : "POST",
-												url : '/PRfinal/ajax_project_detail_Issue.do?project_name='+pp,
+												url : '/PRfinal/ajax_project_detail_Issue.do?project_name='
+														+ pp,
 												dataType : 'json',
 												async : true,
 												contentType : 'application/json; charset=utf-8',
 												success : function(res) {
-												
+
 													var $time_line = $("#timeline");
 
 													$time_line.empty();
@@ -131,12 +128,18 @@ System.out.println("ididtest ==   "+id);
 																		var issue;
 																		issue = "<li><!--Time Line Element---> <div class='timeline-badge up'>	<i class='	fa fa-cloud-upload'></i></div>"
 																				+ "	<div class='timeline-panel'>	<div class='timeline-heading'>	<h4 class='timeline-title'>"
-																				+ value.className +"  "
-																				+ value.id +"  "
-																				+ value.date +"  "
+																				+ "<p>Upload</p>"
 																				+ "</h4></div>"
-																				+ "	<div class='timeline-body'>	<!---Time Line Body&Content--->	<p>Upload</p>"
-																				+ "		</div>		</div>	</li>";
+																				+ "	<div class='timeline-body'>	<!---Time Line Body&Content--->	"
+																				+ value.className
+																				+ "  "
+																				+ value.id
+																				+ "  "
+																				+ value.date
+																				+ "  "
+																				+
+
+																				+"		</div>		</div>	</li>";
 																		////////////////
 
 																		$time_line
@@ -157,93 +160,93 @@ System.out.println("ididtest ==   "+id);
 <script type="text/javascript">
 	function fileupload_form() {
 <%PRUpload upload;
-	request.setCharacterEncoding("UTF-8");
-	//10Mbyte
-	int maxSize = 1024*1024*10;
+			request.setCharacterEncoding("UTF-8");
+			//10Mbyte
+			int maxSize = 1024 * 1024 * 10;
 
-	//파일 저장할 경로
-	String path = request.getSession().getServletContext().getRealPath("/")+"download/";
+			//파일 저장할 경로
+			String path = request.getSession().getServletContext().getRealPath("/") + "download/";
 
-	//업로드된 파일 이름
-	String uploadFile = "";
+			//업로드된 파일 이름
+			String uploadFile = "";
 
-	//저장될 파일 이름
-	String fileName = "";
+			//저장될 파일 이름
+			String fileName = "";
 
-	//DB에 저장될 날짜, 아이디, 프로젝트 이름, 클래스 이름
-	String DB_date, DB_Id, DB_projectName, DB_className;
-	int read = 0;
+			//DB에 저장될 날짜, 아이디, 프로젝트 이름, 클래스 이름
+			String DB_date, DB_Id, DB_projectName, DB_className;
+			int read = 0;
 
-	byte[] buf = new byte[1024];
-	FileInputStream is = null;
-	FileOutputStream os = null;
-	long currentTime = System.currentTimeMillis();
-	SimpleDateFormat simDf = new SimpleDateFormat("yyyyMMdd"); 
-	SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss");
-	try {
-		System.out.println("path : " + request.getSession().getServletContext().getRealPath("/")+"download/");
-		System.out.println(request.getContentType());
-		MultipartRequest multi = new MultipartRequest(request, path, maxSize, "UTF-8", new DefaultFileRenamePolicy());
+			byte[] buf = new byte[1024];
+			FileInputStream is = null;
+			FileOutputStream os = null;
+			long currentTime = System.currentTimeMillis();
+			SimpleDateFormat simDf = new SimpleDateFormat("yyyyMMdd");
+			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss");
+			try {
+				System.out.println("path : " + request.getSession().getServletContext().getRealPath("/") + "download/");
+				System.out.println(request.getContentType());
+				MultipartRequest multi = new MultipartRequest(request, path, maxSize, "UTF-8",
+						new DefaultFileRenamePolicy());
 
-	     //System.out.println(multi.getFilesystemName("uploadFile"));
-	     //파일 이름
-	     uploadFile = multi.getFilesystemName("uploadFile");
-	     //확장자
-	     String extension = uploadFile.substring(uploadFile.lastIndexOf(".")+1);
-	     System.out.println("확장자: " + extension);
-	     //확장자가 java가 아니라면
-	     if(!(extension.equalsIgnoreCase("java"))) {
-	    	
-			return;
-	     }
-	     else {
-	    	 DB_date = date.format(new Date(currentTime));
-	    	 DB_Id = id;
-	    	 DB_projectName = project_name;
-	    	 DB_className = uploadFile.substring(0, uploadFile.lastIndexOf("."));
-	    	 System.out.println("업로드 날짜: " + DB_date);
-	    	 System.out.println("아이디: " + DB_Id);
-	    	 System.out.println("프로젝트 이름 : " + DB_projectName);
-	    	 System.out.println("클래스 이름 : " + DB_className);
-	    	// 실제 저장할 파일명(class name_id_date.java)
-	    	 fileName = DB_className + "_" + DB_Id + "_" + simDf.format(new Date(currentTime)) + "." + extension;
-	    	 System.out.println("저장된 이름 : " + fileName);
-	    	 
-	    	 upload = new PRUpload();
-	         //filename, id, date, projectname, classname
-	        upload.upLoad(fileName, DB_Id, DB_date, DB_projectName, DB_className);
-	         
-	        //System.out.println(fileName + "_" + simDf.format(new Date(currentTime)));
-	        // 업로드된 파일 객체 생성
-	        File oFile = new File(path + uploadFile);
-	         
-	        // 실제 저장될 파일 객체 생성
-	        File nFile = new File(path + fileName);
+				//System.out.println(multi.getFilesystemName("uploadFile"));
+				//파일 이름
+				uploadFile = multi.getFilesystemName("uploadFile");
+				//확장자
+				String extension = uploadFile.substring(uploadFile.lastIndexOf(".") + 1);
+				System.out.println("확장자: " + extension);
+				//확장자가 java가 아니라면
+				if (!(extension.equalsIgnoreCase("java"))) {
 
-	        // 파일명 rename
-	        if(!oFile.renameTo(nFile)){
-	            // rename이 되지 않을경우 강제로 파일을 복사하고 기존파일은 삭제
-	            buf = new byte[1024];
-	            is = new FileInputStream(oFile);
-	            os = new FileOutputStream(nFile);
-	            read = 0;
-	            while((read=is.read(buf,0,buf.length))!=-1){
-	                os.write(buf, 0, read);
-	         }
-	      
-	   	}
-		     is.close();
-	         os.close();
-	         oFile.delete();    
-	    }
-	}catch(Exception e) {
-		e.printStackTrace();
-	}%>
+					return;
+				} else {
+					DB_date = date.format(new Date(currentTime));
+					DB_Id = id;
+					DB_projectName = project_name;
+					DB_className = uploadFile.substring(0, uploadFile.lastIndexOf("."));
+					System.out.println("업로드 날짜: " + DB_date);
+					System.out.println("아이디: " + DB_Id);
+					System.out.println("프로젝트 이름 : " + DB_projectName);
+					System.out.println("클래스 이름 : " + DB_className);
+					// 실제 저장할 파일명(class name_id_date.java)
+					fileName = DB_className + "_" + DB_Id + "_" + simDf.format(new Date(currentTime)) + "." + extension;
+					System.out.println("저장된 이름 : " + fileName);
+
+					upload = new PRUpload();
+					//filename, id, date, projectname, classname
+					upload.upLoad(fileName, DB_Id, DB_date, DB_projectName, DB_className);
+
+					//System.out.println(fileName + "_" + simDf.format(new Date(currentTime)));
+					// 업로드된 파일 객체 생성
+					File oFile = new File(path + uploadFile);
+
+					// 실제 저장될 파일 객체 생성
+					File nFile = new File(path + fileName);
+
+					// 파일명 rename
+					if (!oFile.renameTo(nFile)) {
+						// rename이 되지 않을경우 강제로 파일을 복사하고 기존파일은 삭제
+						buf = new byte[1024];
+						is = new FileInputStream(oFile);
+						os = new FileOutputStream(nFile);
+						read = 0;
+						while ((read = is.read(buf, 0, buf.length)) != -1) {
+							os.write(buf, 0, read);
+						}
+
+					}
+					is.close();
+					os.close();
+					oFile.delete();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}%>
 	var c = confirm("Upload Success!");
-	if (c == true) {
+		if (c == true) {
 			window.addUploadIssue();
+		}
 	}
-}	
 </script>
 
 
@@ -270,7 +273,7 @@ System.out.println("ididtest ==   "+id);
 						});
 
 				// 항목추가 버튼 클릭시
-				$(".addBtn").click( function() {
+				$(".addBtn").click(function() {
 					var clickedRow = $(this).parent().parent();
 					var cls = clickedRow.attr("class");
 
@@ -311,30 +314,26 @@ System.out.println("ididtest ==   "+id);
 			});
 </script>
 <script type="text/javascript">
-function addUploadIssue(){
-	
-	var issue;
-	issue = "<li><!--Time Line Element---> <div class='timeline-badge up'>	<i class='	fa fa-cloud-upload'></i></div>" 
-	+"	<div class='timeline-panel'>	<div class='timeline-heading'>	<h4 class='timeline-title'>Time Line Entry #1</h4></div>" 
-	+"	<div class='timeline-body'>	<!---Time Line Body&Content--->	<p>Upload</p>"
-	+"		</div>		</div>	</li>";
-	$("#timeline").append(issue); //db에 넣어야 함!
-
-}
-
-
 	function addUploadIssue() {
-		<%PRUpload tmp = new PRUpload();
-		// tmp.upLoad(fileName, id, date, projectName, className)
-		%>
+
+		var issue;
+		issue = "<li><!--Time Line Element---> <div class='timeline-badge up'>	<i class='	fa fa-cloud-upload'></i></div>"
+				+ "	<div class='timeline-panel'>	<div class='timeline-heading'>	<h4 class='timeline-title'>Time Line Entry #1</h4></div>"
+				+ "	<div class='timeline-body'>	<!---Time Line Body&Content--->	<p>Upload</p>"
+				+ "		</div>		</div>	</li>";
+		$("#timeline").append(issue); //db에 넣어야 함!
+
 	}
 
-	
+	function addUploadIssue() {
+<%PRUpload tmp = new PRUpload();
+			// tmp.upLoad(fileName, id, date, projectName, className)%>
+	}
 </script>
 
 
 <style>
-.modal-backdrop{
+.modal-backdrop {
 	z-index: -1;
 }
 </style>
@@ -355,10 +354,6 @@ function addUploadIssue(){
 
 			<!-- Nav --> <nav id="nav">
 			<ul>
-				<li class="current"><a href="main.do"><i
-						class="fa fa-2x fa-fw fa-home text-warning"></i></a></li>
-				<li><a href="project_list">Projects</a></li>
-				<li><a href="community.do">Community</a></li>
 				<li><a href="#" onclick="goback()"><i
 						class="fa fa-2x fa-angle-left fa-fw"></i></a></li>
 				<li><a href="logout.do"><i
@@ -374,76 +369,71 @@ function addUploadIssue(){
 			<div id="banner" class="box container">
 				<div class="row">
 					<div class="container" text-center>
-						<div>
+						<div style="text-align: center;">
 							<header>
-							<h2 id = "p_name" style="text-align: center; value="<%=project_name%>"><%=project_name%></h2>
+							<h2 id="p_name"><%=project_name%></h2>
 							</header>
 						</div>
-						<p><%=content %></p>
-						
+						<div style="background-color: #ffe6f2; width: 92%;">
+							<h3>=== Project Information ===</h3>
+							<div>
+								<p><%=content%></p>
+
+							</div>
+						</div>
+						</br>
+						<h3>=== Class List ===</h3>
 						<div id="current_prj">
 							<table id="tableid">
-								<tr>
-									<th colspan="2">등록된 클래스 목록</th>
-								
-								</tr>
+							
 								<%
-								ArrayList<String> temp = new ArrayList<String>();
-								for(int i = 0; i < classlist.size(); i++) { 
-									
-									temp.add(classlist.get(i));
-								}
-								for(int i = 0; i < temp.size(); i++) {
-									for(int j = i+1; j < temp.size(); j++) {
-										if(temp.get(i).equalsIgnoreCase(temp.get(j))) {
-											temp.remove(j);
+									ArrayList<String> temp = new ArrayList<String>();
+									for (int i = 0; i < classlist.size(); i++) {
+
+										temp.add(classlist.get(i));
+									}
+									for (int i = 0; i < temp.size(); i++) {
+										for (int j = i + 1; j < temp.size(); j++) {
+											if (temp.get(i).equalsIgnoreCase(temp.get(j))) {
+												temp.remove(j);
+											}
 										}
 									}
-								}
-								classes = new ArrayList<String>();
-								
-								for(int i = 0; i < temp.size(); i++) {
-									classes.add(temp.get(i));
+									classes = new ArrayList<String>();
+
+									for (int i = 0; i < temp.size(); i++) {
+										classes.add(temp.get(i));
 								%>
-									<tr class="item1">
+								<tr class="item1">
 									<td><%=temp.get(i)%></td>
-									
+
 									<td style="width: 15%;"><a data-toggle="modal"
 										data-target="#uploadModal" class="button">upload</a></td>
-										
+
 									<td style="width: 15%;">
 										<!--  <a data-toggle="modal" id = "modalbutton" data-id="<%=temp.get(i)%>" data-target = "#downloadModal" class = "button downBtn">download</a></td>	-->
-										<a  data-id="<%=temp.get(i)%>" class = "button downBtn">download</a></td>
-
-									</tr>
-									
-									
-							<!--	<tr class="item1">
-									<td>Class name</td>
-
-									<td style="width: 15%;"><a data-toggle="modal"
-										data-target="#uploadModal" class="button">upload</a></td>
-									<td style="width: 15%;"><a data-toggle="modal"
-										data-target="#downloadModal" class="button">download</a></td>
+										<a data-id="<%=temp.get(i)%>" class="button downBtn">download</a>
+									</td>
 
 								</tr>
-								-->
-								<%} %>
-								
+
+								<%
+									}
+								%>
+
 								<script>
-								var selected = "";
+									var selected = "";
 
-								$(function(){
-									$('.downBtn').click(function(){
-										selected = $(this).attr("data-id");
+									$(function() {
+										$('.downBtn').click(function() {
+											selected = $(this).attr("data-id");
 
-										$('#downloadModal').modal('show')
-									})	
-									
-								})
+											$('#downloadModal').modal('show')
+										})
+
+									})
 								</script>
 							</table>
-							<button id="addItemBtn">클래스추가</button>
 						</div>
 					</div>
 				</div>
@@ -561,10 +551,12 @@ function addUploadIssue(){
 					<h3 class="modal-title" id="lineModalLabel">Upload Code File</h3>
 				</div>
 				<div class="modal-body">
-					<form action="form/fileupload_form.jsp?project_name=<%=project_name%>"    method="post" enctype="multipart/form-data">
+					<form
+						action="form/fileupload_form.jsp?project_name=<%=project_name%>"
+						method="post" enctype="multipart/form-data">
 						<input type="file" id="file" class="file" name="uploadFile"
 							id="uploadFile"> <br>
-						<button type="submit" class="btn btn-primary" name="upload" >Submit</button>
+						<button type="submit" class="btn btn-primary" name="upload">Submit</button>
 						<button type="reset" class="btn btn-default">Reset</button>
 					</form>
 					<hr>
@@ -588,10 +580,10 @@ function addUploadIssue(){
 					<h3 class="modal-title" id="lineModalLabel">Source Code List</h3>
 				</div>
 				<div class="modal-body">
-				
-				<input type = "hidden" id = "classtype" name = "classtype" value = "">
-				
-				
+
+					<input type="hidden" id="classtype" name="classtype" value="">
+
+
 					<table id="fileListTable">
 						<theader>
 						<tr>
@@ -604,45 +596,69 @@ function addUploadIssue(){
 						</tr>
 						</theader>
 						<tbody>
-							<% 
-								ArrayList<UploadFile> lists = (ArrayList<UploadFile>) request
-										.getAttribute("lists");
+							<%
+								ArrayList<UploadFile> lists = (ArrayList<UploadFile>) request.getAttribute("lists");
 								for (int i = 0; i < lists.size(); i++) {
 							%>
 
-							<tr class="class-info" data-class="<%= lists.get(i).getClassName() %>" style="display:none" >
+							<tr class="class-info"
+								data-class="<%=lists.get(i).getClassName()%>"
+								style="display: none">
 								<td><%=lists.get(i).getProjectName()%></td>
 								<td><%=lists.get(i).getClassName()%></td>
 								<td><%=lists.get(i).getFileName()%></td>
 								<td><%=lists.get(i).getId()%></td>
 								<td><%=lists.get(i).getDate()%></td>
 
-								<td><a href="form/downloadFile.jsp?filename=<%=lists.get(i).getFileName()%>" >
-								<span class="glyphicon glyphicon-save" aria-hidden="true" onClick="addDownloadIssue()"></span></a></td>
-								<%System.out.println(lists.get(i).getFileName()); %>
+								<td><a
+									href="form/downloadFile.jsp?filename=<%=lists.get(i).getFileName()%>">
+										<span class="glyphicon glyphicon-save" aria-hidden="true"
+										onClick="addDownloadIssue()"></span>
+								</a></td>
+								<%
+									System.out.println(lists.get(i).getFileName());
+								%>
 
-								
+
 							</tr>
 							<%
 								}
 							%>
-							
+
 							<script>
-							$('#downloadModal').on('shown.bs.modal', function(e){
-								
-								$('.class-info').each(function(index){
-									 if ($(".class-info").eq(index).attr('data-class') == selected){
-										$(".class-info").eq(index).fadeIn()
-									 }
-								 })
-							})
-							
-							$('#downloadModal').on('hidden.bs.modal', function(e){
-								$('.class-info').each(function(index){
-									 $(".class-info").eq(index).hide()	
-								 })
-							})
-							 
+								$('#downloadModal')
+										.on(
+												'shown.bs.modal',
+												function(e) {
+
+													$('.class-info')
+															.each(
+																	function(
+																			index) {
+																		if ($(
+																				".class-info")
+																				.eq(
+																						index)
+																				.attr(
+																						'data-class') == selected) {
+																			$(
+																					".class-info")
+																					.eq(
+																							index)
+																					.fadeIn()
+																		}
+																	})
+												})
+
+								$('#downloadModal').on(
+										'hidden.bs.modal',
+										function(e) {
+											$('.class-info').each(
+													function(index) {
+														$(".class-info").eq(
+																index).hide()
+													})
+										})
 							</script>
 						</tbody>
 					</table>

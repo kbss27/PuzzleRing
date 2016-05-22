@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="com.dao.PRCreateProject"%>
 <%@ page import="com.dao.PRModel"%>
-<%@ page import="com.dao.PRGetModalInfo" %>
+<%@ page import="com.dao.PRGetModalInfo"%>
 <%@ page import="java.util.ArrayList"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -108,10 +108,6 @@
 
 			<!-- Nav --> <nav id="nav">
 			<ul>
-				<li class="current"><a href="main.do"><i
-						class="fa fa-2x fa-fw fa-home text-warning"></i></a></li>
-				<li><a href="project_list">Projects</a></li>
-				<li><a href="community.do">Community</a></li>
 				<li><a href="#" onclick="goback()"><i
 						class="fa fa-2x fa-angle-left fa-fw"></i></a></li>
 				<li><a href="logout.do"><i
@@ -132,21 +128,19 @@
 							accept-charset="utf-8">
 							<div id="page-wrapper">
 								<div class="row">
-									<div class="col-lg-12">
-										<h3>Board</h3>
-									</div>
-									<!-- /.col-lg-12 -->
+
+									<h3>Board</h3>
+
 								</div>
 								<!-- /.row -->
 								<div class="row">
-									<div class="col-lg-3 col-md-6">
-
+									<div class="col-lg-4">
 										<div class="displaystyle-fullborder displaystyle-danger">
 											<div class="panel-heading">
 												<div class="row">
-													<div>
-														<i class="fa fa-tasks fa-5x"></i>
-													</div>
+
+													<i class="fa fa-tasks fa-5x"></i>
+
 													<%
 														PRCreateProject gettotal = new PRCreateProject();
 														String total_id = (String) session.getAttribute("login");
@@ -158,31 +152,24 @@
 													</div>
 												</div>
 											</div>
-											<a href="#">
-												<div class="panel-footer">
-													<span><a href="showproject.do?id=<%=total_id%>">View
-															Details </a><i class="fa fa-arrow-circle-right"></i></span>
-													<div class="clearfix"></div>
-												</div>
-											</a>
+
 										</div>
-
 									</div>
-									<div class="col-lg-3 col-md-6">
-
+									<div class="col-lg-4">
 										<div class="displaystyle-fullborder displaystyle-success">
 											<div class="panel-heading">
+												<div class="panel-heading">
 
-												<i class="fa fa-comments fa-5x"></i>
+													<i class="fa fa-comments fa-5x"></i>
 
+												</div>
+												<a href="createproject_process.do"> 
+												<span> Create Projects </a> 
+												<i class="fa fa-arrow-circle-right"></i>
+												</span> </a>
 											</div>
-											<a href="#"> <span><a
-													href="createproject_process.do">Create
-														Projects </a> <i class="fa fa-arrow-circle-right"></i></span>
 
-											</a>
 										</div>
-
 									</div>
 
 								</div>
@@ -191,27 +178,27 @@
 						</section>
 					</div>
 					<div class="5u 12u(medium)">
-					<form role="form" method="get" id="setting">
-						<ul style="text-align: center; margin-top: 20px;">
+						<form role="form" method="get" id="setting">
+							<ul style="text-align: center; margin-top: 20px;">
 
-							<p style="text-align: center; margin-top: 20px;">
-								<i class="fa fa-user" style="font-size: 100px;"></i>
-							</p>
+								<p style="text-align: center; margin-top: 20px;">
+									<i class="fa fa-user" style="font-size: 100px;"></i>
+								</p>
 
-							<div class="login_id"
-								style="text-align: center; margin-top: 20px;">
-								<h5>
-									Welcome
-									<%=(String) session.getAttribute("login")%></h5>
-									<input type="hidden" value="<%=(String) session.getAttribute("login")%>" name="user_id" id="user_id">
-							</div>
+								<div class="login_id"
+									style="text-align: center; margin-top: 20px;">
+									<h5>
+										Welcome
+										<%=(String) session.getAttribute("login")%></h5>
+									<input type="hidden"
+										value="<%=(String) session.getAttribute("login")%>"
+										name="user_id" id="user_id">
+								</div>
 
-							
-							<input type="button" value="Settings" onClick="goSetting()">
-							<!--<li><a href="#" class="button big icon fa-arrow-circle-right">Join</a></li>
-                        <li><a href="#" class="button alt big icon fa-question-circle">Login</a></li>-->
-						</ul>
-					</form>
+
+								<input type="button" value="Settings" onClick="goSetting()">
+							</ul>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -330,9 +317,7 @@
 							<h3>
 								<i class="fa fa-bullhorn"></i> To Do
 							</h3>
-							</header>
-							
-							<%PRGetModalInfo modal = new PRGetModalInfo();
+							</header> <%PRGetModalInfo modal = new PRGetModalInfo();
 								String tmpId = (String) session.getAttribute("login");
 								ArrayList<String> todo = modal.getTodo(tmpId); 
 								ArrayList<String> inprogress = modal.getInprogress(tmpId);
@@ -343,8 +328,7 @@
 								class="row col-sm-12 displaystyle-leftborder displaystyle-danger">
 								<a href="showUploadList.do?project_name=<%=todo.get(i)%>"><strong><%=todo.get(i)%></strong></a>
 							</div>
-							<%} %>							
-							</section>
+							<%} %> </section>
 
 						</div>
 						<div class="4u 12u(mobile)">
@@ -355,14 +339,12 @@
 							<h3>
 								<i class="fa fa-archive"></i> In Progress
 							</h3>
-							</header>
-							<%for(int i = 0; i<inprogress.size(); i++){ %>
+							</header> <%for(int i = 0; i<inprogress.size(); i++){ %>
 							<div
 								class="row col-sm-12 displaystyle-leftborder displaystyle-success">
 								<a href="showUploadList.do?project_name=<%=inprogress.get(i)%>"><strong><%=inprogress.get(i)%></strong></a>
 							</div>
-							<%} %>
-							</section>
+							<%} %> </section>
 
 						</div>
 						<div class="4u 12u(mobile)">
@@ -373,14 +355,12 @@
 							<h3>
 								<i class="fa fa-bookmark"></i> Done
 							</h3>
-							</header>
-							<%for(int i = 0; i<done.size(); i++){ %>
+							</header> <%for(int i = 0; i<done.size(); i++){ %>
 							<div
 								class="row col-sm-12 displaystyle-leftborder displaystyle-success">
 								<a href="showUploadList.do?project_name=<%=done.get(i)%>"><strong><%=done.get(i)%></strong></a>
 							</div>
-							<%} %>
-							</section>
+							<%} %> </section>
 
 						</div>
 					</div>

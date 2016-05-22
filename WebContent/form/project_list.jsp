@@ -174,10 +174,6 @@
 
 			<!-- Nav --> <nav id="nav">
 			<ul>
-				<li class="current"><a href="main.do"><i
-						class="fa fa-2x fa-fw fa-home text-warning"></i></a></li>
-			<li><a href="project_list">Projects</a></li>
-				<li><a href="community">Community</a></li>
 				<li><a href="#" onclick="goback()"><i
 						class="fa fa-2x fa-angle-left fa-fw"></i></a></li>
 				<li><a href="logout.do"><i

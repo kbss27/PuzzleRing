@@ -760,24 +760,19 @@ $("#addCompose").click(function() {
 			</div>
 			<div class="row">
 				<div class="row step">
-					<div id="div1" class="col-md-3 activestep"
+					<div id="div1" class="col-md-4 activestep"
 						onclick="javascript: resetActive(event, 0, 'step-1');">
 						<span class="fa fa-cloud-download"></span>
 						<p>Overview</p>
 					</div>
-					<div class="col-md-3 "
-						onclick="javascript: resetActive(event, 33, 'step-2');">
+					<div class="col-md-4"
+						onclick="javascript: resetActive(event, 50, 'step-2');">
 						<span class="fa fa-pencil"></span>
-						<p>Details</p>
-					</div>
-					<div class="col-md-3"
-						onclick="javascript: resetActive(event, 66, 'step-3');">
-						<span class="fa fa-refresh"></span>
 						<p>Design</p>
 					</div>
-					<div class="col-md-3"
-						onclick="javascript: resetActive(event, 100, 'step-4');">
-						<span class="fa fa-dollar"></span>
+					<div class="col-md-4"
+						onclick="javascript: resetActive(event, 100, 'step-3');">
+						<span class="fa fa-refresh"></span>
 						<p>Check</p>
 					</div>
 				</div>
@@ -992,7 +987,7 @@ $("#addCompose").click(function() {
 					<br> 
 					<button class="btn btn-lg btn-primary" onClick="javascript: resetActive(event, 0, 'step-1');">Go Previous Step</button>
 					<button class="btn btn-lg btn-primary" onClick="completeProjectDetail()">Save</button>
-					<button class="btn btn-lg btn-primary" onClick="javascript: resetActive(event, 66, 'step-3')"";>Go Next Step</button>
+					<button class="btn btn-lg btn-primary" onClick="javascript: resetActive(event, 100, 'step-3')"";>Go Next Step</button>
 					<br><br><br>
 					<div class="col-md-12 well text-center" >
 
@@ -1005,32 +1000,14 @@ $("#addCompose").click(function() {
 						<input class="btn btn-primary" id="addCompose" type="button" style="cursor: hand" value="add Composition Arrow">
 
 						<section id="boxes" class="papers"></section>
-						<button class="btn btn-lg btn-primary" onClick="capture()" value="capture">capture</button>
+					<!-- <button class="btn btn-lg btn-primary" onClick="capture()" value="capture">capture</button> "-->
 						<section id="Myboxes" class="papers"></section>
 					</div>
 					
 				</div>
 			</div>
+			
 			<div class="row setup-content step hiddenStepInfo" id="step-3">
-				<div class="col-xs-12">
-					<div class="col-md-12 well text-center">
-						<h1>STEP 3</h1>
-						<h3 class="underline">Write Test Case</h3>
-						Write Test Case! <small>Write test case for each method!</small>
-
-						<div class="col-md-12" id="step3md"></div>
-
-						<div>
-							<center style='margin-bottom: 30px;'>
-								<input type="submit" name="submit"> <br />
-							</center>
-						</div>
-
-					</div>
-
-				</div>
-			</div>
-			<div class="row setup-content step hiddenStepInfo" id="step-4">
 			<form role="form" method="get" id="projectform2">
 			
 			<input type="hidden" value="" name="project_creator" id="project_creator2">
@@ -1040,7 +1017,7 @@ $("#addCompose").click(function() {
 			
 				<div class="col-xs-12" style="height: 500px;">
 					<div class="col-md-12 well text-center">
-						<h1>STEP 4</h1>
+						<h1>STEP 3</h1>
 						<h3 class="underline">Done</h3>
 						<div style="height: 300px; float: left; width: 50%;">
 							<h4 class="underline">Class detail</h4>
@@ -1134,25 +1111,25 @@ $("#addCompose").click(function() {
 	text-align: center;
 }
 
-.step .col-md-3 {
+.step .col-md-4 {
 	background-color: #fff;
 	border: 1px solid #C0C0C0;
 	border-right: none;
 }
 
-.step .col-md-3:last-child {
+.step .col-md-4:last-child {
 	border: 1px solid #C0C0C0;
 }
 
-.step .col-md-3:first-child {
+.step .col-md-4:first-child {
 	border-radius: 5px 0 0 5px;
 }
 
-.step .col-md-3:last-child {
+.step .col-md-4:last-child {
 	border-radius: 0 5px 5px 0;
 }
 
-.step .col-md-3:hover {
+.step .col-md-4:hover {
 	color: #F58723;
 	cursor: pointer;
 }
@@ -1187,7 +1164,7 @@ $("#addCompose").click(function() {
 				}
 			});
 
-			if (event.target.className == "col-md-3") {
+			if (event.target.className == "col-md-4") {
 				$(event.target).addClass("activestep");
 			} else {
 				$(event.target.parentNode).addClass("activestep");

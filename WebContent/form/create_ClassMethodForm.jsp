@@ -596,8 +596,59 @@ function Composition(a, b) {
 
 };
 		
-$("#addArrow").click(function() {
+function Aggregation(a, b) {
+	var link = new uml.Aggregation({
+		source : {
+			id : a.id
+		},
+		target : {
+			id : b.id
+		}
+	});
+
+	//	arrows.push(link);
+	//	graph.addCells([link]);
+
+	return link;
+
+}
+;
+
+function Composition(a, b) {
+	var link = new uml.Composition({
+		source : {
+			id : a.id
+		},
+		target : {
+			id : b.id
+		}
+	});
+
+	//	arrows.push(link);
+	//	graph.addCells([link]);
+
+	return link;
+
+};
+		
+$("#addGeneral").click(function() {
 	var link = new joint.shapes.uml.Generalization({
+		source : {
+			x : 100,
+			y : 100
+		},
+		target : {
+			x : 200,
+			y : 300
+		}
+	});
+
+	arrows.push(link);
+	graph.addCells([ link ]);
+
+});
+$("#addImplement").click(function() {
+	var link = new joint.shapes.uml.Implementation({
 		source : {
 			x : 100,
 			y : 100
@@ -612,7 +663,38 @@ $("#addArrow").click(function() {
 	graph.addCells([ link ]);
 
 });
+$("#addAggregate").click(function() {
+	var link = new joint.shapes.uml.Aggregation({
+		source : {
+			x : 100,
+			y : 100
+		},
+		target : {
+			x : 300,
+			y : 400
+		}
+	});
 
+	arrows.push(link);
+	graph.addCells([ link ]);
+
+});
+$("#addCompose").click(function() {
+	var link = new joint.shapes.uml.Composition({
+		source : {
+			x : 100,
+			y : 100
+		},
+		target : {
+			x : 400,
+			y : 500
+		}
+	});
+
+	arrows.push(link);
+	graph.addCells([ link ]);
+
+});
 }
 </script>
 
@@ -703,24 +785,19 @@ $("#addArrow").click(function() {
 			</div>
 			<div class="row">
 				<div class="row step">
-					<div id="div1" class="col-md-3 activestep"
+					<div id="div1" class="col-md-4 activestep"
 						onclick="javascript: resetActive(event, 0, 'step-1');">
 						<span class="fa fa-cloud-download"></span>
 						<p>Overview</p>
 					</div>
-					<div class="col-md-3 "
-						onclick="javascript: resetActive(event, 33, 'step-2');">
+					<div class="col-md-4"
+						onclick="javascript: resetActive(event, 50, 'step-2');">
 						<span class="fa fa-pencil"></span>
-						<p>Details</p>
-					</div>
-					<div class="col-md-3"
-						onclick="javascript: resetActive(event, 66, 'step-3');">
-						<span class="fa fa-refresh"></span>
 						<p>Design</p>
 					</div>
-					<div class="col-md-3"
-						onclick="javascript: resetActive(event, 100, 'step-4');">
-						<span class="fa fa-dollar"></span>
+					<div class="col-md-4"
+						onclick="javascript: resetActive(event, 100, 'step-3');">
+						<span class="fa fa-refresh"></span>
 						<p>Check</p>
 					</div>
 				</div>
@@ -921,7 +998,7 @@ $("#addArrow").click(function() {
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-default"
-													data-dismiss="modal">Close</button>
+													data-dismiss="modal">Save</button>
 											</div>
 										</div>
 									</div>
@@ -932,42 +1009,25 @@ $("#addArrow").click(function() {
 					<br> 
 					<button class="btn btn-lg btn-primary" onClick="javascript: resetActive(event, 0, 'step-1');">Go Previous Step</button>
 					<button class="btn btn-lg btn-primary" onClick="completeProjectDetail()">Save</button>
-					<button class="btn btn-lg btn-primary" onClick="javascript: resetActive(event, 66, 'step-3')"";>Go Next Step</button>
+					<button class="btn btn-lg btn-primary" onClick="javascript: resetActive(event, 100, 'step-3')"";>Go Next Step</button>
 					<br><br><br>
 					<div class="col-md-12 well text-center" >
 
 						<h3 class="underline">Draw UML</h3>
 						<!-- step2 -->
-						<input class="btn btn-lg btn-primary" id="addBox" name="add" type="button" style="cursor: hand" value="add class"> 
-						<input class="btn btn-lg btn-primary" id="addArrow" type="button" style="cursor: hand" value="add Arrow">
+						<input class="btn btn-primary" id="addGeneral" type="button" style="cursor: hand" value="add Generalization Arrow">
+						<input class="btn btn-primary" id="addImplement" type="button" style="cursor: hand" value="add Implementation Arrow">
+						<input class="btn btn-primary" id="addAggregate" type="button" style="cursor: hand" value="add Aggregation Arrow">
+						<input class="btn btn-primary" id="addCompose" type="button" style="cursor: hand" value="add Composition Arrow">
 
 						<section id="boxes" class="papers"></section>
-						<button class="btn btn-lg btn-primary" onClick="capture()" value="capture">capture</button>
+						<!-- <button class="btn btn-lg btn-primary" onClick="capture()" value="capture">capture</button> -->
 						<section id="Myboxes" class="papers"></section>
 					</div>
 					
 				</div>
 			</div>
 			<div class="row setup-content step hiddenStepInfo" id="step-3">
-				<div class="col-xs-12">
-					<div class="col-md-12 well text-center">
-						<h1>STEP 3</h1>
-						<h3 class="underline">Write Test Case</h3>
-						Write Test Case! <small>Write test case for each method!</small>
-
-						<div class="col-md-12" id="step3md"></div>
-
-						<div>
-							<center style='margin-bottom: 30px;'>
-								<input type="submit" name="submit"> <br />
-							</center>
-						</div>
-
-					</div>
-
-				</div>
-			</div>
-			<div class="row setup-content step hiddenStepInfo" id="step-4">
 			<form role="form" method="get" id="projectform2">
 			
 			<input type="hidden" value="" name="project_creator" id="project_creator2">
@@ -977,7 +1037,7 @@ $("#addArrow").click(function() {
 			
 				<div class="col-xs-12" style="height: 500px;">
 					<div class="col-md-12 well text-center">
-						<h1>STEP 4</h1>
+						<h1>STEP 3</h1>
 						<h3 class="underline">Done</h3>
 						<div style="height: 300px; float: left; width: 50%;">
 							<h4 class="underline">Class detail</h4>
@@ -1071,25 +1131,25 @@ $("#addArrow").click(function() {
 	text-align: center;
 }
 
-.step .col-md-3 {
+.step .col-md-4 {
 	background-color: #fff;
 	border: 1px solid #C0C0C0;
 	border-right: none;
 }
 
-.step .col-md-3:last-child {
+.step .col-md-4:last-child {
 	border: 1px solid #C0C0C0;
 }
 
-.step .col-md-3:first-child {
+.step .col-md-4:first-child {
 	border-radius: 5px 0 0 5px;
 }
 
-.step .col-md-3:last-child {
+.step .col-md-4:last-child {
 	border-radius: 0 5px 5px 0;
 }
 
-.step .col-md-3:hover {
+.step .col-md-4:hover {
 	color: #F58723;
 	cursor: pointer;
 }
@@ -1124,7 +1184,7 @@ $("#addArrow").click(function() {
 				}
 			});
 
-			if (event.target.className == "col-md-3") {
+			if (event.target.className == "col-md-4") {
 				$(event.target).addClass("activestep");
 			} else {
 				$(event.target.parentNode).addClass("activestep");
