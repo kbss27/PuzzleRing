@@ -103,7 +103,9 @@ public class PRFilter implements Filter {
 			controller_project_process3.createProject3(req, res);
 		}else if (reqString.equals("/createClassMethod.do")){
 	         controller_create_class_method.createClassMethod(req, res);
-	      }
+	    }else if (reqString.equals("/projectList.do")){
+	    	controller_main.projectList(req, res);
+	    }
 	}
 
 	@Override

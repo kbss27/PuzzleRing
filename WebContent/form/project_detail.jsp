@@ -60,6 +60,7 @@
 	ArrayList<UploadFile> lists;
 	ArrayList<String> classlist;
 	ArrayList<String> classes;
+	String uml;
 	String content;%>
 <%!String classname = "";%>
 <%
@@ -80,6 +81,7 @@
 	lists = (ArrayList<UploadFile>) request.getAttribute("lists");
 	classlist = (ArrayList<String>) request.getAttribute("classlist");
 	content = (String) request.getAttribute("content");
+	uml = (String)request.getAttribute("uml");
 %>
 
 <script type="text/javascript">
@@ -354,6 +356,9 @@
 
 			<!-- Nav --> <nav id="nav">
 			<ul>
+			<li class="current"><a href="usermain.do"><i
+						class="fa fa-2x fa-fw fa-home text-warning"></i></a></li>
+				<li><a href="projectList.do">Project List</a></li>
 				<li><a href="#" onclick="goback()"><i
 						class="fa fa-2x fa-angle-left fa-fw"></i></a></li>
 				<li><a href="logout.do"><i
@@ -367,26 +372,24 @@
 		<!-- Banner -->
 		<div id="banner-wrapper">
 			<div id="banner" class="box container">
-				<div class="row">
-					<div class="container" text-center>
-						<div style="text-align: center;">
-							<header>
-							<h2 id="p_name"><%=project_name%></h2>
-							</header>
-						</div>
-						<div style="background-color: #ffe6f2; width: 92%;">
-							<h3>=== Project Information ===</h3>
-							<div>
-								<p><%=content%></p>
+				<div style="text-align: center;">
+					<h2 id="p_name"><%=project_name%></h2>
 
-							</div>
-						</div>
-						</br>
-						<h3>=== Class List ===</h3>
-						<div id="current_prj">
-							<table id="tableid">
-							
-								<%
+				</div>
+				</br>
+				<div style="background-color: #ffe6f2;">
+					<h3>Project Information </h3>
+
+					<p><%=content%></p>
+				</div>
+
+
+
+				<h3>Class List</h3>
+				<div id="current_prj">
+					<table id="tableid">
+
+						<%
 									ArrayList<String> temp = new ArrayList<String>();
 									for (int i = 0; i < classlist.size(); i++) {
 
@@ -404,24 +407,20 @@
 									for (int i = 0; i < temp.size(); i++) {
 										classes.add(temp.get(i));
 								%>
-								<tr class="item1">
-									<td><%=temp.get(i)%></td>
+						<tr>
+							<td><%=temp.get(i)%></td>
+							<td style="width: 15%;"><a data-toggle="modal"
+								data-target="#uploadModal" class="button">upload</a></td>
 
-									<td style="width: 15%;"><a data-toggle="modal"
-										data-target="#uploadModal" class="button">upload</a></td>
+							<td style="width: 15%;"><a data-id="<%=temp.get(i)%>"
+								class="button downBtn">download</a></td>
+						</tr>
 
-									<td style="width: 15%;">
-										<!--  <a data-toggle="modal" id = "modalbutton" data-id="<%=temp.get(i)%>" data-target = "#downloadModal" class = "button downBtn">download</a></td>	-->
-										<a data-id="<%=temp.get(i)%>" class="button downBtn">download</a>
-									</td>
-
-								</tr>
-
-								<%
+						<%
 									}
 								%>
 
-								<script>
+						<script>
 									var selected = "";
 
 									$(function() {
@@ -433,13 +432,17 @@
 
 									})
 								</script>
-							</table>
-						</div>
-					</div>
+					</table>
 				</div>
-				<br>
+				<h3>UML</h3>
+				<div style="border: solid 1px; height: 500px;">
+					<section id="Myboxes" class="papers"><%=uml %></section>
+				</div>
 			</div>
+
+			<br>
 		</div>
+
 
 		<!-- Features -->
 		<div id="features-wrapper">
@@ -524,7 +527,7 @@
 			</footer>
 		</div>
 	</div>
-	</div>
+
 
 
 	<!-- Scripts -->

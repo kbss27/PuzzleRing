@@ -6,19 +6,16 @@
 }
 #current_prj
 {
-    width:92%;
+	width: auto;
     height:85%;
     overflow-y:scroll;
-    margin-left:5px;
     border-collapse: collapse;
     border:1px solid gray;
 }
 #current_prj th{
-    height:40px;
     border-bottom: 1px solid black;
 }
 #current_prj td{
-    height:60px;
     border-top: 1px solid black;
     border-left: 1px solid black;
     border-bottom: 1px solid black;

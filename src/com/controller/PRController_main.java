@@ -27,4 +27,17 @@ public class PRController_main {
 			e.printStackTrace();
 		}
 	}
+	
+	public void projectList(HttpServletRequest req, HttpServletResponse res){
+		//this is logout form. this logout form will open login_form.jsp
+	
+		RequestDispatcher dis = req
+				.getRequestDispatcher("/form/project_list.jsp");
+		try {
+			dis.forward(req, res);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

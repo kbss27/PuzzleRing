@@ -3,23 +3,24 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Test Site</title>
-	<link rel="stylesheet" type="text/css" href="assets/css/joint.css"/>
-	<link rel="stylesheet" type="text/css" href="assets/css/joint.min.css"/>
-	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css" />
+<title>Create Project</title>
+<link rel="stylesheet" type="text/css" href="assets/css/joint.css" />
+<link rel="stylesheet" type="text/css" href="assets/css/joint.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="assets/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="assets/css/font-awesome.min.css" />
 
-	<script type="text/javascript" src="assets/js/jquery.min.js"></script>
-	  <script type="text/javascript" src="assets/js/lodash.min.js"></script>
-   	<script type="text/javascript" src="assets/js/backbone-min.js"></script>
-	<script type="text/javascript" src="assets/js/joint.js"></script>
-	<script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
-   	<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-  
-    
-     
+<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="assets/js/lodash.min.js"></script>
+<script type="text/javascript" src="assets/js/backbone-min.js"></script>
+<script type="text/javascript" src="assets/js/joint.js"></script>
+<script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+
+
+
 <style type="text/css">
-
 .bs-example {
 	margin: 20px;
 }
@@ -35,7 +36,6 @@
 </script>
 
 <script type="text/javascript">
-	
 	var tot_obj = null;
 	var completeObj = null;
 	var complete_list = new Array();
@@ -67,9 +67,8 @@
 			class_check = false;
 			return;
 		}
-		
-		if(check_duplicate(class_name))
-		{
+
+		if (check_duplicate(class_name)) {
 			alert(class_name + " is already exist. Please re-enter class name");
 			class_check = false;
 			return;
@@ -80,10 +79,10 @@
 
 		var o = new makeClass(class_am, class_name);
 		var obj = o.makeClassObj();
-		
+
 		class_list.push(obj);
 		add_something("inner_class_control", obj.class_name, obj.class_am);
-		inputblank.value="";
+		inputblank.value = "";
 	}
 
 	function makeClass(class_am, class_name) {
@@ -112,10 +111,10 @@
 			method_check = false;
 			return;
 		}
-		
-		if(check_duplicate2(method_name))
-		{
-			alert(method_name + " is already exist. Please re-enter method name");
+
+		if (check_duplicate2(method_name)) {
+			alert(method_name
+					+ " is already exist. Please re-enter method name");
 			method_check = false;
 			return;
 		}
@@ -137,7 +136,7 @@
 		method_list_obj = test.makeListObj();
 
 		add_something2("inner_method_control", obj.method_name);
-		inputblank.value="";
+		inputblank.value = "";
 	}
 
 	function makeMethod(method_am, method_type, method_modifier, method_name,
@@ -171,15 +170,20 @@
 		return obj;
 	};
 
-	
 	function add_something(tableid, cname, cam) {
 		var table = document.getElementById(tableid);
 		var class_name = cname;
 		var rowlen = table.rows.length;
 		var row = table.insertRow(rowlen - 1);
 
-		row.insertCell(0).innerHTML = "<input type='button' style='width:100%; height:50px;' id='"+class_name+"' value='"+cam+ " class "+class_name+"' data-toggle='modal' data-target='#class_info' onclick='draw_Method_Variable(id)'; />";
-		
+		row.insertCell(0).innerHTML = "<input type='button' style='width:100%; height:50px;' id='"
+				+ class_name
+				+ "' value='"
+				+ cam
+				+ " class "
+				+ class_name
+				+ "' data-toggle='modal' data-target='#class_info' onclick='draw_Method_Variable(id)'; />";
+
 	}
 	function add_something2(tableid, cname) {
 		var table = document.getElementById(tableid);
@@ -187,8 +191,10 @@
 		var rowlen = table.rows.length;
 		var row = table.insertRow(rowlen - 1);
 
-		row.insertCell(0).innerHTML = "<input type='button' style='width:280px; height:30px;' value='"+class_name+"' data-toggle='modal' data-target='#class_info' onclick='draw_Method_Variable(value)'; />";
-		
+		row.insertCell(0).innerHTML = "<input type='button' style='width:280px; height:30px;' value='"
+				+ class_name
+				+ "' data-toggle='modal' data-target='#class_info' onclick='draw_Method_Variable(value)'; />";
+
 	}
 
 	function objSelPic(optionId) {
@@ -207,9 +213,9 @@
 				num.push(method_list[i].method_name);
 			}
 		}
-		
+
 		class_inform.value = classname;
-		
+
 		draw_Table(num, "inner_method_control");
 
 	}
@@ -223,20 +229,18 @@
 		}
 	}
 
-	function check_duplicate(class_name){
+	function check_duplicate(class_name) {
 		var cname = class_name;
-		for(var i=0;i<class_list.length;i++)
-		{
-			if(class_list[i].class_name == cname)
+		for (var i = 0; i < class_list.length; i++) {
+			if (class_list[i].class_name == cname)
 				return true;
 		}
 		return false;
 	}
-	function check_duplicate2(method_name){
+	function check_duplicate2(method_name) {
 		var mname = method_name;
-		for(var i=0;i<method_list.length;i++)
-		{
-			if(method_list[i].method_name == mname)
+		for (var i = 0; i < method_list.length; i++) {
+			if (method_list[i].method_name == mname)
 				return true;
 		}
 		return false;
@@ -244,7 +248,7 @@
 	///////////////////Create Total Obejct ////////////////////
 	//최종 object 만드는 부
 	function Create_TotObj() {
-		tot_obj = new makeTot(class_list,method_list);
+		tot_obj = new makeTot(class_list, method_list);
 		var fobj = tot_obj.makeTotObj();
 		return fobj;
 	}
@@ -268,134 +272,139 @@
 				'tbody')[0].getElementsByTagName('tr');
 		return "test1";
 	}
-	
 </script>
 <script type="text/javascript">
-	
-	function completeProjectDetail()
-	{
+	function completeProjectDetail() {
 		var cString = "";
 		var mString = "";
-		var m2String= "";
+		var m2String = "";
 		var temp = "";
-		var obj =Create_TotObj();
+		var obj = Create_TotObj();
 		var class_detail = document.getElementById("class_detail");
 		var method_detail = document.getElementById("method_detail");
 		var method_detail2 = document.getElementById("method_detail2");
+		var pc = document.getElementById("project_creator2");
+		var pn = document.getElementById("project_name2");
+		var pt = document.getElementById("project_type2");
+		var pco = document.getElementById("project_content2");
 		
-		for(var i=0;i<obj.class_list.length;i++)
-		{
-			temp = obj.class_list[i].class_am + " " +obj.class_list[i].class_name + "\n";
+		var a = document.getElementById("a");
+		var b = document.getElementById("b");
+		var c = document.getElementById("c");
+		var d = document.getElementById("d");
+		
+		pc.value = a.value;
+		pn.value = b.value;
+		pt.value = c.value;
+		pco.value = d.value;
+		for (var i = 0; i < obj.class_list.length; i++) {
+			temp = obj.class_list[i].class_am + " "
+					+ obj.class_list[i].class_name + "\n";
 			cString = cString + temp;
 		}
 		class_detail.innerHTML = cString;
-		
-		for(var i=0;i<obj.method_list.length;i++)
-		{
-			temp = obj.method_list[i].method_am + " " +obj.method_list[i].method_type + " " +obj.method_list[i].method_modifier+ " " +obj.method_list[i].method_name+ " " +obj.method_list[i].class_info + "\n";
+
+		for (var i = 0; i < obj.method_list.length; i++) {
+			temp = obj.method_list[i].method_am + " "
+					+ obj.method_list[i].method_type + " "
+					+ obj.method_list[i].method_modifier + " "
+					+ obj.method_list[i].method_name + " "
+					+ obj.method_list[i].class_info + "\n";
 			mString = mString + temp;
 		}
 		method_detail.innerHTML = mString;
-		
-		for(var i=0;i<obj.method_list.length;i++)
-		{
-			temp = obj.method_list[i].method_am + " " +obj.method_list[i].method_type + " " +obj.method_list[i].method_name+ " ( In  " +obj.method_list[i].class_info + "  class ) \n";
+
+		for (var i = 0; i < obj.method_list.length; i++) {
+			temp = obj.method_list[i].method_am + " "
+					+ obj.method_list[i].method_type + " "
+					+ obj.method_list[i].method_name + " ( In  "
+					+ obj.method_list[i].class_info + "  class ) \n";
 			m2String = m2String + temp;
 		}
 		method_detail2.innerHTML = m2String;
-		
+
 		//uml function call
 		window.addUML();
 	}
 	function gocreateProject3() {
-		
+
 		var form2 = document.getElementById("projectform2");
 		form2.action = "createproject3.do";
 		form2.submit();
 	}
-	function terms()
-	{
+	function terms() {
 		var project_creater = document.getElementById("a").value;
 		document.getElementById("project_creator2").value = project_creater;
 	}
-	function terms2()
-	{
+	function terms2() {
 		var project_name = document.getElementById("b").value;
 		document.getElementById("project_name2").value = project_name;
 	}
-	function terms3()
-	{
+	function terms3() {
 		var project_type = document.getElementById("c").value;
 		document.getElementById("project_type2").value = project_type;
 	}
-	function terms4()
-	{
+	function terms4() {
 		var project_type = document.getElementById("d").value;
 		document.getElementById("project_content2").value = project_type;
 	}
 </script>
 <script type="text/javascript">
+	function addUML() {
+		var graph = new joint.dia.Graph;
+		var uml = joint.shapes.uml;
 
+		var paper = new joint.dia.Paper({
+			el : $('#boxes'),
+			width : 1000,
+			height : 500,
+			model : graph,
+			gridSize : 1
+		});
 
-function addUML(){
-var graph = new joint.dia.Graph;
-var uml = joint.shapes.uml;
+		var rects = [];
+		var arrows = [];
+		var classes = [];
 
+		var className = [];
+		var classLength = class_list.length;
 
-var paper = new joint.dia.Paper({
-	el : $('#boxes'),
-	width : 1000,
-	height : 1000,
-	model : graph,
-	gridSize : 1
-}); 
-
-var rects = [];
-var arrows = [];
-var classes = [];
-	
-	var className = [];
-	var classLength = class_list.length;
-	
-	for (var i = 0; i < classLength; i++) {
-		className[i] = class_list[i].class_name;
-		addUMLClass(className[i], i);
-	}
-	
-/*	var relations = [ Generalization(
-			rects[0], rects[1]) ];
-	_.each(relations, function(r) {
-		graph.addCell(r);
-	}); */
-	
-
-function addUMLClass(name, p) {
-
-	
-	var classType = 1; //1:normal, 2: abstract, 3: interface
-	var methodNum = method_list.length;
-	var method = "";
-
-	for (var i = 0; i < methodNum; i++) {
-		var temp, mMax;
-		if (i == 0) {
-			temp = addMethod(name).length;
-			mMax = addMethod(name).length;
-		} else {
-			temp = addMethod(name).length;
+		for (var i = 0; i < classLength; i++) {
+			className[i] = class_list[i].class_name;
+			addUMLClass(className[i], i);
 		}
-		if (mMax < temp) {
-			mMax = temp;
-		}
-		
-	}
-	method += addMethod(name);
-	var widthSize = mMax;
-	var heightSize = methodNum;
 
-	if (classType == 3) {
-		var c = new uml.Interface(
-				{
+		/*	var relations = [ Generalization(
+		 rects[0], rects[1]) ];
+		 _.each(relations, function(r) {
+		 graph.addCell(r);
+		 }); */
+
+		function addUMLClass(name, p) {
+
+			var classType = 1; //1:normal, 2: abstract, 3: interface
+			var methodNum = method_list.length;
+			var method = "";
+
+			for (var i = 0; i < methodNum; i++) {
+				var temp, mMax;
+				if (i == 0) {
+					temp = addMethod(name).length;
+					mMax = addMethod(name).length;
+				} else {
+					temp = addMethod(name).length;
+				}
+				if (mMax < temp) {
+					mMax = temp;
+				}
+
+			}
+			method += addMethod(name);
+			var widthSize = mMax;
+			var heightSize = methodNum;
+
+			if (classType == 3) {
+				var c = new uml.Interface({
 					position : {
 						x : p * 10,
 						y : p * 300
@@ -430,9 +439,8 @@ function addUMLClass(name, p) {
 
 					}
 				})
-	} else if (classType == 2) {
-		var c = new uml.Abstract(
-				{
+			} else if (classType == 2) {
+				var c = new uml.Abstract({
 					position : {
 						x : p * 10,
 						y : p * 300
@@ -459,9 +467,8 @@ function addUMLClass(name, p) {
 						}
 					}
 				});
-	} else {
-		var c = new uml.Class(
-				{
+			} else {
+				var c = new uml.Class({
 					position : {
 						x : p * 10,
 						y : p * 300
@@ -496,215 +503,216 @@ function addUMLClass(name, p) {
 					}
 
 				});
+			}
+			rects.push(c);
+			graph.addCells([ c ]);
+
+			return c;
+		}
+		;
+
+		function addMethod(name) {
+			var text = "";
+
+			var methodAM;
+			var methodType;
+			var methodModifier;
+			var methodName;
+			for (var i = 0; i < method_list.length; i++) {
+				if (method_list[i].class_info == name) {
+
+					methodAM = method_list[i].method_am;
+					methodType = method_list[i].method_type;
+					methodModifier = method_list[i].method_modifier;
+					methodName = method_list[i].method_name;
+					text += methodAM + " " + methodType + " " + methodModifier
+							+ " " + methodName + "\n";
+				}
+			}
+
+			return text;
+		}
+
+		function Generalization(a, b) {
+			var link = new uml.Generalization({
+				source : {
+					id : a.id
+				},
+				target : {
+					id : b.id
+				}
+			});
+
+			//	arrows.push(link);
+			//	graph.addCells([link]);
+
+			return link;
+
+		}
+		;
+
+		function Implementation(a, b) {
+			var link = new uml.Implementation({
+				source : {
+					id : a.id
+				},
+				target : {
+					id : b.id
+				}
+			});
+
+			//	arrows.push(link);
+			//	graph.addCells([link]);
+			return link;
+		}
+		;
+
+		function Aggregation(a, b) {
+			var link = new uml.Aggregation({
+				source : {
+					id : a.id
+				},
+				target : {
+					id : b.id
+				}
+			});
+
+			//	arrows.push(link);
+			//	graph.addCells([link]);
+
+			return link;
+
+		}
+		;
+
+		function Composition(a, b) {
+			var link = new uml.Composition({
+				source : {
+					id : a.id
+				},
+				target : {
+					id : b.id
+				}
+			});
+
+			//	arrows.push(link);
+			//	graph.addCells([link]);
+
+			return link;
+
+		}
+		;
+
+		function Aggregation(a, b) {
+			var link = new uml.Aggregation({
+				source : {
+					id : a.id
+				},
+				target : {
+					id : b.id
+				}
+			});
+
+			//	arrows.push(link);
+			//	graph.addCells([link]);
+
+			return link;
+
+		}
+		;
+
+		function Composition(a, b) {
+			var link = new uml.Composition({
+				source : {
+					id : a.id
+				},
+				target : {
+					id : b.id
+				}
+			});
+
+			//	arrows.push(link);
+			//	graph.addCells([link]);
+
+			return link;
+
+		}
+		;
+
+		$("#addGeneral").click(function() {
+			var link = new joint.shapes.uml.Generalization({
+				source : {
+					x : 100,
+					y : 100
+				},
+				target : {
+					x : 200,
+					y : 300
+				}
+			});
+
+			arrows.push(link);
+			graph.addCells([ link ]);
+
+		});
+		$("#addImplement").click(function() {
+			var link = new joint.shapes.uml.Implementation({
+				source : {
+					x : 100,
+					y : 100
+				},
+				target : {
+					x : 100,
+					y : 200
+				}
+			});
+
+			arrows.push(link);
+			graph.addCells([ link ]);
+
+		});
+		$("#addAggregate").click(function() {
+			var link = new joint.shapes.uml.Aggregation({
+				source : {
+					x : 100,
+					y : 100
+				},
+				target : {
+					x : 300,
+					y : 400
+				}
+			});
+
+			arrows.push(link);
+			graph.addCells([ link ]);
+
+		});
+		$("#addCompose").click(function() {
+			var link = new joint.shapes.uml.Composition({
+				source : {
+					x : 100,
+					y : 100
+				},
+				target : {
+					x : 400,
+					y : 500
+				}
+			});
+
+			arrows.push(link);
+			graph.addCells([ link ]);
+
+		});
 	}
-	rects.push(c);
-	graph.addCells([ c ]);
-
-	return c;
-};
-
-function addMethod(name) {
-	var text = "";
-
-	var methodAM;
-	var methodType;
-	var methodModifier;
-	var methodName;
-	for(var i=0;i<method_list.length;i++)
-	{
-		if(method_list[i].class_info == name)
-		{
-			
-			methodAM = method_list[i].method_am;
-			methodType = method_list[i].method_type;
-			methodModifier = method_list[i].method_modifier;
-			methodName = method_list[i].method_name;
-			text += methodAM + " " + methodType + " " + methodModifier + " " + methodName + "\n";
-		}
-	}
-	
-
-	return text;
-}
-
-function Generalization(a, b) {
-	var link = new uml.Generalization({
-		source : {
-			id : a.id
-		},
-		target : {
-			id : b.id
-		}
-	});
-
-	//	arrows.push(link);
-	//	graph.addCells([link]);
-
-	return link;
-
-}
-;
-
-function Implementation(a, b) {
-	var link = new uml.Implementation({
-		source : {
-			id : a.id
-		},
-		target : {
-			id : b.id
-		}
-	});
-
-	//	arrows.push(link);
-	//	graph.addCells([link]);
-	return link;
-}
-;
-
-function Aggregation(a, b) {
-	var link = new uml.Aggregation({
-		source : {
-			id : a.id
-		},
-		target : {
-			id : b.id
-		}
-	});
-
-	//	arrows.push(link);
-	//	graph.addCells([link]);
-
-	return link;
-
-}
-;
-
-function Composition(a, b) {
-	var link = new uml.Composition({
-		source : {
-			id : a.id
-		},
-		target : {
-			id : b.id
-		}
-	});
-
-	//	arrows.push(link);
-	//	graph.addCells([link]);
-
-	return link;
-
-};
-		
-function Aggregation(a, b) {
-	var link = new uml.Aggregation({
-		source : {
-			id : a.id
-		},
-		target : {
-			id : b.id
-		}
-	});
-
-	//	arrows.push(link);
-	//	graph.addCells([link]);
-
-	return link;
-
-}
-;
-
-function Composition(a, b) {
-	var link = new uml.Composition({
-		source : {
-			id : a.id
-		},
-		target : {
-			id : b.id
-		}
-	});
-
-	//	arrows.push(link);
-	//	graph.addCells([link]);
-
-	return link;
-
-};
-		
-$("#addGeneral").click(function() {
-	var link = new joint.shapes.uml.Generalization({
-		source : {
-			x : 100,
-			y : 100
-		},
-		target : {
-			x : 200,
-			y : 300
-		}
-	});
-
-	arrows.push(link);
-	graph.addCells([ link ]);
-
-});
-$("#addImplement").click(function() {
-	var link = new joint.shapes.uml.Implementation({
-		source : {
-			x : 100,
-			y : 100
-		},
-		target : {
-			x : 100,
-			y : 200
-		}
-	});
-
-	arrows.push(link);
-	graph.addCells([ link ]);
-
-});
-$("#addAggregate").click(function() {
-	var link = new joint.shapes.uml.Aggregation({
-		source : {
-			x : 100,
-			y : 100
-		},
-		target : {
-			x : 300,
-			y : 400
-		}
-	});
-
-	arrows.push(link);
-	graph.addCells([ link ]);
-
-});
-$("#addCompose").click(function() {
-	var link = new joint.shapes.uml.Composition({
-		source : {
-			x : 100,
-			y : 100
-		},
-		target : {
-			x : 400,
-			y : 500
-		}
-	});
-
-	arrows.push(link);
-	graph.addCells([ link ]);
-
-});
-}
 </script>
 
 <script type="text/javascript">
 	function capture() {
 		var MyDiv1 = document.getElementById('boxes');
 		var MyDiv2 = document.getElementById('Myboxes');
+		var Myuml = document.getElementById('uml');
 		MyDiv2.innerHTML = MyDiv1.innerHTML;
-
-		alert(MyDiv1.innerHTML.toString());
+		Myuml.innerHTML = MyDiv1.innerHTML;
 
 	}
 </script>
@@ -764,21 +772,42 @@ $("#addCompose").click(function() {
 	}
 </script>
 </head>
-<body style="background-color:#FCFCFB;">
+<body style="background-color: #FCFCFB;">
+<!-- Header -->
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="row">
+				<!-- Nav -->
+				<ul class="nav navbar-nav navbar-right">
+					<li class="current"><a href="usermain.do"><i
+							class="fa fa-2x fa-fw fa-home text-warning"></i></a></li>
+					<li><a href="projectList.do">Project List</a></li>
+					<li><a href="#" onclick="goback()"><i
+							class="fa fa-2x fa-angle-left fa-fw"></i></a></li>
+					<li><a href="logout.do"><i
+							class="fa fa-2x fa-fw fa-unlock text-success"></i></a></li>
+					<li><a href="#" onclick="foward()"><i
+							class="fa fa-2x fa-angle-right fa-fw"></i></a></li>
+				</ul>
 
+			</div>
+		</div>
+	</nav>
 	<!--  <h1 align="center">Create New Project</h1>-->
 	<div class="container">
-		<div align="center"style="width:1130px; height:80px; margin-top:-20px; margin-left:10px; margin-right:5px">
-                <img src="assets/css/images/createprj-banner.jpg" alt=""/>
-         </div>
+		<div align="center"
+			style="width: 1130px; height: 80px; margin-top: -20px; margin-left: 10px; margin-right: 5px">
+			<img src="assets/css/images/createprj-banner.jpg" alt="" />
+		</div>
 
 		<!-- Steps Progress and Details - START -->
 		<div class="container"
 			style="margin-top: 100px; margin-bottom: 100px;">
 			<div class="row">
 				<div class="progress" id="progress1">
-					<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20"
-						aria-valuemin="0" aria-valuemax="100" style="width: 20%;"></div>
+					<div class="progress-bar progress-bar-success" role="progressbar"
+						aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+						style="width: 20%;"></div>
 					<span class="progress-type">Overall Progress</span> <span
 						class="progress-completed">20%</span>
 				</div>
@@ -787,7 +816,7 @@ $("#addCompose").click(function() {
 				<div class="row step">
 					<div id="div1" class="col-md-4 activestep"
 						onclick="javascript: resetActive(event, 0, 'step-1');">
-						<span class="fa fa-cloud-download"></span>
+						<span class="fa fa-map"></span>
 						<p>Overview</p>
 					</div>
 					<div class="col-md-4"
@@ -797,7 +826,7 @@ $("#addCompose").click(function() {
 					</div>
 					<div class="col-md-4"
 						onclick="javascript: resetActive(event, 100, 'step-3');">
-						<span class="fa fa-refresh"></span>
+						<span class="fa fa-check-square-o"></span>
 						<p>Check</p>
 					</div>
 				</div>
@@ -809,37 +838,41 @@ $("#addCompose").click(function() {
 						<h3 class="underline">Overview</h3>
 						<!-- step1 -->
 						<section class="projectoverview">
-							<form role="form" method="get" id="projectform" >
-							<%Project_overview project = (Project_overview)request.getAttribute("project_overview");%>
+							<form role="form" method="get" id="projectform">
+								<%
+									Project_overview project = (Project_overview) request.getAttribute("project_overview");
+								%>
 								<div class="project_creator">
 									<label for="project_creator">Project Creator: </label> <input
-										type="text" id="a"name="project_creator" onchange="terms()" value ="<%=project.getProject_creator()%>" readonly>
+										type="text" id="a" name="project_creator" onchange="terms()"
+										value="<%=project.getProject_creator()%>" readonly>
 
 								</div>
 								<div class="project_name">
 									<label for="project_name">Project Name: </label> <input
-										type="text" id="b" name="project_name" onchange="terms2()" value ="<%=project.getProject_name()%>" readonly>
+										type="text" id="b" name="project_name" onchange="terms2()"
+										value="<%=project.getProject_name()%>" readonly>
 								</div>
 								<div class="project_type">
-									<label for="project_type">Project Type: </label> <input type ="text"
-										id="c" name="project_type" onchange="terms3()" value ="<%=project.getProject_type()%>" readonly>
-										
-									</select>
+									<label for="project_type">Project Type: </label> <input
+										type="text" id="c" name="project_type" onchange="terms3()"
+										value="<%=project.getProject_type()%>" readonly> </select>
 								</div>
 								<div class="project_content">
 									<label for="project_content">Project Content: </label><br />
-									<textarea name="project_content" id="d" max_length="900" cols="120"
-										rows="10" onchange="terms4()" readonly><%=project.getProject_detail()%></textarea>
+									<textarea name="project_content" id="d" max_length="900"
+										cols="120" rows="10" onchange="terms4()" readonly><%=project.getProject_detail()%></textarea>
 								</div>
-								<br /> 
-								<input class="btn btn-lg btn-primary" type="submit" value="Cancel" onclick="goback()">
-								<input class="btn btn-lg btn-primary" type="button" value="Next Step" onclick="javascript: resetActive(event, 33, 'step-2');"> 
-									
+								<br /> <input class="btn btn-lg btn-success" type="submit"
+									value="Cancel" onclick="goback()"> <input
+									class="btn btn-lg btn-success" type="button" value="Next Step"
+									onclick="javascript: resetActive(event, 33, 'step-2');">
+
 							</form>
 						</section>
 					</div>
-					
-					
+
+
 				</div>
 			</div>
 			<div class="row setup-content step hiddenStepInfo" id="step-2">
@@ -857,7 +890,7 @@ $("#addCompose").click(function() {
 
 										<br>
 										<!-- Button HTML (to Trigger Modal) -->
-										<a href="#myModal" class="btn btn-lg btn-primary"
+										<a href="#myModal" class="btn btn-lg btn-success"
 											data-toggle="modal"
 											style="width: 500px; margin-bottom: 30px; margin-left: -40px;">Create
 											Class</a>
@@ -906,8 +939,9 @@ $("#addCompose").click(function() {
 									</div>
 									<div style="height: 300px; float: right; width: 50%;">
 										<h2>Class List</h2>
-										<div id="class_div" style="height:240px; background-color: #EAEAEA; overflow:auto;">
-											
+										<div id="class_div"
+											style="height: 240px; background-color: #EAEAEA; overflow: auto;">
+
 											<table id="inner_class_control" width="100%" border="1"
 												cellspacing="0" cellpadding="0" align="middle"
 												onclick="selected('inner_class_control')">
@@ -927,7 +961,7 @@ $("#addCompose").click(function() {
 													<h4 class="modal-title">Class detail information</h4>
 												</div>
 												<div class="modal-body">
-													<div style="height:300px; float:right; width:50%;">
+													<div style="height: 300px; float: right; width: 50%;">
 														<div id="method_div" style="background-color: #EAEAEA;">
 
 															<table id="inner_method_control" border="1" width="100%"
@@ -942,7 +976,7 @@ $("#addCompose").click(function() {
 														<table id="method_control">
 															<tr style="text-align: left";>
 																<input type="text" id="class_name_info" readonly>
-																<td> <select name="method_am">
+																<td><select name="method_am">
 
 																		<option value="public">public</option>
 																		<option value="private">private</option>
@@ -1006,85 +1040,117 @@ $("#addCompose").click(function() {
 							</form>
 						</section>
 					</div>
-					<br> 
-					<button class="btn btn-lg btn-primary" onClick="javascript: resetActive(event, 0, 'step-1');">Go Previous Step</button>
-					<button class="btn btn-lg btn-primary" onClick="completeProjectDetail()">Save</button>
-					<button class="btn btn-lg btn-primary" onClick="javascript: resetActive(event, 100, 'step-3')"";>Go Next Step</button>
-					<br><br><br>
-					<div class="col-md-12 well text-center" >
+					<br>
+					<button class="btn btn-lg btn-success"
+						onClick="javascript: resetActive(event, 0, 'step-1');">Go
+						Previous Step</button>
+					<button class="btn btn-lg btn-success"
+						onClick="completeProjectDetail()">Save</button>
+					<button class="btn btn-lg btn-success"
+						onClick="javascript: resetActive(event, 100, 'step-3')"";>Go
+						Next Step</button>
+					<br>
+					<br>
+					<br>
+					<div class="col-md-12 well text-center">
 
 						<h3 class="underline">Draw UML</h3>
 						<!-- step2 -->
-						<input class="btn btn-primary" id="addGeneral" type="button" style="cursor: hand" value="add Generalization Arrow">
-						<input class="btn btn-primary" id="addImplement" type="button" style="cursor: hand" value="add Implementation Arrow">
-						<input class="btn btn-primary" id="addAggregate" type="button" style="cursor: hand" value="add Aggregation Arrow">
-						<input class="btn btn-primary" id="addCompose" type="button" style="cursor: hand" value="add Composition Arrow">
 
-						<section id="boxes" class="papers"></section>
-						<!-- <button class="btn btn-lg btn-primary" onClick="capture()" value="capture">capture</button> -->
-						<section id="Myboxes" class="papers"></section>
+						<input class="btn btn-primary" id="addGeneral" type="button"
+							style="cursor: hand" value="add Generalization Arrow"> <input
+							class="btn btn-primary" id="addImplement" type="button"
+							style="cursor: hand" value="add Implementation Arrow"> <input
+							class="btn btn-primary" id="addAggregate" type="button"
+							style="cursor: hand" value="add Aggregation Arrow"> <input
+							class="btn btn-primary" id="addCompose" type="button"
+							style="cursor: hand" value="add Composition Arrow">
+
+						<section id="boxes" class="papers"
+							style="background-color: yellow;"></section>
+						<!-- <button class="btn btn-lg btn-primary" onClick="capture()" value="capture">capture</button> "-->
+						<button class="btn btn-lg btn-primary" onClick="capture()"
+							value="capture">capture</button>
 					</div>
-					
+
 				</div>
 			</div>
 			<div class="row setup-content step hiddenStepInfo" id="step-3">
-			<form role="form" method="get" id="projectform2">
-			
-			<input type="hidden" value="" name="project_creator" id="project_creator2">
-			<input type="hidden" value="" name="project_name" id="project_name2">
-			<input type="hidden" value="" name="project_type" id="project_type2">
-			<input type="hidden" value="" name="project_content" id="project_content2">
-			
-				<div class="col-xs-12" style="height: 500px;">
-					<div class="col-md-12 well text-center">
-						<h1>STEP 3</h1>
-						<h3 class="underline">Done</h3>
-						<div style="height: 300px; float: left; width: 50%;">
-							<h4 class="underline">Class detail</h4>
-							<textarea style="width:350px; height:250px;" name ="class_detail" id="class_detail" readonly>
-							</textarea>
-						</div>
-							
-						<div style="height: 300px; float: left; width: 50%;">
-							<h4 class="underline">Method detail</h4>
-							<textarea style="width:450px; height:250px" name = "method_detail2" id="method_detail2" readonly >
-							</textarea>
-							<textarea style="display:none; width:450px; height:250px" name = "method_detail" id="method_detail" readonly >
-							</textarea>
-						</div>
-						
-						<!-- Complete button modal -->
-						
-						<a href="#complete" class="btn btn-lg btn-primary"
-											data-toggle="modal">Complete Create Project</a>
-					    
-										<!-- Create Class PopUp-->
-										<div id="complete" class="modal fade">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h4 class="modal-title">Confirm</h4>
-													</div>
-													<div class="modal-body">
-														Do you really want to complete a creating Project?
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-default"
-															data-dismiss="modal">Close</button>
-														<button type="button" class="btn btn-default"
-															data-dismiss="modal" 
-															onclick="gocreateProject3();" >Create Project</button>
+				<form role="form" method="get" id="projectform2">
 
-													</div>
-												</div>
-											</div>
+					<input type="hidden" value="" name="project_creator"
+						id="project_creator2"> <input type="hidden" value=""
+						name="project_name" id="project_name2"> <input
+						type="hidden" value="" name="project_type" id="project_type2">
+					<input type="hidden" value="" name="project_content"
+						id="project_content2">
+
+					<div class="col-xs-12" style="height: 500px;">
+						<div class="col-md-12 well text-center">
+							<div class="row">
+								<h1>STEP 3</h1>
+								<h3 class="underline">Done</h3>
+								<div style="height: 300px; float: left; width: 50%;">
+									<h4 class="underline">Class detail</h4>
+									<textarea style="width: 70%; height: 250px;"
+										name="class_detail" id="class_detail" readonly>
+							</textarea>
+								</div>
+
+								<div style="height: 300px; float: left; width: 50%;">
+									<h4 class="underline">Method detail</h4>
+									<textarea style="width: 70%; height: 250px"
+										name="method_detail2" id="method_detail2" readonly>
+							</textarea>
+									<textarea style="display: none; width: 70%; height: 250px"
+										name="method_detail" id="method_detail" readonly>
+							</textarea>
+
+								</div>
+							</div>
+							<h4 class="underline">UML</h4>
+							<div style="border: solid 1px; height: 500px;">
+								<section id="Myboxes" class="papers"></section>
+								<textarea style="display:none;" name="uml" id="uml" readonly></textarea>
+							</div>
+						</div>
+					<input class="btn btn-lg btn-success" type="submit" value="Cancel"
+						formmethod="get" formaction="">
+
+					<!-- Complete button modal -->
+					<a href="#complete" class="btn btn-lg btn-success"
+						data-toggle="modal">Complete Create Project</a>
+
+							<!-- Create Class PopUp-->
+							<div id="complete" class="modal fade">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">
+												<span aria-hidden="true">x</span> <span class="sr-only">Close</span>
+											</button>
+											<h4 class="modal-title">Confirm</h4>
 										</div>
-					    
-					    <!-- --------------------- -->
-					<input class="btn btn-lg btn-primary" type="submit" value="Cancel" formmethod="get" formaction="">
+										<div class="modal-body">Do you really want to complete a
+											creating Project?</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default"
+												data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-default"
+												data-dismiss="modal" onclick="gocreateProject3();">Create
+												Project</button>
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- --------------------- -->
+
+						</div>
+						</form>
 					</div>
-				</div>
-			</form>
+				
 			</div>
 		</div>
 	</div>

@@ -120,4 +120,92 @@ public class PRShowUploadList {
 		System.out.println("ddddddddddddd          :   "+content);
 		return content;
 	}
+	
+	public ArrayList<String> getSumClass(String p_name){
+		Connection con;
+		ArrayList<String> classlist = new ArrayList<String>();
+		try {
+			con = ds.getConnection();
+			String sql = "select class_name from class_detail where project_id in (select project_id from project_detail where project_name = ?)";
+			PreparedStatement pstat = con.prepareStatement(sql);
+			pstat.setString(1, p_name);
+
+			System.out.println("test getsum = "+p_name);
+
+			ResultSet rs = pstat.executeQuery();
+			
+			while(rs.next()){
+				classlist.add(rs.getString(1)); 
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return classlist;
+	}
+	public ArrayList<String> getUploadList(String p_name){
+		Connection con;
+		ArrayList<String> classUploadList = new ArrayList<String>();
+		System.out.println("test getuploadlist = "+p_name);
+		try {
+			con = ds.getConnection();
+			String sql = "select distinct className from uploadlist where projectName = ?";
+			PreparedStatement pstat = con.prepareStatement(sql);
+			//System.out.println("project name =   "+p_name);
+			pstat.setString(1, p_name);
+
+			ResultSet rs = pstat.executeQuery();
+			
+			while(rs.next()){
+				classUploadList.add(rs.getString(1)); 
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return classUploadList;
+	}
+	
+	public void updateProgress(int state, String p_name){
+		
+		Connection con;
+		
+		try {
+			con = ds.getConnection();
+			String sql = "update project_detail set project_progress = ? where project_name = ?";
+			PreparedStatement pstat = con.prepareStatement(sql);
+			//System.out.println("project name =   "+p_name);
+			
+			pstat.setInt(1, state);
+			pstat.setString(2, p_name);
+			
+			pstat.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	public String getUML(String project_name)
+	{
+		Connection con;
+		String uml="";
+		try {
+			con = ds.getConnection();
+			String sql = "select uml_code from uml_list where project_name = ?";
+			
+			PreparedStatement pstat = con.prepareStatement(sql);
+			//System.out.println("project name =   "+p_name);
+			pstat.setString(1, project_name);
+
+			ResultSet rs = pstat.executeQuery();
+			
+			while(rs.next()){
+				uml = rs.getString(1);
+			}
+			System.out.println(uml);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return uml;
+	}
 }

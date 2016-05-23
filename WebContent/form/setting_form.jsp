@@ -16,6 +16,7 @@
 </head>
 <body class="homepage">
 	<div id="page-wrapper">
+
 	<div id="banner-wrapper">
 		<div id="banner">
 				<div class="container">		
