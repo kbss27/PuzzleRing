@@ -6,10 +6,8 @@
 <title>Create Project</title>
 <link rel="stylesheet" type="text/css" href="assets/css/joint.css" />
 <link rel="stylesheet" type="text/css" href="assets/css/joint.min.css" />
-<link rel="stylesheet" type="text/css"
-	href="assets/css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css"
-	href="assets/css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css" />
 
 <script type="text/javascript" src="assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="assets/js/lodash.min.js"></script>
@@ -1066,8 +1064,7 @@
 							class="btn btn-primary" id="addCompose" type="button"
 							style="cursor: hand" value="add Composition Arrow">
 
-						<section id="boxes" class="papers"
-							style="background-color: yellow;"></section>
+						<section id="boxes" class="papers"></section>
 						<!-- <button class="btn btn-lg btn-primary" onClick="capture()" value="capture">capture</button> "-->
 						<button class="btn btn-lg btn-primary" onClick="capture()"
 							value="capture">capture</button>
@@ -1076,7 +1073,7 @@
 				</div>
 			</div>
 			<div class="row setup-content step hiddenStepInfo" id="step-3">
-				<form role="form" method="get" id="projectform2">
+				<form role="form" method="post" id="projectform2">
 
 					<input type="hidden" value="" name="project_creator"
 						id="project_creator2"> <input type="hidden" value=""

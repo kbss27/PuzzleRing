@@ -6,6 +6,7 @@
 }
 #current_prj
 {
+	margin-top: 8px;
 	width: auto;
     height:85%;
     overflow-y:scroll;

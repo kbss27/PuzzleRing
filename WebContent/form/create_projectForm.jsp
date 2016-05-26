@@ -17,7 +17,6 @@
 <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
 
 
-
 <style type="text/css">
 .bs-example {
 	margin: 20px;
@@ -381,12 +380,6 @@
 			addUMLClass(className[i], i);
 		}
 
-		/*	var relations = [ Generalization(
-		 rects[0], rects[1]) ];
-		 _.each(relations, function(r) {
-		 graph.addCell(r);
-		 }); */
-
 		function addUMLClass(name, p) {
 
 			var classType = 1; //1:normal, 2: abstract, 3: interface
@@ -413,8 +406,8 @@
 			if (classType == 3) {
 				var c = new uml.Interface({
 					position : {
-						x : p * 10,
-						y : p * 300
+						x : p + 10,
+						y : p + 30
 					},
 					size : {
 						width : widthSize * 7,
@@ -449,8 +442,8 @@
 			} else if (classType == 2) {
 				var c = new uml.Abstract({
 					position : {
-						x : p * 10,
-						y : p * 300
+						x : p + 10,
+						y : p + 30
 					},
 					size : {
 						width : widthSize * 7,
@@ -477,8 +470,8 @@
 			} else {
 				var c = new uml.Class({
 					position : {
-						x : p * 10,
-						y : p * 300
+						x : p + 10,
+						y : p + 30
 					},
 					size : {
 						width : widthSize * 7,
@@ -683,11 +676,15 @@
 		var MyDiv1 = document.getElementById('boxes');
 		var MyDiv2 = document.getElementById('Myboxes');
 		var Myuml = document.getElementById('uml');
+		
 		MyDiv2.innerHTML = MyDiv1.innerHTML;
 		Myuml.innerHTML = MyDiv1.innerHTML;
+	
 
 	}
+
 </script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		var classLength = 2;
@@ -1040,8 +1037,7 @@
 							class="btn btn-primary" id="addCompose" type="button"
 							style="cursor: hand" value="add Composition Arrow">
 
-						<section id="boxes" class="papers"
-							style="background-color: yellow;"></section>
+						<section id="boxes" class="papers"></section>
 						<!-- <button class="btn btn-lg btn-primary" onClick="capture()" value="capture">capture</button> "-->
 						<button class="btn btn-lg btn-primary" onClick="capture()"
 							value="capture">capture</button>
@@ -1051,7 +1047,7 @@
 			</div>
 
 			<div class="row setup-content step hiddenStepInfo" id="step-3">
-				<form role="form" method="get" id="projectform2">
+				<form role="form" method="post" id="projectform2">
 
 					<input type="hidden" value="" name="project_creator"
 						id="project_creator2"> <input type="hidden" value=""

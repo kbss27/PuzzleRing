@@ -22,6 +22,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!--  <link rel="stylesheet" type="text/css" href="assetscss/loginmain.css"> -->
 
+<link rel="stylesheet" type="text/css" href="assets/css/joint.css" />
+<link rel="stylesheet" type="text/css" href="assets/css/joint.min.css" />
 <link rel="stylesheet" href="assets/css/main.css">
 <link rel="stylesheet" href="assets/css/addcss.css">
 <link href="assets/css/fileinput.css" media="all" rel="stylesheet"
@@ -30,6 +32,9 @@
 
 
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /> <![endif]-->
+<script type="text/javascript" src="assets/js/lodash.min.js"></script>
+<script type="text/javascript" src="assets/js/backbone-min.js"></script>
+<script type="text/javascript" src="assets/js/joint.js"></script>
 <script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
 <!--  <script type="text/javascript" src="assets/js/bootstrap.min.js"></script> -->
 <script src="assets/js/fileinput.js" type="text/javascript"></script>
@@ -82,6 +87,9 @@
 	classlist = (ArrayList<String>) request.getAttribute("classlist");
 	content = (String) request.getAttribute("content");
 	uml = (String)request.getAttribute("uml");
+	uml = uml.replace('?', ' ');
+	System.out.println("-------------------------------");
+	System.out.println(uml);
 %>
 
 <script type="text/javascript">
@@ -377,15 +385,17 @@
 
 				</div>
 				</br>
-				<div style="background-color: #ffe6f2;">
-					<h3>Project Information </h3>
-
-					<p><%=content%></p>
+				<i class="fa fa-cube" style="font-size:24px; color:Black;"> Project Information </i>
+				<div class="info-display">
+          			<div class="message success">
+						
+						<strong><%=content%></strong>
+					</div>
 				</div>
+				<br>
+				
 
-
-
-				<h3>Class List</h3>
+				<i class="fa fa-cube"  style="font-size:24px; color:Black;"> Class List</i>
 				<div id="current_prj">
 					<table id="tableid">
 
@@ -434,8 +444,9 @@
 								</script>
 					</table>
 				</div>
-				<h3>UML</h3>
-				<div style="border: solid 1px; height: 500px;">
+				<br>
+				<i class="fa fa-cube"  style="font-size:24px; color:Black;"> UML</i>
+				<div style="border: solid 1px; height: 500px; 	margin-top: 8px;">
 					<section id="Myboxes" class="papers"><%=uml %></section>
 				</div>
 			</div>
@@ -837,6 +848,38 @@
 .timeline-body>p+p {
 	margin-top: 5px;
 }
+.info-display {
+  margin-top: 8px;
+}
+
+.message {
+  margin: 0 auto;   
+  padding: 19px;
+  margin: 0 auto;
+  background-color: #FFFFFF; 
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+.info strong {
+  color: #5bc0de;
+}
+
+.success {
+  border-right-color: #FF4486;
+  border-radius: 31px;
+  background-color: rgba(255, 235, 254, 0.2);
+  border-right-color:#FF4486; /* Side Effect Colors */
+  border-left-color:#FF4486; /* Side Effect Colors */
+  border: 1px solid #FF4486;
+  border-right-width: 19px;
+  border-left-width: 19px;
+}
+.success strong {
+  color: Black;
+}
+
+
 </style>
 		<!-- Timeline style - END -->
 </body>

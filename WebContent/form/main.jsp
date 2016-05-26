@@ -341,7 +341,7 @@
  	for (int i = 0; i < todo.size(); i++) {
  %>
 							<div
-								class="row col-sm-12 displaystyle-leftborder displaystyle-danger">
+								class="row col-sm-12 displaystyle-leftborder displaystyle-danger" >
 								<a href="showUploadList.do?project_name=<%=todo.get(i)%>"><strong><%=todo.get(i)%></strong></a>
 							</div>
 							<%
@@ -410,7 +410,8 @@
 }
 
 .displaystyle-leftborder {
-	margin: 1px;
+	margin: 1px; 
+	padding-bottom: 20px;
 	background-color: #FFFFFF;
 	border-left: 9px solid;
 	border-right: 1px solid;
