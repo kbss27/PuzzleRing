@@ -531,7 +531,6 @@ function addMethod(name) {
 			text += methodAM + " " + methodType + " " + methodModifier + " " + methodName + "\n";
 		}
 	}
-	
 
 	return text;
 }

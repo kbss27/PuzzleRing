@@ -83,6 +83,8 @@ public class PRFilter implements Filter {
 			controller_test.showproject(req, res);
 		}else if(reqString.equals("/showUploadList.do")) {
 			controller_show_upload.showUploadList(req, res);
+		}else if(reqString.equals("/showUploadSecondList.do")) {
+			controller_show_upload.showUploadSecondList(req, res);
 		}else if (reqString.equals("/ajaxIssue.do")){
 	         prAjax.getIssueData(req,res);//main.jsp.
 	    }else if (reqString.equals("/ajaxIssuehome.do")){
@@ -103,7 +105,9 @@ public class PRFilter implements Filter {
 			controller_project_process3.createProject3(req, res);
 		}else if (reqString.equals("/createClassMethod.do")){
 	         controller_create_class_method.createClassMethod(req, res);
-	      }
+	    }else if(reqString.equals("/projectList.do")){
+	    	controller_main.projectList(req, res);
+	    }
 	}
 
 	@Override

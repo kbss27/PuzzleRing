@@ -108,7 +108,10 @@
 					}
 				}
 				
-				response.sendRedirect("../showUploadList.do?project_name="+DB_projectName);			
+				//
+				//여기서 다음 넘어가기 전에 디비가서 project_progress업데이트 시켜야 됩니다.
+				
+				response.sendRedirect("../showUploadSecondList.do?project_name="+DB_projectName);			
 
 				oFile.delete();
 				is.close();
