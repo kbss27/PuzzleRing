@@ -22,6 +22,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!--  <link rel="stylesheet" type="text/css" href="assetscss/loginmain.css"> -->
 
+<link rel="stylesheet" type="text/css" href="assets/css/joint.css" />
+<link rel="stylesheet" type="text/css" href="assets/css/joint.min.css" />
 <link rel="stylesheet" href="assets/css/main.css">
 <link rel="stylesheet" href="assets/css/addcss.css">
 <link href="assets/css/fileinput.css" media="all" rel="stylesheet"
@@ -30,6 +32,9 @@
 
 
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /> <![endif]-->
+<script type="text/javascript" src="assets/js/lodash.min.js"></script>
+<script type="text/javascript" src="assets/js/backbone-min.js"></script>
+<script type="text/javascript" src="assets/js/joint.js"></script>
 <script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
 <!--  <script type="text/javascript" src="assets/js/bootstrap.min.js"></script> -->
 <script src="assets/js/fileinput.js" type="text/javascript"></script>
@@ -60,6 +65,7 @@
 	ArrayList<UploadFile> lists;
 	ArrayList<String> classlist;
 	ArrayList<String> classes;
+	String uml;
 	String content;%>
 <%!String classname = "";%>
 <%
@@ -80,6 +86,10 @@
 	lists = (ArrayList<UploadFile>) request.getAttribute("lists");
 	classlist = (ArrayList<String>) request.getAttribute("classlist");
 	content = (String) request.getAttribute("content");
+	uml = (String)request.getAttribute("uml");
+	uml = uml.replace('?', ' ');
+	System.out.println("-------------------------------");
+	System.out.println(uml);
 %>
 
 <script type="text/javascript">
@@ -354,6 +364,9 @@
 
 			<!-- Nav --> <nav id="nav">
 			<ul>
+			<li class="current"><a href="usermain.do"><i
+						class="fa fa-2x fa-fw fa-home text-warning"></i></a></li>
+				<li><a href="projectList.do">Project List</a></li>
 				<li><a href="#" onclick="goback()"><i
 						class="fa fa-2x fa-angle-left fa-fw"></i></a></li>
 				<li><a href="logout.do"><i
@@ -367,26 +380,26 @@
 		<!-- Banner -->
 		<div id="banner-wrapper">
 			<div id="banner" class="box container">
-				<div class="row">
-					<div class="container" text-center>
-						<div style="text-align: center;">
-							<header>
-							<h2 id="p_name"><%=project_name%></h2>
-							</header>
-						</div>
-						<div style="background-color: #ffe6f2; width: 92%;">
-							<h3>=== Project Information ===</h3>
-							<div>
-								<p><%=content%></p>
+				<div style="text-align: center;">
+					<h2 id="p_name"><%=project_name%></h2>
 
-							</div>
-						</div>
-						</br>
-						<h3>=== Class List ===</h3>
-						<div id="current_prj">
-							<table id="tableid">
-							
-								<%
+				</div>
+				</br>
+				<i class="fa fa-cube" style="font-size:24px; color:Black;"> Project Information </i>
+				<div class="info-display">
+          			<div class="message success">
+						
+						<strong><%=content%></strong>
+					</div>
+				</div>
+				<br>
+				
+
+				<i class="fa fa-cube"  style="font-size:24px; color:Black;"> Class List</i>
+				<div id="current_prj">
+					<table id="tableid">
+
+						<%
 									ArrayList<String> temp = new ArrayList<String>();
 									for (int i = 0; i < classlist.size(); i++) {
 
@@ -404,24 +417,20 @@
 									for (int i = 0; i < temp.size(); i++) {
 										classes.add(temp.get(i));
 								%>
-								<tr class="item1">
-									<td><%=temp.get(i)%></td>
+						<tr>
+							<td><%=temp.get(i)%></td>
+							<td style="width: 15%;"><a data-toggle="modal"
+								data-target="#uploadModal" class="button">upload</a></td>
 
-									<td style="width: 15%;"><a data-toggle="modal"
-										data-target="#uploadModal" class="button">upload</a></td>
+							<td style="width: 15%;"><a data-id="<%=temp.get(i)%>"
+								class="button downBtn">download</a></td>
+						</tr>
 
-									<td style="width: 15%;">
-										<!--  <a data-toggle="modal" id = "modalbutton" data-id="<%=temp.get(i)%>" data-target = "#downloadModal" class = "button downBtn">download</a></td>	-->
-										<a data-id="<%=temp.get(i)%>" class="button downBtn">download</a>
-									</td>
-
-								</tr>
-
-								<%
+						<%
 									}
 								%>
 
-								<script>
+						<script>
 									var selected = "";
 
 									$(function() {
@@ -433,13 +442,18 @@
 
 									})
 								</script>
-							</table>
-						</div>
-					</div>
+					</table>
 				</div>
 				<br>
+				<i class="fa fa-cube"  style="font-size:24px; color:Black;"> UML</i>
+				<div style="border: solid 1px; height: 500px; 	margin-top: 8px;">
+					<section id="Myboxes" class="papers"><%=uml %></section>
+				</div>
 			</div>
+
+			<br>
 		</div>
+
 
 		<!-- Features -->
 		<div id="features-wrapper">
@@ -524,7 +538,7 @@
 			</footer>
 		</div>
 	</div>
-	</div>
+
 
 
 	<!-- Scripts -->
@@ -834,6 +848,38 @@
 .timeline-body>p+p {
 	margin-top: 5px;
 }
+.info-display {
+  margin-top: 8px;
+}
+
+.message {
+  margin: 0 auto;   
+  padding: 19px;
+  margin: 0 auto;
+  background-color: #FFFFFF; 
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+.info strong {
+  color: #5bc0de;
+}
+
+.success {
+  border-right-color: #FF4486;
+  border-radius: 31px;
+  background-color: rgba(255, 235, 254, 0.2);
+  border-right-color:#FF4486; /* Side Effect Colors */
+  border-left-color:#FF4486; /* Side Effect Colors */
+  border: 1px solid #FF4486;
+  border-right-width: 19px;
+  border-left-width: 19px;
+}
+.success strong {
+  color: Black;
+}
+
+
 </style>
 		<!-- Timeline style - END -->
 </body>

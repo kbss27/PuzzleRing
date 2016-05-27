@@ -26,10 +26,9 @@
 		history.forward();
 	}
 	function logout() {
-		
+
 	}
-	function goSetting()
-	{
+	function goSetting() {
 		var form = document.getElementById("setting");
 		form.action = "setting.do";
 		form.submit();
@@ -55,23 +54,35 @@
 
 													$table.empty();
 
-													$.each(res, function(idx, value){
-									                	  var projectNameTag = "<tr><td width='40%'>" + value.projectName + "</td>";
-									                      var projectProgressTag = "<td width='50%'><div class='progress'><div class='progress-bar progress-bar-striped active'role='progressbar' aria-valuenow='40' aria-valuemin='0'aria-valuemax='100' style='width: {{pro}}'>{{pro}}</div></div></td>"
-									                      var projectProgressTag = projectProgressTag.replace(/{{pro}}/gi, value.projectProgress +"%")
-									                      
-									                      var projectStatus;
-									                      if(value.projectProgress === 0){
-									                         projectStatus = "<td width='10%'>TODO</td></tr>";
-									                      }else if(value.projectProgress === 50){
-									                         projectStatus = "<td width='10%'>PROGRESS</td></tr>";
-									                      }else {
-									                         projectStatus = "<td width='10%'>DONE</td></tr>";
-									                      }
+													$
+															.each(
+																	res,
+																	function(
+																			idx,
+																			value) {
+																		var projectNameTag = "<tr><td width='40%'><a href='showUploadList.do?project_name=" + value.projectName + "'>" + value.projectName + "</a></td>";
+																		var projectProgressTag = "<td width='50%'><div class='progress'><div class='progress-bar progress-bar-striped active'role='progressbar' aria-valuenow='40' aria-valuemin='0'aria-valuemax='100' style='width: {{pro}}'>{{pro}}</div></div></td>"
+																		var projectProgressTag = projectProgressTag
+																				.replace(
+																						/{{pro}}/gi,
+																						value.projectProgress
+																								+ "%")
 
-									                     $table.append(projectNameTag + projectProgressTag + projectStatus);
-									                     
-									                  });
+																		var projectStatus;
+																		if (value.projectProgress === 0) {
+																			projectStatus = "<td width='10%'>TODO</td></tr>";
+																		} else if (value.projectProgress === 50) {
+																			projectStatus = "<td width='10%'>PROGRESS</td></tr>";
+																		} else {
+																			projectStatus = "<td width='10%'>DONE</td></tr>";
+																		}
+
+																		$table
+																				.append(projectNameTag
+																						+ projectProgressTag
+																						+ projectStatus);
+
+																	});
 												},
 												error : function(req, st, e) {
 
@@ -108,6 +119,9 @@
 
 			<!-- Nav --> <nav id="nav">
 			<ul>
+			<li class="current"><a href="usermain.do"><i
+						class="fa fa-2x fa-fw fa-home text-warning"></i></a></li>
+			<li><a href="projectList.do">Project List</a></li>
 				<li><a href="#" onclick="goback()"><i
 						class="fa fa-2x fa-angle-left fa-fw"></i></a></li>
 				<li><a href="logout.do"><i
@@ -122,7 +136,7 @@
 		<div id="banner-wrapper">
 			<div id="banner" class="box container">
 				<div class="row">
-					<div class="7u 12u(medium)">
+					<div class="8u 12u(medium)">
 						<section class="index_info">
 						<form name="my project" action="index_submit" method="get"
 							accept-charset="utf-8">
@@ -138,7 +152,6 @@
 										<div class="displaystyle-fullborder displaystyle-danger">
 											<div class="panel-heading">
 												<div class="row">
-
 													<i class="fa fa-tasks fa-5x"></i>
 
 													<%
@@ -146,38 +159,39 @@
 														String total_id = (String) session.getAttribute("login");
 														int total = gettotal.getTotal(total_id);
 													%>
-													<div>
+
+													<div class="panel-footer">
 														<div class="huge"><%=total%></div>
-														<div>New Projects</div>
+														<div>Total Projects</div>
 													</div>
+
 												</div>
 											</div>
 
+
 										</div>
 									</div>
+
 									<div class="col-lg-4">
 										<div class="displaystyle-fullborder displaystyle-success">
-											<div class="panel-heading">
+											<div class="row">
 												<div class="panel-heading">
-
-													<i class="fa fa-comments fa-5x"></i>
-
+													<i class="fa fa-edit fa-5x"></i>
 												</div>
-												<a href="createproject_process.do"> 
-												<span> Create Projects </a> 
-												<i class="fa fa-arrow-circle-right"></i>
-												</span> </a>
+												<div class="panel-footer">
+												<div>Let's create!</div>
+													<a href="createproject_process.do"> Create Projects </a> <i
+														class="fa fa-arrow-circle-right"></i>
+												</div>
 											</div>
-
 										</div>
-									</div>
 
+									</div>
 								</div>
-							</div>
 						</form>
 						</section>
 					</div>
-					<div class="5u 12u(medium)">
+					<div class="4u 12u(medium)">
 						<form role="form" method="get" id="setting">
 							<ul style="text-align: center; margin-top: 20px;">
 
@@ -317,18 +331,22 @@
 							<h3>
 								<i class="fa fa-bullhorn"></i> To Do
 							</h3>
-							</header> <%PRGetModalInfo modal = new PRGetModalInfo();
-								String tmpId = (String) session.getAttribute("login");
-								ArrayList<String> todo = modal.getTodo(tmpId); 
-								ArrayList<String> inprogress = modal.getInprogress(tmpId);
-								ArrayList<String> done = modal.getDone(tmpId);
-								
-								for(int i = 0; i<todo.size(); i++){ %>
+							</header> <%
+ 	PRGetModalInfo modal = new PRGetModalInfo();
+ 	String tmpId = (String) session.getAttribute("login");
+ 	ArrayList<String> todo = modal.getTodo(tmpId);
+ 	ArrayList<String> inprogress = modal.getInprogress(tmpId);
+ 	ArrayList<String> done = modal.getDone(tmpId);
+
+ 	for (int i = 0; i < todo.size(); i++) {
+ %>
 							<div
-								class="row col-sm-12 displaystyle-leftborder displaystyle-danger">
+								class="row col-sm-12 displaystyle-leftborder displaystyle-danger" >
 								<a href="showUploadList.do?project_name=<%=todo.get(i)%>"><strong><%=todo.get(i)%></strong></a>
 							</div>
-							<%} %> </section>
+							<%
+								}
+							%> </section>
 
 						</div>
 						<div class="4u 12u(mobile)">
@@ -339,12 +357,16 @@
 							<h3>
 								<i class="fa fa-archive"></i> In Progress
 							</h3>
-							</header> <%for(int i = 0; i<inprogress.size(); i++){ %>
+							</header> <%
+ 	for (int i = 0; i < inprogress.size(); i++) {
+ %>
 							<div
 								class="row col-sm-12 displaystyle-leftborder displaystyle-success">
 								<a href="showUploadList.do?project_name=<%=inprogress.get(i)%>"><strong><%=inprogress.get(i)%></strong></a>
 							</div>
-							<%} %> </section>
+							<%
+								}
+							%> </section>
 
 						</div>
 						<div class="4u 12u(mobile)">
@@ -355,12 +377,16 @@
 							<h3>
 								<i class="fa fa-bookmark"></i> Done
 							</h3>
-							</header> <%for(int i = 0; i<done.size(); i++){ %>
+							</header> <%
+ 	for (int i = 0; i < done.size(); i++) {
+ %>
 							<div
 								class="row col-sm-12 displaystyle-leftborder displaystyle-success">
 								<a href="showUploadList.do?project_name=<%=done.get(i)%>"><strong><%=done.get(i)%></strong></a>
 							</div>
-							<%} %> </section>
+							<%
+								}
+							%> </section>
 
 						</div>
 					</div>
@@ -384,7 +410,8 @@
 }
 
 .displaystyle-leftborder {
-	margin: 1px;
+	margin: 1px; 
+	padding-bottom: 20px;
 	background-color: #FFFFFF;
 	border-left: 9px solid;
 	border-right: 1px solid;

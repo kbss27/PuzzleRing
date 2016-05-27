@@ -184,4 +184,30 @@ public class PRShowUploadList {
 		}
 
 	}
+
+	public String getUML(String project_name)
+	{
+		Connection con;
+		String uml="";
+		try {
+			con = ds.getConnection();
+			String sql = "select uml_code from uml_list where project_name = ?";
+			
+			PreparedStatement pstat = con.prepareStatement(sql);
+			//System.out.println("project name =   "+p_name);
+			pstat.setString(1, project_name);
+
+			ResultSet rs = pstat.executeQuery();
+			
+			while(rs.next()){
+				uml = rs.getString(1);
+			}
+			System.out.println(uml);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return uml;
+	}
+
 }

@@ -37,7 +37,7 @@ public class PRCreateProject2 {
 		}
 	}
 	
-	public boolean createProject2(String class_detail, String method_detail){
+public boolean createProject2(String class_detail, String method_detail, String project_uml,String project_name){
 		
 		try {
 			
@@ -46,20 +46,21 @@ public class PRCreateProject2 {
 			
 			if(makeMethodList(method_detail))
 				System.out.println("Success insert method_detail in class");
+			
+			
 			Connection con = ds.getConnection();
 			
-			Statement stmt2 = con.createStatement();
-			ResultSet rs = stmt2.executeQuery("select max(project_id) from project_detail");
-			ResultSetMetaData rsmd = rs.getMetaData();
-			int colnum = rsmd.getColumnCount();
+			PreparedStatement stmt2 = con.prepareStatement("select project_id from project_detail where project_name =?");
+			stmt2.setString(1, project_name);
+			ResultSet rs = stmt2.executeQuery();
+			System.out.println("Error1");
 			int projectId=0;
+			
 			while(rs.next()){
-				for(int i=1;i<=colnum;i++)
-				{
-					projectId = rs.getInt(i);
-				}
+				projectId = rs.getInt(1);
 			}
-
+			System.out.println("Error2");
+			
 			String sql = "insert into class_detail(class_am, class_name, project_id) values(?, ?, ?)";
 			PreparedStatement pstat = con.prepareStatement(sql);
 			
@@ -73,6 +74,7 @@ public class PRCreateProject2 {
 			}
 			pstat.close();
 			sql = "insert into method_detail(class_info, method_am, method_type,method_modifier,method_name,class_id) values(?, ?, ?, ?, ?, ?)";
+			
 			pstat = con.prepareStatement(sql);
 			for(int i=0;i<md.size();i++)
 			{
@@ -86,6 +88,18 @@ public class PRCreateProject2 {
 				pstat.executeUpdate();
 				
 			}
+			pstat.close();
+			
+			sql = "insert into uml_list(project_name, uml_code) values(?, ?)";
+			pstat = con.prepareStatement(sql);
+			System.out.println(project_name);
+			System.out.println(project_uml);
+			pstat.setString(1, project_name);
+			pstat.setString(2, project_uml);
+				
+			pstat.executeUpdate();
+				
+			
 			pstat.close();
 			return true;
 			//con.close();

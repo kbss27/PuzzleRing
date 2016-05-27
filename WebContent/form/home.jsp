@@ -172,6 +172,9 @@ prmodel.updateTodayProject();	//페이지 불릴때마다 today new project upda
 
 			<!-- Nav --> <nav id="nav">
 			<ul>
+			<li class="current"><a href="usermain.do"><i
+						class="fa fa-2x fa-fw fa-home text-warning"></i></a></li>
+			<li><a href="projectList.do">Project List</a></li>
 				<li><a href="#" onclick="goback()"><i
 						class="fa fa-2x fa-angle-left fa-fw"></i></a></li>
 				<li><a href="logout.do"><i

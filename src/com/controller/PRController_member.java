@@ -17,7 +17,7 @@ public class PRController_member {
 	public PRController_member() {
 		model = new PRMember();
 	}
-/*
+	/*
 	public void login(HttpServletRequest req, HttpServletResponse res) {
 		RequestDispatcher dis = req.getRequestDispatcher("form/login.jsp");
 		try {
@@ -26,23 +26,23 @@ public class PRController_member {
 			e.printStackTrace();
 		}
 	}
-*/
+	 */
 	public void login(HttpServletRequest req, HttpServletResponse res) {
 		try {
-			//req, res통해서 통신한다.
+			//req, res�넻�빐�꽌 �넻�떊�븳�떎.
 			//?id=kbss27&pass=1234
-			//request객체는 url.
+			//request媛앹껜�뒗 url.
 			//ttt
 			String id = req.getParameter("id");
 			String pass = req.getParameter("password");
 			// String pass = controller.getEncSHA256(hash_pass);
 
 			boolean isLogin = model.m_login(id, pass);
-			
+
 			if (isLogin == true) {
 
 				req.setAttribute("id", id);
-				
+
 				RequestDispatcher dis = req
 						.getRequestDispatcher("/form/main.jsp");
 
@@ -58,14 +58,20 @@ public class PRController_member {
 		}
 	}
 	public void mainlogin(HttpServletRequest req, HttpServletResponse res) {
-		RequestDispatcher dis = req.getRequestDispatcher("form/main.jsp");
 		try {
+			RequestDispatcher dis;
+		if(req.getSession().getAttribute("login") != null){
+			dis = req.getRequestDispatcher("form/main.jsp");
+		}else {
+			dis = req.getRequestDispatcher("form/home.jsp");
+		}
 			dis.forward(req, res);
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void join(HttpServletRequest req, HttpServletResponse res) {
 		RequestDispatcher dis = req.getRequestDispatcher("form/join.jsp");
 		try {
@@ -74,13 +80,13 @@ public class PRController_member {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void joinprocess(HttpServletRequest req, HttpServletResponse res) {
-		
-		
+
+
 		Member new_member = new Member(req.getParameter("id"), req.getParameter("password"), req.getParameter("e_mail"),
 				req.getParameter("information"));
-		
+
 		if(model.m_join(new_member)){
 			RequestDispatcher dis = req.getRequestDispatcher("form/home.jsp");
 			try {
@@ -89,9 +95,9 @@ public class PRController_member {
 				e.printStackTrace();
 			}
 		}else{
-			System.out.println("join 실패");
+			System.out.println("join �떎�뙣");
 		}
-		
+
 	}
 
 }
