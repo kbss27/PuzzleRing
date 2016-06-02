@@ -356,351 +356,329 @@
 	}
 </script>
 <script type="text/javascript">
-	function addUML() {
+   function addUML() {
 
-		var graph = new joint.dia.Graph;
-		var uml = joint.shapes.uml;
+      var graph = new joint.dia.Graph;
+      var uml = joint.shapes.uml;
 
-		var paper = new joint.dia.Paper({
-			el : $('#boxes'),
-			width : 1000,
-			height : 500,
-			model : graph,
-			gridSize : 1
-		});
-		var rects = [];
-		var arrows = [];
-		var classes = [];
+      var paper = new joint.dia.Paper({
+         el : $('#boxes'),
+         width : 1000,
+         height : 500,
+         model : graph,
+         gridSize : 1
+      });
+      var rects = [];
+      var arrows = [];
+      var classes = [];
 
-		var className = [];
-		var classLength = class_list.length;
+      var className = [];
+      var classLength = class_list.length;
 
-		for (var i = 0; i < classLength; i++) {
-			className[i] = class_list[i].class_name;
-			addUMLClass(className[i], i);
-		}
+      for (var i = 0; i < classLength; i++) {
+         className[i] = class_list[i].class_name;
+         addUMLClass(className[i], i);
+      }
 
-		function addUMLClass(name, p) {
+      /*   var relations = [ Generalization(
+       rects[0], rects[1]) ];
+       _.each(relations, function(r) {
+       graph.addCell(r);
+       }); */
 
-			var classType = 1; //1:normal, 2: abstract, 3: interface
-			var methodNum = method_list.length;
-			var method = "";
+      function addUMLClass(name, p) {
 
-			for (var i = 0; i < methodNum; i++) {
-				var temp, mMax;
-				if (i == 0) {
-					temp = addMethod(name).length;
-					mMax = addMethod(name).length;
-				} else {
-					temp = addMethod(name).length;
-				}
-				if (mMax < temp) {
-					mMax = temp;
-				}
+         var classType = 1; //1:normal, 2: abstract, 3: interface
+         var methodNum = method_list.length;
+         var method = "";
 
-			}
-			method += addMethod(name);
-			var widthSize = mMax;
-			var heightSize = methodNum;
+         for (var i = 0; i < methodNum; i++) {
+            var temp, mMax;
+            if (i == 0) {
+               temp = addMethod(name).length;
+               mMax = addMethod(name).length;
+            } else {
+               temp = addMethod(name).length;
+            }
+            if (mMax < temp) {
+               mMax = temp;
+            }
 
-			if (classType == 3) {
-				var c = new uml.Interface({
-					position : {
-						x : p + 10,
-						y : p + 30
-					},
-					size : {
-						width : widthSize * 7,
-						height : heightSize * 60
-					},
-					name : name,
-					methods : [ method ],
-					attrs : {
-						'.uml-class-name-rect' : {
-							fill : '#feb662',
-							stroke : '#ffffff',
-							'stroke-width' : 0.5
-						},
-						'.uml-class-attrs-rect, .uml-class-methods-rect' : {
-							fill : '#fdc886',
-							stroke : '#fff',
-							'stroke-width' : 0.5
-						},
-						'.uml-class-attrs-text' : {
-							ref : '.uml-class-attrs-rect',
-							'ref-y' : 0.5,
-							'y-alignment' : 'middle'
-						},
-						'.uml-class-methods-text' : {
-							ref : '.uml-class-methods-rect',
-							'ref-y' : 0.5,
-							'y-alignment' : 'middle'
-						}
+         }
+         method += addMethod(name);
+         var widthSize = mMax;
+         var heightSize = methodNum;
 
-					}
-				})
-			} else if (classType == 2) {
-				var c = new uml.Abstract({
-					position : {
-						x : p + 10,
-						y : p + 30
-					},
-					size : {
-						width : widthSize * 7,
-						height : heightSize * 60
-					},
-					name : name,
-					methods : [ method ],
-					attrs : {
-						'.uml-class-name-rect' : {
-							fill : '#68ddd5',
-							stroke : '#ffffff',
-							'stroke-width' : 0.5
-						},
-						'.uml-class-attrs-rect, .uml-class-methods-rect' : {
-							fill : '#9687fe',
-							stroke : '#fff',
-							'stroke-width' : 0.5
-						},
-						'.uml-class-methods-text, .uml-class-attrs-text' : {
-							fill : '#fff'
-						}
-					}
-				});
-			} else {
-				var c = new uml.Class({
-					position : {
-						x : p + 10,
-						y : p + 30
-					},
-					size : {
-						width : widthSize * 7,
-						height : heightSize * 60
-					},
-					name : name,
-					methods : [ method ],
-					attrs : {
-						'.uml-class-name-rect' : {
-							fill : '#ff8450',
-							stroke : '#fff',
-							'stroke-width' : 0.5,
-						},
-						'.uml-class-attrs-rect, .uml-class-methods-rect' : {
-							fill : '#fe976a',
-							stroke : '#fff',
-							'stroke-width' : 0.5
-						},
-						'.uml-class-attrs-text' : {
-							ref : '.uml-class-attrs-rect',
-							'ref-y' : 0.5,
-							'y-alignment' : 'middle'
-						},
-						'.uml-class-methods-text' : {
-							ref : '.uml-class-methods-rect',
-							'ref-y' : 0.5,
-							'y-alignment' : 'middle'
-						}
-					}
+         if (classType == 3) {
+            var c = new uml.Interface({
+               position : {
+                  x : p + 10,
+                  y : p + 30
+               },
+               size : {
+                  width : widthSize * 7,
+                  height : heightSize * 60
+               },
+               name : name,
+               methods : [ method ],
+               attrs : {
+                  '.uml-class-name-rect' : {
+                     fill : '#feb662',
+                     stroke : '#ffffff',
+                     'stroke-width' : 0.5
+                  },
+                  '.uml-class-attrs-rect, .uml-class-methods-rect' : {
+                     fill : '#fdc886',
+                     stroke : '#fff',
+                     'stroke-width' : 0.5
+                  },
+                  '.uml-class-attrs-text' : {
+                     ref : '.uml-class-attrs-rect',
+                     'ref-y' : 0.5,
+                     'y-alignment' : 'middle'
+                  },
+                  '.uml-class-methods-text' : {
+                     ref : '.uml-class-methods-rect',
+                     'ref-y' : 0.5,
+                     'y-alignment' : 'middle'
+                  }
 
-				});
-<<<<<<< HEAD
-	}
-	rects.push(c);
-	graph.addCells([ c ]);
+               }
+            })
+         } else if (classType == 2) {
+            var c = new uml.Abstract({
+               position : {
+                  x : p + 10,
+                  y : p + 30
+               },
+               size : {
+                  width : widthSize * 7,
+                  height : heightSize * 60
+               },
+               name : name,
+               methods : [ method ],
+               attrs : {
+                  '.uml-class-name-rect' : {
+                     fill : '#68ddd5',
+                     stroke : '#ffffff',
+                     'stroke-width' : 0.5
+                  },
+                  '.uml-class-attrs-rect, .uml-class-methods-rect' : {
+                     fill : '#9687fe',
+                     stroke : '#fff',
+                     'stroke-width' : 0.5
+                  },
+                  '.uml-class-methods-text, .uml-class-attrs-text' : {
+                     fill : '#fff'
+                  }
+               }
+            });
+         } else {
+            var c = new uml.Class({
+               position : {
+                  x : p + 10,
+                  y : p + 30
+               },
+               size : {
+                  width : widthSize * 7,
+                  height : heightSize * 60
+               },
+               name : name,
+               methods : [ method ],
+               attrs : {
+                  '.uml-class-name-rect' : {
+                     fill : '#ff8450',
+                     stroke : '#fff',
+                     'stroke-width' : 0.5,
+                  },
+                  '.uml-class-attrs-rect, .uml-class-methods-rect' : {
+                     fill : '#fe976a',
+                     stroke : '#fff',
+                     'stroke-width' : 0.5
+                  },
+                  '.uml-class-attrs-text' : {
+                     ref : '.uml-class-attrs-rect',
+                     'ref-y' : 0.5,
+                     'y-alignment' : 'middle'
+                  },
+                  '.uml-class-methods-text' : {
+                     ref : '.uml-class-methods-rect',
+                     'ref-y' : 0.5,
+                     'y-alignment' : 'middle'
+                  }
+               }
 
-	return c;
-};
+            });
+         }
+         rects.push(c);
+         graph.addCells([ c ]);
 
-function addMethod(name) {
-	var text = "";
+         return c;
+      }
+      ;
 
-	var methodAM;
-	var methodType;
-	var methodModifier;
-	var methodName;
-	for(var i=0;i<method_list.length;i++)
-	{
-		if(method_list[i].class_info == name)
-		{
-			
-			methodAM = method_list[i].method_am;
-			methodType = method_list[i].method_type;
-			methodModifier = method_list[i].method_modifier;
-			methodName = method_list[i].method_name;
-			text += methodAM + " " + methodType + " " + methodModifier + " " + methodName + "\n";
-		}
-	}
-=======
-			}
-			rects.push(c);
-			graph.addCells([ c ]);
->>>>>>> 47bc17e7a566ce61671c42b44b152d50385c1ef2
+      function addMethod(name) {
+         var text = "";
 
-			return c;
-		}
-		;
+         var methodAM;
+         var methodType;
+         var methodModifier;
+         var methodName;
+         for (var i = 0; i < method_list.length; i++) {
+            if (method_list[i].class_info == name) {
 
-		function addMethod(name) {
-			var text = "";
+               methodAM = method_list[i].method_am;
+               methodType = method_list[i].method_type;
+               methodModifier = method_list[i].method_modifier;
+               methodName = method_list[i].method_name;
+               text += methodAM + " " + methodType + " " + methodModifier
+                     + " " + methodName + "\n";
+            }
+         }
 
-			var methodAM;
-			var methodType;
-			var methodModifier;
-			var methodName;
-			for (var i = 0; i < method_list.length; i++) {
-				if (method_list[i].class_info == name) {
+         return text;
+      }
 
-					methodAM = method_list[i].method_am;
-					methodType = method_list[i].method_type;
-					methodModifier = method_list[i].method_modifier;
-					methodName = method_list[i].method_name;
-					text += methodAM + " " + methodType + " " + methodModifier
-							+ " " + methodName + "\n";
-				}
-			}
+      function Generalization(a, b) {
+         var link = new uml.Generalization({
+            source : {
+               id : a.id
+            },
+            target : {
+               id : b.id
+            }
+         });
 
-			return text;
-		}
+         //   arrows.push(link);
+         //   graph.addCells([link]);
 
-		function Generalization(a, b) {
-			var link = new uml.Generalization({
-				source : {
-					id : a.id
-				},
-				target : {
-					id : b.id
-				}
-			});
+         return link;
 
-			//	arrows.push(link);
-			//	graph.addCells([link]);
+      }
+      ;
 
-			return link;
+      function Implementation(a, b) {
+         var link = new uml.Implementation({
+            source : {
+               id : a.id
+            },
+            target : {
+               id : b.id
+            }
+         });
 
-		}
-		;
+         //   arrows.push(link);
+         //   graph.addCells([link]);
+         return link;
+      }
+      ;
 
-		function Implementation(a, b) {
-			var link = new uml.Implementation({
-				source : {
-					id : a.id
-				},
-				target : {
-					id : b.id
-				}
-			});
+      function Aggregation(a, b) {
+         var link = new uml.Aggregation({
+            source : {
+               id : a.id
+            },
+            target : {
+               id : b.id
+            }
+         });
 
-			//	arrows.push(link);
-			//	graph.addCells([link]);
-			return link;
-		}
-		;
+         //   arrows.push(link);
+         //   graph.addCells([link]);
 
-		function Aggregation(a, b) {
-			var link = new uml.Aggregation({
-				source : {
-					id : a.id
-				},
-				target : {
-					id : b.id
-				}
-			});
+         return link;
 
-			//	arrows.push(link);
-			//	graph.addCells([link]);
+      }
+      ;
 
-			return link;
+      function Composition(a, b) {
+         var link = new uml.Composition({
+            source : {
+               id : a.id
+            },
+            target : {
+               id : b.id
+            }
+         });
 
-		}
-		;
+         //   arrows.push(link);
+         //   graph.addCells([link]);
 
-		function Composition(a, b) {
-			var link = new uml.Composition({
-				source : {
-					id : a.id
-				},
-				target : {
-					id : b.id
-				}
-			});
+         return link;
 
-			//	arrows.push(link);
-			//	graph.addCells([link]);
+      }
+      ;
 
-			return link;
+      $("#addGeneral").click(function() {
+         var link = new joint.shapes.uml.Generalization({
+            source : {
+               x : 100,
+               y : 100
+            },
+            target : {
+               x : 200,
+               y : 300
+            }
+         });
 
-		}
-		;
+         arrows.push(link);
+         graph.addCells([ link ]);
 
-		$("#addGeneral").click(function() {
-			var link = new joint.shapes.uml.Generalization({
-				source : {
-					x : 100,
-					y : 100
-				},
-				target : {
-					x : 200,
-					y : 300
-				}
-			});
+      });
+      $("#addImplement").click(function() {
+         var link = new joint.shapes.uml.Implementation({
+            source : {
+               x : 100,
+               y : 100
+            },
+            target : {
+               x : 100,
+               y : 200
+            }
+         });
 
-			arrows.push(link);
-			graph.addCells([ link ]);
+         arrows.push(link);
+         graph.addCells([ link ]);
 
-		});
-		$("#addImplement").click(function() {
-			var link = new joint.shapes.uml.Implementation({
-				source : {
-					x : 100,
-					y : 100
-				},
-				target : {
-					x : 100,
-					y : 200
-				}
-			});
+      });
+      $("#addAggregate").click(function() {
+         var link = new joint.shapes.uml.Aggregation({
+            source : {
+               x : 100,
+               y : 100
+            },
+            target : {
+               x : 300,
+               y : 400
+            }
+         });
 
-			arrows.push(link);
-			graph.addCells([ link ]);
+         arrows.push(link);
+         graph.addCells([ link ]);
 
-		});
-		$("#addAggregate").click(function() {
-			var link = new joint.shapes.uml.Aggregation({
-				source : {
-					x : 100,
-					y : 100
-				},
-				target : {
-					x : 300,
-					y : 400
-				}
-			});
+      });
+      $("#addCompose").click(function() {
+         var link = new joint.shapes.uml.Composition({
+            source : {
+               x : 100,
+               y : 100
+            },
+            target : {
+               x : 400,
+               y : 500
+            }
+         });
 
-			arrows.push(link);
-			graph.addCells([ link ]);
+         arrows.push(link);
+         graph.addCells([ link ]);
 
-		});
-		$("#addCompose").click(function() {
-			var link = new joint.shapes.uml.Composition({
-				source : {
-					x : 100,
-					y : 100
-				},
-				target : {
-					x : 400,
-					y : 500
-				}
-			});
+      });
 
-			arrows.push(link);
-			graph.addCells([ link ]);
-
-		});
-
-	}
+   }
 </script>
 
 <script type="text/javascript">
+
 	function capture() {
 		var MyDiv1 = document.getElementById('boxes');
 		var MyDiv2 = document.getElementById('Myboxes');
@@ -1067,9 +1045,8 @@ function addMethod(name) {
 							style="cursor: hand" value="add Composition Arrow">
 
 						<section id="boxes" class="papers"></section>
-						<!-- <button class="btn btn-lg btn-primary" onClick="capture()" value="capture">capture</button> "-->
 						<button class="btn btn-lg btn-primary" onClick="capture()"
-							value="capture">capture</button>
+							value="capture">Save UML</button>
 					</div>
 
 				</div>
